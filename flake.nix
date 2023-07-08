@@ -33,7 +33,14 @@
             raylib = super.callPackage ./nix/raylib {};
             # build chipmunk without demos
             chipmunk = super.callPackage ./nix/chipmunk {originalChipmunk = super.chipmunk;};
-            webRaylib = super.raylib.override {stdenv = super.emscriptenStdenv;};
+            web-raylib = (super.raylib.override {sharedLib = false;}).overrideAttrs (oa: {
+              nativeBuildInputs = oa.nativeBuildInputs ++ [super.emscripten];
+              cmakeFlags = oa.cmakeFlags ++ ["-DCMAKE_C_COMPILER=emcc"];
+              preFixup = "";
+              src = (super.callPackage ./nix/raylib {}).src;
+              version = (super.callPackage ./nix/raylib {}).version;
+              patches = [];
+            });
           })
         ];
       };
@@ -42,6 +49,7 @@
         chipmunk = pkgs.chipmunk;
         zig = pkgs.zig;
         raylib = pkgs.raylib;
+        web-raylib = pkgs.web-raylib;
       };
 
       devShell =
@@ -60,7 +68,6 @@
               chipmunk
               raylib
               pkg-config
-
               libGL
               self.packages.${system}.zig
             ])

@@ -1,5 +1,8 @@
 {
+  lib,
   stdenv,
+  useWebTarget ? false,
+  webTarget ? "wasm32-emscripten",
   zig,
   fetchFromGitHub,
   coreutils-full,
@@ -39,7 +42,7 @@ stdenv.mkDerivation rec {
 
   buildPhase = ''
     ${coreutils-full}/bin/chmod +wr . -R
-    zig build -Doptimize=ReleaseFast --global-cache-dir ..
+    zig build -Doptimize=ReleaseFast ${lib.optionalString useWebTarget "-Dtarget=${webTarget}"} --global-cache-dir ..
   '';
 
   installPhase = ''

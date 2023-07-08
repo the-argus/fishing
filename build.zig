@@ -11,7 +11,7 @@ const c_sources = [_][]const u8{
     "src/main.c",
 };
 
-fn link(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.Step.Compile), lib: []const u8) !void {
+fn link(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.CompileStep), lib: []const u8) !void {
     for (targets.items) |target| {
         target.linkSystemLibrary(lib);
     }
@@ -19,7 +19,7 @@ fn link(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.Step.Com
     try linker_and_include_flags.append(str);
 }
 
-fn include(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.Step.Compile), path: []const u8) !void {
+fn include(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.CompileStep), path: []const u8) !void {
     for (targets.items) |target| {
         target.addIncludePath(path);
     }
@@ -34,7 +34,7 @@ pub fn build(b: *std.Build) !void {
     // this is used in the makeCdb function
     linker_and_include_flags = std.ArrayList([]const u8).init(b.allocator);
 
-    var targets = std.ArrayList(*std.Build.Step.Compile).init(b.allocator);
+    var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
 
     // create executable
     var exe: *std.Build.CompileStep =
@@ -67,15 +67,8 @@ pub fn build(b: *std.Build) !void {
     try include(b.allocator, targets, "src/");
 
     switch (target.getOsTag()) {
-        .wasi, .emscripten => {
-        },
+        .wasi, .emscripten => {},
         else => {
-            const rayBuild = @import("src/raylib/raylib/src/build.zig");
-            const raylib = rayBuild.addRaylib(b, target, mode, .{});
-            exe.linkLibrary(raylib);
-            exe.addIncludePath(raylibSrc);
-            exe.addIncludePath(raylibSrc ++ "extras/");
-            exe.addIncludePath(bindingSrc);
             switch (target.getOsTag()) {
                 .windows => {
                     try link(b.allocator, targets, "winmm");
@@ -173,11 +166,13 @@ fn makeCdb(step: *std.Build.Step, prog_node: *std.Progress.Node) anyerror!void {
     }
 
     {
-        const options = std.json.StringifyOptions{ .whitespace = .{
-            .indent_level = 0,
-            .indent = .{ .space = 2 },
-            .separator = true,
-        }, .emit_null_optional_fields = false };
+        const options = std.json.StringifyOptions{
+            .whitespace = .{
+                .indent_level = 0,
+                .separator = true,
+            },
+            .emit_null_optional_fields = false,
+        };
 
         try std.json.stringify(cmp_commands, options, file.writer());
     }
