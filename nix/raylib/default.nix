@@ -1,7 +1,6 @@
 {
   stdenv,
-  callPackage,
-  zig ? (callPackage ../zig {}),
+  zig,
   fetchFromGitHub,
   coreutils-full,
 }:
