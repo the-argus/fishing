@@ -41,6 +41,11 @@
               version = (super.callPackage ./nix/raylib {}).version;
               patches = [];
             });
+            web-chipmunk = super.chipmunk.overrideAttrs (oa: {
+              nativeBuildInputs = oa.nativeBuildInputs ++ [super.emscripten];
+              cmakeFlags = (oa.cmakeFlags or []) ++ ["-DCMAKE_C_COMPILER=emcc" "-DBUILD_DEMOS=OFF" "-DBUILD_SHARED=OFF"];
+              postInstall = "";
+            });
           })
         ];
       };
@@ -50,6 +55,7 @@
         zig = pkgs.zig;
         raylib = pkgs.raylib;
         web-raylib = pkgs.web-raylib;
+        web-chipmunk = pkgs.web-chipmunk;
       };
 
       devShell =
