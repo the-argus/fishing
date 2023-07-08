@@ -25,13 +25,16 @@
         overlays = [
           (_: super: {
             # build chipmunk without demos
-            chipmunk = super.callPackage ./nix/chipmunk.nix {originalChipmunk = super.chipmunk;};
+            chipmunk = super.callPackage ./nix/chipmunk {originalChipmunk = super.chipmunk;};
+            raylib = super.callPackage ./nix/raylib {};
+            webRaylib = super.raylib.override {stdenv = super.emscriptenStdenv;};
           })
         ];
       };
     in {
       packages = {
         chipmunk = pkgs.chipmunk;
+        raylib = pkgs.raylib;
         zig = pkgs.callPackage ./nix/zig {
           llvmPackages = pkgs.llvmPackages_16;
         };
@@ -52,6 +55,7 @@
               gdb
               valgrind
               chipmunk
+              raylib
               pkg-config
 
               libGL

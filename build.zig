@@ -2,13 +2,13 @@ const std = @import("std");
 const builtin = @import("builtin");
 const app_name = "abmoog";
 
-const release_flags = [_][]const u8{ "-DNDEBUG" };
-const debug_flags = [_][]const u8{ };
+const release_flags = [_][]const u8{"-DNDEBUG"};
+const debug_flags = [_][]const u8{};
 var chosen_flags: ?[]const []const u8 = null;
 var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
 const c_sources = [_][]const u8{
-    "src/main.cpp",
+    "src/main.c",
 };
 
 fn link(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.Step.Compile), lib: []const u8) !void {
@@ -54,7 +54,7 @@ pub fn build(b: *std.Build) !void {
         },
     }
 
-    exe.addCSourceFiles(&cpp_sources, chosen_flags.?);
+    exe.addCSourceFiles(&c_sources, chosen_flags.?);
 
     // always link libc
     for (targets.items) |t| {
@@ -63,37 +63,44 @@ pub fn build(b: *std.Build) !void {
 
     // links and includes which are shared across platforms
     try link(b.allocator, targets, "raylib");
-    const raylib = b.dependency("raylib_zig", .{
-        .target = target,
-        .optimize = mode,
-    });
-    app.step.linkLibrary(raylib.artifact("raylib"));
     try link(b.allocator, targets, "chipmunk");
     try include(b.allocator, targets, "src/");
 
     switch (target.getOsTag()) {
-        .windows => {
-            try link(b.allocator, targets, "winmm");
-            try link(b.allocator, targets, "gdi32");
-            try link(b.allocator, targets, "opengl32");
+        .wasi, .emscripten => {
         },
-        //dunno why but macos target needs sometimes 2 tries to build
-        .macos => {
-            try link(b.allocator, targets, "Foundation");
-            try link(b.allocator, targets, "Cocoa");
-            try link(b.allocator, targets, "OpenGL");
-            try link(b.allocator, targets, "CoreAudio");
-            try link(b.allocator, targets, "CoreVideo");
-            try link(b.allocator, targets, "IOKit");
+        else => {
+            const rayBuild = @import("src/raylib/raylib/src/build.zig");
+            const raylib = rayBuild.addRaylib(b, target, mode, .{});
+            exe.linkLibrary(raylib);
+            exe.addIncludePath(raylibSrc);
+            exe.addIncludePath(raylibSrc ++ "extras/");
+            exe.addIncludePath(bindingSrc);
+            switch (target.getOsTag()) {
+                .windows => {
+                    try link(b.allocator, targets, "winmm");
+                    try link(b.allocator, targets, "gdi32");
+                    try link(b.allocator, targets, "opengl32");
+                },
+                //dunno why but macos target needs sometimes 2 tries to build
+                .macos => {
+                    try link(b.allocator, targets, "Foundation");
+                    try link(b.allocator, targets, "Cocoa");
+                    try link(b.allocator, targets, "OpenGL");
+                    try link(b.allocator, targets, "CoreAudio");
+                    try link(b.allocator, targets, "CoreVideo");
+                    try link(b.allocator, targets, "IOKit");
+                },
+                .linux => {
+                    try link(b.allocator, targets, "GL");
+                    try link(b.allocator, targets, "rt");
+                    try link(b.allocator, targets, "dl");
+                    try link(b.allocator, targets, "m");
+                    try link(b.allocator, targets, "X11");
+                },
+                else => {},
+            }
         },
-        .linux => {
-            try link(b.allocator, targets, "GL");
-            try link(b.allocator, targets, "rt");
-            try link(b.allocator, targets, "dl");
-            try link(b.allocator, targets, "m");
-            try link(b.allocator, targets, "X11");
-        },
-        else => {},
     }
 
     for (targets.items) |t| {
@@ -127,7 +134,7 @@ const CompileCommandEntry = struct {
     file: []const u8,
     output: []const u8,
 };
-const CompileCommands = [cpp_sources.len]CompileCommandEntry;
+const CompileCommands = [c_sources.len]CompileCommandEntry;
 
 fn makeCdb(step: *std.Build.Step, prog_node: *std.Progress.Node) anyerror!void {
     _ = prog_node;
@@ -145,8 +152,8 @@ fn makeCdb(step: *std.Build.Step, prog_node: *std.Progress.Node) anyerror!void {
     const cwd_string = try toString(cwd, allocator);
 
     // fill each compile command entry, once for each file
-    std.debug.assert(cmp_commands.len == cpp_sources.len);
-    for (0.., cpp_sources) |index, filename| {
+    std.debug.assert(cmp_commands.len == c_sources.len);
+    for (0.., c_sources) |index, filename| {
         const file_str = try std.fs.path.join(allocator, &[_][]const u8{ cwd_string, filename });
         const output_str = try std.fmt.allocPrint(allocator, "{s}.o", .{file_str});
 
