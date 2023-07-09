@@ -36,6 +36,53 @@ example to get an idea of what the API is like.
   JIT compiler. Unfortunately this JIT only works on Mac/Linux. Might consider
   another JIT for windows support.
 
+## Removing Features You Don't Need
+
+If you don't use Nix, then `rm -rf nix flake.nix flake.lock .envrc`.
+
+If your editor does not use editorconfig for clang-format, remove those dotfiles.
+
+If you don't plan on building for web, `rm -rf emscripten` and delete the
+contents of the `.wasi, .emscripten => {` case in the `build.zig.
+
+## Usage
+
+How to install and use this template on different platforms with different tools.
+
+On all platforms, building for desktop is the same: `zig build`. Installing zig
+and adding it to your PATH is not covered here.
+
+Add the `-Doptimize=Debug` flag for a debug build.
+
+### Windows
+
+This is the platform for which the process is the most complex.
+
+Install raylib and chipmunk into a systemwide install location. In order to
+perform a web build from windows, you need to build both chipmunk and raylib
+using emscripten. Install the resulting static libraries somewhere, and then
+provide the path to the install prefixes with ``-Draylib-prefix=/path/to/raylib`
+and `-Dchipmunk-prefix=/path/to/chipmunk`. You will also need to install the
+emscripten SDK and pass its location to the build command.
+
+Here is an example build command:
+
+```bash
+zig build -Doptimize=ReleaseSmall \
+    -Dtarget=wasm32-wasi \
+    --sysroot "$EMSDK/upstream/sysroot" \
+    -Dchipmunk-prefix="C:\Program Files\Chipmunk 7.0.3" \
+    -Draylib-prefix"C:\raylib" \
+```
+
+Notice the `wasm32-wasi` platform.
+
+### Linux
+
+### MacOS
+
+Untested, but in theory the linux instructions should work.
+
 ## Credits
 
 Credit to `@ryupold` on GitHub for writing a large portion of the code present
