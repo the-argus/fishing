@@ -4,7 +4,7 @@
   useWebTarget ? false,
   webTarget ? "wasm32-emscripten",
   zig,
-  fetchFromGitHub,
+  callPackage,
   coreutils-full,
   mesa,
   glfw,
@@ -18,13 +18,8 @@
 }:
 stdenv.mkDerivation rec {
   pname = "raylib";
-  version = "4.5.0";
-  src = fetchFromGitHub {
-    repo = pname;
-    rev = "ed2caa12775da95d3e19ce42dccdca4a0ba8f8a0";
-    owner = "raysan5";
-    hash = "sha256-EcY0Z9AsEm2B9DeA2LXSv6iJX4DwC8Gh+NNJp/F2zkQ=";
-  };
+
+  inherit (callPackage ./common.nix {}) src version;
 
   nativeBuildInputs = [zig];
 

@@ -112,7 +112,7 @@ pub fn build(b: *std.Build) !void {
                 "-lchipmunk",
                 "-l" ++ app_name,
                 "--shell-file",
-                "minshell.html",
+                try std.fs.path.join(b.allocator, &.{ emscriptenSrc, "minshell.html" }),
                 "-DPLATFORM_WEB",
                 "-sUSE_GLFW=3",
                 "-sWASM=1",
