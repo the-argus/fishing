@@ -3,7 +3,7 @@
 A flexible C game project template. This project:
 
 - Can be built on Windows/Mac/Linux hosts for Windows/Mac/Linux/Web targets.
-  (MacOS hosts and target are currently untested)
+  (MacOS hosts and targets are currently untested)
 - Includes drawing, asset loading, 2D physics, and vector/matrix math.
 - Uses Zig as the build system, making it easy to use C++ or Zig in place of C.
 - Generates `compile_commands.json`
@@ -40,7 +40,7 @@ example to get an idea of what the API is like.
 
 If you don't use Nix, then `rm -rf nix flake.nix flake.lock .envrc`.
 
-If your editor does not use editorconfig for clang-format, remove those dotfiles.
+If your editor does not use editorconfig or clang-format, remove those dotfiles.
 
 If you don't plan on building for web, `rm -rf emscripten` and delete the
 contents of the `.wasi, .emscripten => {` case in the `build.zig.
@@ -86,7 +86,7 @@ Untested, but in theory the linux instructions should work.
 ## Credits
 
 Credit to `@ryupold` on GitHub for writing a large portion of the code present
-in the `build.zig`. Copied from their [raylib.zig cross platform examples](https://github.com/ryupold/examples-raylib.zig)
+in the `build.zig`. Copied from their [raylib.zig cross platform examples](https://github.com/ryupold/examples-raylib.zig).
 
 ## Licensing
 
