@@ -21,7 +21,7 @@ int emsc_main()
 int main()
 #endif
 {
-  printf("Hello, abmoog\n");
+  printf("Hello, World\n");
   init();
 #ifdef __EMSCRIPTEN__
   emscripten_set_main_loop(update, 0, 1);
@@ -34,7 +34,7 @@ int main()
 
 void init() {
   SetConfigFlags(FLAG_MSAA_4X_HINT);
-  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "abmoog");
+  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib/Chipmunk Example Project");
   SetTargetFPS(60);
 
   physics_init();
