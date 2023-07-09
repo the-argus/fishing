@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
 
   buildPhase = ''
     ${coreutils-full}/bin/chmod +wr . -R
-    zig build -Doptimize=ReleaseFast ${lib.optionalString useWebTarget "-Dtarget=${webTarget}"} --global-cache-dir ..
+    zig build -Doptimize=ReleaseFast ${lib.optionalString useWebTarget "-Dtarget=${webTarget}"} --global-cache-dir .
   '';
 
   installPhase = ''

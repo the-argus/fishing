@@ -29,23 +29,31 @@
               llvmPackages = pkgs.llvmPackages_16;
             };
           })
+          # next do web builds, which are overrides of the nixpkgs ones
           (_: super: {
-            raylib = super.callPackage ./nix/raylib {};
-            # build chipmunk without demos
-            chipmunk = super.callPackage ./nix/chipmunk {originalChipmunk = super.chipmunk;};
             web-raylib = (super.raylib.override {sharedLib = false;}).overrideAttrs (oa: {
+              pname = "emscripten-${oa.pname}";
               nativeBuildInputs = oa.nativeBuildInputs ++ [super.emscripten];
-              cmakeFlags = oa.cmakeFlags ++ ["-DCMAKE_C_COMPILER=emcc"];
+              cmakeFlags = oa.cmakeFlags ++ ["-DCMAKE_C_COMPILER=emcc" "-DPLATFORM=Web"];
               preFixup = "";
               src = (super.callPackage ./nix/raylib {}).src;
               version = (super.callPackage ./nix/raylib {}).version;
               patches = [];
+              postFixup = "${super.emscripten}/bin/emranlib $out/lib/libraylib.a";
             });
             web-chipmunk = super.chipmunk.overrideAttrs (oa: {
+              pname = "emscripten-${oa.pname}";
               nativeBuildInputs = oa.nativeBuildInputs ++ [super.emscripten];
               cmakeFlags = (oa.cmakeFlags or []) ++ ["-DCMAKE_C_COMPILER=emcc" "-DBUILD_DEMOS=OFF" "-DBUILD_SHARED=OFF"];
               postInstall = "";
+              postFixup = "${super.emscripten}/bin/emranlib $out/lib/libchipmunk.a";
             });
+          })
+          # replace nixpkgs ones with my packages
+          (_: super: {
+            raylib = super.callPackage ./nix/raylib {};
+            # build chipmunk without demos
+            chipmunk = super.callPackage ./nix/chipmunk {originalChipmunk = super.chipmunk;};
           })
         ];
       };
@@ -56,6 +64,7 @@
         raylib = pkgs.raylib;
         web-raylib = pkgs.web-raylib;
         web-chipmunk = pkgs.web-chipmunk;
+        web-build = pkgs.callPackage ./nix/web-build {};
       };
 
       devShell =
@@ -68,6 +77,7 @@
         {
           packages =
             (with pkgs; [
+              python311
               clang-tools
               gdb
               valgrind
@@ -76,6 +86,14 @@
               pkg-config
               libGL
               self.packages.${system}.zig
+
+              # this is just here so that i get intellisense for emscripten stuff
+              (linkFarm "emsdk" [
+                {
+                  path = "${emscripten}/share/emscripten/cache/sysroot/include";
+                  name = "include";
+                }
+              ])
             ])
             ++ (with pkgs.xorg; [
               libX11

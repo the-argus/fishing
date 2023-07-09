@@ -37,38 +37,157 @@ pub fn build(b: *std.Build) !void {
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
 
     // create executable
-    var exe: *std.Build.CompileStep =
-        b.addExecutable(.{
-        .name = app_name,
-        .optimize = mode,
-        .target = target,
-    });
-    try targets.append(exe);
-
-    switch (mode) {
-        .Debug => {
-            chosen_flags = &debug_flags;
-        },
-        else => {
-            chosen_flags = &release_flags;
-        },
-    }
-
-    exe.addCSourceFiles(&c_sources, chosen_flags.?);
-
-    // always link libc
-    for (targets.items) |t| {
-        t.linkLibC();
-    }
-
-    // links and includes which are shared across platforms
-    try link(b.allocator, targets, "raylib");
-    try link(b.allocator, targets, "chipmunk");
-    try include(b.allocator, targets, "src/");
+    var exe: ?*std.Build.CompileStep = null;
 
     switch (target.getOsTag()) {
-        .wasi, .emscripten => {},
+        .wasi, .emscripten => {
+            std.log.warn("WARNING: the cdb compile step will not work when using the emscripten target.\n", .{});
+
+            const emscriptenSrc = "emscripten/";
+            const chipmunkPrefix = b.option(
+                []const u8,
+                "chipmunk-prefix",
+                "Location where chipmunk include and lib directories can be found",
+            ) orelse "";
+            const raylibPrefix = b.option(
+                []const u8,
+                "raylib-prefix",
+                "Location where raylib include and lib directories can be found",
+            ) orelse "";
+
+            const raylibIncludeDir: ?[]const u8 = if (raylibPrefix.len != 0) try std.fmt.allocPrint(b.allocator, "{s}/include", .{raylibPrefix}) else null;
+            const chipmunkIncludeDir: ?[]const u8 = if (chipmunkPrefix.len != 0) try std.fmt.allocPrint(b.allocator, "{s}/include", .{chipmunkPrefix}) else null;
+            const raylibLibDir: ?[]const u8 = if (raylibPrefix.len != 0) try std.fmt.allocPrint(b.allocator, "{s}/lib", .{raylibPrefix}) else null;
+            const chipmunkLibDir: ?[]const u8 = if (chipmunkPrefix.len != 0) try std.fmt.allocPrint(b.allocator, "{s}/lib", .{chipmunkPrefix}) else null;
+
+            const raylibIncludeFlag = if (raylibIncludeDir != null) try std.fmt.allocPrint(b.allocator, "-I{s}", .{raylibIncludeDir.?}) else "";
+            const chipmunkIncludeFlag = if (chipmunkIncludeDir != null) try std.fmt.allocPrint(b.allocator, "-I{s}", .{chipmunkIncludeDir.?}) else "";
+            const raylibLibFlag = if (raylibLibDir != null) try std.fmt.allocPrint(b.allocator, "-L{s}", .{raylibLibDir.?}) else "";
+            const chipmunkLibFlag = if (chipmunkLibDir != null) try std.fmt.allocPrint(b.allocator, "-L{s}", .{chipmunkLibDir.?}) else "";
+
+            std.log.info("building for emscripten\n", .{});
+            if (b.sysroot == null) {
+                std.log.err("\n\nUSAGE: Please build with 'zig build -Doptimize=ReleaseSmall -Dtarget=wasm32-wasi --sysroot \"$EMSDK/upstream/emscripten\"'\n\n", .{});
+                return error.SysRootExpected;
+            }
+            const webOutdir = try std.fs.path.join(b.allocator, &.{ b.install_prefix, "web" });
+            const webOutFile = try std.fs.path.join(b.allocator, &.{ webOutdir, "game.html" });
+            const lib = b.addStaticLibrary(.{
+                .name = app_name,
+                .optimize = mode,
+                .target = target,
+            });
+
+            const emscripten_include_flag = try std.fmt.allocPrint(b.allocator, "-I{s}/include", .{b.sysroot.?});
+
+            lib.addCSourceFiles(&c_sources, &[_][]const u8{ raylibIncludeFlag, chipmunkIncludeFlag, emscripten_include_flag });
+            lib.linkLibC();
+
+            lib.defineCMacro("__EMSCRIPTEN__", null);
+            lib.defineCMacro("PLATFORM_WEB", null);
+            lib.addIncludePath(emscriptenSrc);
+
+            const libraryOutputFolder = try std.fs.path.join(b.allocator, &.{ b.install_prefix, "lib" });
+            const libraryOutputFolderFlag = try std.fmt.allocPrint(b.allocator, "-L{s}", .{libraryOutputFolder});
+            // this installs the lib (libraylib-zig-examples.a) to the `libraryOutputFolder` folder
+            b.installArtifact(lib);
+
+            const shell = switch (mode) {
+                .Debug => emscriptenSrc ++ "shell.html",
+                else => emscriptenSrc ++ "minshell.html",
+            };
+
+            const emcc = b.addSystemCommand(&.{
+                "emcc",
+                "-o",
+                webOutFile,
+
+                emscriptenSrc ++ "entry.c",
+
+                // libraryOutputFolder ++ "lib" ++ app_name ++ ".a",
+                "-I.",
+                "-I" ++ emscriptenSrc,
+                "-L.",
+                libraryOutputFolderFlag,
+                chipmunkLibFlag,
+                chipmunkIncludeFlag,
+                raylibIncludeFlag,
+                raylibLibFlag,
+                "-lraylib",
+                "-lchipmunk",
+                "-l" ++ app_name,
+                "--shell-file",
+                shell,
+                "-DPLATFORM_WEB",
+                "-sUSE_GLFW=3",
+                "-sWASM=1",
+                "-sALLOW_MEMORY_GROWTH=1",
+                "-sWASM_MEM_MAX=512MB", //going higher than that seems not to work on iOS browsers ¯\_(ツ)_/¯
+                "-sTOTAL_MEMORY=512MB",
+                "-sABORTING_MALLOC=0",
+                "-sASYNCIFY",
+                "-sFORCE_FILESYSTEM=1",
+                "-sASSERTIONS=1",
+                "--memory-init-file",
+                "0",
+                "--preload-file",
+                "assets",
+                "--source-map-base",
+                // "-sLLD_REPORT_UNDEFINED",
+                "-sERROR_ON_UNDEFINED_SYMBOLS=0",
+
+                // optimizations
+                "-O1",
+                "-Os",
+
+                // "-sUSE_PTHREADS=1",
+                // "--profiling",
+                // "-sTOTAL_STACK=128MB",
+                // "-sMALLOC='emmalloc'",
+                // "--no-entry",
+                "-sEXPORTED_FUNCTIONS=['_malloc','_free','_main', '_emsc_main','_emsc_set_window_size']",
+                "-sEXPORTED_RUNTIME_METHODS=ccall,cwrap",
+            });
+
+            emcc.step.dependOn(&lib.step);
+
+            b.getInstallStep().dependOn(&emcc.step);
+
+            std.fs.cwd().makePath(webOutdir) catch {};
+
+            std.log.info("\n\nOutput files will be in {s}\n---\ncd {s}\npython -m http.server\n---\n\nbuilding...", .{ webOutdir, webOutdir });
+
+            return;
+        },
         else => {
+            exe =
+                b.addExecutable(.{
+                .name = app_name,
+                .optimize = mode,
+                .target = target,
+            });
+            try targets.append(exe.?);
+
+            switch (mode) {
+                .Debug => {
+                    chosen_flags = &debug_flags;
+                },
+                else => {
+                    chosen_flags = &release_flags;
+                },
+            }
+
+            exe.?.addCSourceFiles(&c_sources, chosen_flags.?);
+
+            // always link libc
+            for (targets.items) |t| {
+                t.linkLibC();
+            }
+            // links and includes which are shared across platforms
+            try link(b.allocator, targets, "raylib");
+            try link(b.allocator, targets, "chipmunk");
+            try include(b.allocator, targets, "src/");
+
             switch (target.getOsTag()) {
                 .windows => {
                     try link(b.allocator, targets, "winmm");
@@ -100,7 +219,7 @@ pub fn build(b: *std.Build) !void {
         b.installArtifact(t);
     }
 
-    const run_cmd = b.addRunArtifact(exe);
+    const run_cmd = b.addRunArtifact(exe.?);
     run_cmd.step.dependOn(b.getInstallStep());
     if (b.args) |args| {
         run_cmd.addArgs(args);
