@@ -35,6 +35,11 @@ example to get an idea of what the API is like.
   JIT compiler. Unfortunately this JIT only works on Mac/Linux. Might consider
   another JIT for windows support.
 
+## Credits
+
+Credit to `@ryupold` on GitHub for writing a large portion of the code present
+in the `build.zig`. Copied from their [raylib.zig cross platform examples](https://github.com/ryupold/examples-raylib.zig)
+
 ## Licensing
 
 This is under the same open-source license as raylib: zlib/libpng.
