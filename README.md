@@ -61,7 +61,7 @@ This is the platform for which the process is the most complex.
 Install raylib and chipmunk into a systemwide install location. In order to
 perform a web build from windows, you need to build both chipmunk and raylib
 using emscripten. Install the resulting static libraries somewhere, and then
-provide the path to the install prefixes with ``-Draylib-prefix=/path/to/raylib`
+provide the path to the install prefixes with `-Draylib-prefix=/path/to/raylib`
 and `-Dchipmunk-prefix=/path/to/chipmunk`. You will also need to install the
 emscripten SDK and pass its location to the build command.
 
