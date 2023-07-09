@@ -92,11 +92,6 @@ pub fn build(b: *std.Build) !void {
             // this installs the lib (libraylib-zig-examples.a) to the `libraryOutputFolder` folder
             b.installArtifact(lib);
 
-            const shell = switch (mode) {
-                .Debug => emscriptenSrc ++ "shell.html",
-                else => emscriptenSrc ++ "minshell.html",
-            };
-
             const emcc = b.addSystemCommand(&.{
                 "emcc",
                 "-o",
@@ -117,7 +112,7 @@ pub fn build(b: *std.Build) !void {
                 "-lchipmunk",
                 "-l" ++ app_name,
                 "--shell-file",
-                shell,
+                "minshell.html",
                 "-DPLATFORM_WEB",
                 "-sUSE_GLFW=3",
                 "-sWASM=1",
