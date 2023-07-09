@@ -9,6 +9,7 @@ var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
 const c_sources = [_][]const u8{
     "src/main.c",
+    "src/physics.c",
 };
 
 fn link(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.CompileStep), lib: []const u8) !void {
