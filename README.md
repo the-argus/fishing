@@ -6,6 +6,7 @@ A flexible C game project template. This project:
   (MacOS hosts and target are currently untested)
 - Includes drawing, asset loading, 2D physics, and vector/matrix math.
 - Uses Zig as the build system, making it easy to use C++ or Zig in place of C.
+- Generates `compile_commands.json`
 - Includes a Nix environment, making it very easy to set up on Mac or Linux
   (provided you're okay with installing Nix).
 
