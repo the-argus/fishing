@@ -79,6 +79,21 @@ Notice the `wasm32-wasi` platform.
 
 ### Linux
 
+Install [Nix](https://nixos.org/). `cd` to this directory and type `nix develop`
+to enter the development environment. From there you could launch `vim` or `code`
+or another editor. For automatic environment entry and some helpful aliases,
+install `nix-direnv-flakes` from nixpkgs, add the shell hook to your shell RC
+file, and run `direnv allow` in this directory.
+
+To make a web build, run `nix build .#web-build` (or just `web` if you have
+direnv).
+
+Other direnv aliases:
+
+- `build` to build the program.
+- `run` to run it.
+- `debug` to run it with GDB. Requires putting "r" into the GDB prompt afterwards.
+
 ### MacOS
 
 Untested, but in theory the linux instructions should work.
