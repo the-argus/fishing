@@ -6,6 +6,9 @@ const release_flags = [_][]const u8{"-DNDEBUG"};
 const debug_flags = [_][]const u8{};
 var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
+const include = @import("./common.zig").include;
+const link = @import("./common.zig").link;
+
 const c_sources = [_][]const u8{
     "chipmunk/src/chipmunk.c",
     "chipmunk/src/cpArbiter.c",
@@ -69,8 +72,8 @@ pub fn build(b: *std.Build) !void {
     }
 
     // universal includes / links
-    try include(b.allocator, targets, "./chipmunk/include");
-    try link(b.allocator, targets, "m");
+    try include(b.allocator, targets, "./chipmunk/include", &linker_and_include_flags);
+    try link(b.allocator, targets, "m", &linker_and_include_flags);
 
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
@@ -127,20 +130,4 @@ pub fn build(b: *std.Build) !void {
     for (targets.items) |t| {
         b.installArtifact(t);
     }
-}
-
-fn link(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.CompileStep), lib: []const u8) !void {
-    for (targets.items) |target| {
-        target.linkSystemLibrary(lib);
-    }
-    const str = try std.fmt.allocPrint(allocator, "-l{s}", .{lib});
-    try linker_and_include_flags.append(str);
-}
-
-fn include(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.CompileStep), path: []const u8) !void {
-    for (targets.items) |target| {
-        target.addIncludePath(path);
-    }
-    const str = try std.fmt.allocPrint(allocator, "-I{s}", .{path});
-    try linker_and_include_flags.append(str);
 }

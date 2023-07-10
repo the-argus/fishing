@@ -7,25 +7,12 @@ const debug_flags = [_][]const u8{};
 var chosen_flags: ?[]const []const u8 = null;
 var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
+const include = @import("./deps/common.zig").include;
+const link = @import("./deps/common.zig").link;
+
 const c_sources = [_][]const u8{
     "src/main.c",
 };
-
-fn link(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.CompileStep), lib: []const u8) !void {
-    for (targets.items) |target| {
-        target.linkSystemLibrary(lib);
-    }
-    const str = try std.fmt.allocPrint(allocator, "-l{s}", .{lib});
-    try linker_and_include_flags.append(str);
-}
-
-fn include(allocator: std.mem.Allocator, targets: std.ArrayList(*std.Build.CompileStep), path: []const u8) !void {
-    for (targets.items) |target| {
-        target.addIncludePath(path);
-    }
-    const str = try std.fmt.allocPrint(allocator, "-I{s}", .{path});
-    try linker_and_include_flags.append(str);
-}
 
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
@@ -179,31 +166,31 @@ pub fn build(b: *std.Build) !void {
                 t.linkLibC();
             }
             // links and includes which are shared across platforms
-            try link(b.allocator, targets, "raylib");
-            try link(b.allocator, targets, "chipmunk");
-            try include(b.allocator, targets, "src/");
+            try link(b.allocator, targets, "raylib", &linker_and_include_flags);
+            try link(b.allocator, targets, "chipmunk", &linker_and_include_flags);
+            try include(b.allocator, targets, "src/", &linker_and_include_flags);
 
             switch (target.getOsTag()) {
                 .windows => {
-                    try link(b.allocator, targets, "winmm");
-                    try link(b.allocator, targets, "gdi32");
-                    try link(b.allocator, targets, "opengl32");
+                    try link(b.allocator, targets, "winmm", &linker_and_include_flags);
+                    try link(b.allocator, targets, "gdi32", &linker_and_include_flags);
+                    try link(b.allocator, targets, "opengl32", &linker_and_include_flags);
                 },
                 //dunno why but macos target needs sometimes 2 tries to build
                 .macos => {
-                    try link(b.allocator, targets, "Foundation");
-                    try link(b.allocator, targets, "Cocoa");
-                    try link(b.allocator, targets, "OpenGL");
-                    try link(b.allocator, targets, "CoreAudio");
-                    try link(b.allocator, targets, "CoreVideo");
-                    try link(b.allocator, targets, "IOKit");
+                    try link(b.allocator, targets, "Foundation", &linker_and_include_flags);
+                    try link(b.allocator, targets, "Cocoa", &linker_and_include_flags);
+                    try link(b.allocator, targets, "OpenGL", &linker_and_include_flags);
+                    try link(b.allocator, targets, "CoreAudio", &linker_and_include_flags);
+                    try link(b.allocator, targets, "CoreVideo", &linker_and_include_flags);
+                    try link(b.allocator, targets, "IOKit", &linker_and_include_flags);
                 },
                 .linux => {
-                    try link(b.allocator, targets, "GL");
-                    try link(b.allocator, targets, "rt");
-                    try link(b.allocator, targets, "dl");
-                    try link(b.allocator, targets, "m");
-                    try link(b.allocator, targets, "X11");
+                    try link(b.allocator, targets, "GL", &linker_and_include_flags);
+                    try link(b.allocator, targets, "rt", &linker_and_include_flags);
+                    try link(b.allocator, targets, "dl", &linker_and_include_flags);
+                    try link(b.allocator, targets, "m", &linker_and_include_flags);
+                    try link(b.allocator, targets, "X11", &linker_and_include_flags);
                 },
                 else => {},
             }
