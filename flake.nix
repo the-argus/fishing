@@ -69,6 +69,10 @@
               libXcursor
               libXi
             ]);
+
+            shellHook = ''
+              export EMSDK="${pkgs.emscripten}/share/emscripten/cache/sysroot"
+            '';
         };
 
       formatter = pkgs.alejandra;
