@@ -89,13 +89,13 @@ pub fn build(b: *std.Build) !void {
             lib.defineCMacro("__EMSCRIPTEN__", null);
             lib.defineCMacro("PLATFORM_WEB", null);
 
-            // run emrandlib
+            // run emranlib
             const emranlib_file = switch (b.host.target.os.tag) {
                 .windows => "emranlib.bat",
                 else => "emranlib",
             };
             const emranlib_path = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, emranlib_file });
-            const libPath = lib.output_lib_path_source.getPath();
+            const libPath = lib.getOutputSource().getPath(b);
             const emranlib = b.addSystemCommand(&.{
                 emranlib_path,
                 libPath,
