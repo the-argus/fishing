@@ -1,3 +1,6 @@
 [submodule "raylib"]
 	path = deps/raylib
 	url = git@github.com:raysan5/raylib
+[submodule "deps/chipmunk"]
+	path = deps/chipmunk
+	url = git@github.com:slembcke/Chipmunk2D.git
