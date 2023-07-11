@@ -9,8 +9,7 @@ pub fn link(
     for (targets.items) |target| {
         target.linkSystemLibrary(lib);
     }
-    const str = try std.fmt.allocPrint(allocator, "-l{s}", .{lib});
-    try flags.append(str);
+    try flags.append(try linkFlag(allocator, lib));
 }
 
 pub fn include(
@@ -22,6 +21,53 @@ pub fn include(
     for (targets.items) |target| {
         target.addIncludePath(path);
     }
-    const str = try std.fmt.allocPrint(allocator, "-I{s}", .{path});
-    try flags.append(str);
+    try flags.append(try includeFlag(allocator, path));
+}
+
+pub fn includeFlag(ally: std.mem.Allocator, path: []const u8) ![]const u8 {
+    return try std.fmt.allocPrint(ally, "-I{s}", .{path});
+}
+
+pub fn linkFlag(ally: std.mem.Allocator, lib: []const u8) ![]const u8 {
+    return try std.fmt.allocPrint(ally, "-l{s}", .{lib});
+}
+
+pub fn includePrefixFlag(ally: std.mem.Allocator, path: []const u8) ![]const u8 {
+    return try std.fmt.allocPrint(ally, "-I{s}", .{path});
+}
+
+pub fn linkPrefixFlag(ally: std.mem.Allocator, lib: []const u8) ![]const u8 {
+    return try std.fmt.allocPrint(ally, "-L{s}/lib", .{lib});
+}
+
+const chipmunkBuild = @import("./deps/chipmunk.zig").build;
+const raylibBuild = @import("./deps/raylib.zig").build;
+
+pub const LibrarySource = enum { System, GitModule };
+pub const LibraryParserError = enum { BadName };
+
+pub const Library = struct {
+    source: LibrarySource,
+    contents: union {
+        system: []const u8,
+        buildFunction: *const fn (*std.Build) void,
+    },
+};
+
+pub fn optionalPrefixToLibrary(prefix: []const u8) Library {
+    if (prefix.len == 0) {
+        return .{ .source = LibrarySource.GitModule, .contents = .{ .buildFunction = block: {
+            if (std.mem.eql(prefix, "chipmunk")) {
+                break :block chipmunkBuild;
+            } else if (std.mem.eql(prefix, "raylib")) {
+                break :block raylibBuild;
+            } else {
+                return LibraryParserError.BadName;
+            }
+        } } };
+    } else {
+        return .{ .source = LibrarySource.System, .system = .{
+            .contents = prefix,
+        } };
+    }
 }

@@ -7,8 +7,14 @@ const debug_flags = [_][]const u8{};
 var chosen_flags: ?[]const []const u8 = null;
 var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
-const include = @import("./build/common.zig").include;
-const link = @import("./build/common.zig").link;
+const common = @import("./build/common.zig");
+const include = common.include;
+const link = common.link;
+const linkFlag = common.linkFlag;
+const includeFlag = common.includeFlag;
+const linkPrefixFlag = common.linkPrefixFlag;
+const includePrefixFlag = common.includePrefixFlag;
+const optionalPrefixToLibrary = common.optionalPrefixToLibrary;
 
 const c_sources = [_][]const u8{
     "src/main.c",
@@ -26,26 +32,24 @@ pub fn build(b: *std.Build) !void {
     // create executable
     var exe: ?*std.Build.CompileStep = null;
 
+    const chipmunkPrefix = b.option(
+        []const u8,
+        "chipmunk-prefix",
+        "Location where chipmunk include and lib directories can be found",
+    ) orelse "";
+    const raylibPrefix = b.option(
+        []const u8,
+        "raylib-prefix",
+        "Location where raylib include and lib directories can be found",
+    ) orelse "";
+
+    const chipmunk = try optionalPrefixToLibrary(chipmunkPrefix);
+    const raylib = try optionalPrefixToLibrary(raylibPrefix);
+
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
             std.log.warn("WARNING: the cdb compile step will not work when using the emscripten target.\n", .{});
-
             const emscriptenSrc = "build/emscripten/";
-            const chipmunkPrefix = b.option(
-                []const u8,
-                "chipmunk-prefix",
-                "Location where chipmunk include and lib directories can be found",
-            ) orelse "";
-            const raylibPrefix = b.option(
-                []const u8,
-                "raylib-prefix",
-                "Location where raylib include and lib directories can be found",
-            ) orelse "";
-
-            const raylibIncludeDir: ?[]const u8 = if (raylibPrefix.len != 0) try std.fmt.allocPrint(b.allocator, "{s}/include", .{raylibPrefix}) else null;
-            const chipmunkIncludeDir: ?[]const u8 = if (chipmunkPrefix.len != 0) try std.fmt.allocPrint(b.allocator, "{s}/include", .{chipmunkPrefix}) else null;
-            const raylibLibDir: ?[]const u8 = if (raylibPrefix.len != 0) try std.fmt.allocPrint(b.allocator, "{s}/lib", .{raylibPrefix}) else null;
-            const chipmunkLibDir: ?[]const u8 = if (chipmunkPrefix.len != 0) try std.fmt.allocPrint(b.allocator, "{s}/lib", .{chipmunkPrefix}) else null;
 
             const raylibIncludeFlag = if (raylibIncludeDir != null) try std.fmt.allocPrint(b.allocator, "-I{s}", .{raylibIncludeDir.?}) else "";
             const chipmunkIncludeFlag = if (chipmunkIncludeDir != null) try std.fmt.allocPrint(b.allocator, "-I{s}", .{chipmunkIncludeDir.?}) else "";
@@ -86,7 +90,6 @@ pub fn build(b: *std.Build) !void {
 
                 emscriptenSrc ++ "entry.c",
 
-                // libraryOutputFolder ++ "lib" ++ app_name ++ ".a",
                 "-I.",
                 "-I" ++ emscriptenSrc,
                 "-L.",
@@ -171,25 +174,10 @@ pub fn build(b: *std.Build) !void {
             try include(b.allocator, targets, "src/", &linker_and_include_flags);
 
             switch (target.getOsTag()) {
-                .windows => {
-                    try link(b.allocator, targets, "winmm", &linker_and_include_flags);
-                    try link(b.allocator, targets, "gdi32", &linker_and_include_flags);
-                    try link(b.allocator, targets, "opengl32", &linker_and_include_flags);
-                },
-                //dunno why but macos target needs sometimes 2 tries to build
-                .macos => {
-                    try link(b.allocator, targets, "Foundation", &linker_and_include_flags);
-                    try link(b.allocator, targets, "Cocoa", &linker_and_include_flags);
-                    try link(b.allocator, targets, "OpenGL", &linker_and_include_flags);
-                    try link(b.allocator, targets, "CoreAudio", &linker_and_include_flags);
-                    try link(b.allocator, targets, "CoreVideo", &linker_and_include_flags);
-                    try link(b.allocator, targets, "IOKit", &linker_and_include_flags);
-                },
+                .windows => {},
+                .macos => {},
                 .linux => {
                     try link(b.allocator, targets, "GL", &linker_and_include_flags);
-                    try link(b.allocator, targets, "rt", &linker_and_include_flags);
-                    try link(b.allocator, targets, "dl", &linker_and_include_flags);
-                    try link(b.allocator, targets, "m", &linker_and_include_flags);
                     try link(b.allocator, targets, "X11", &linker_and_include_flags);
                 },
                 else => {},
