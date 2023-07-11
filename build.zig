@@ -7,8 +7,8 @@ const debug_flags = [_][]const u8{};
 var chosen_flags: ?[]const []const u8 = null;
 var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
-const include = @import("./deps/common.zig").include;
-const link = @import("./deps/common.zig").link;
+const include = @import("./build/common.zig").include;
+const link = @import("./build/common.zig").link;
 
 const c_sources = [_][]const u8{
     "src/main.c",
@@ -30,7 +30,7 @@ pub fn build(b: *std.Build) !void {
         .wasi, .emscripten => {
             std.log.warn("WARNING: the cdb compile step will not work when using the emscripten target.\n", .{});
 
-            const emscriptenSrc = "emscripten/";
+            const emscriptenSrc = "build/emscripten/";
             const chipmunkPrefix = b.option(
                 []const u8,
                 "chipmunk-prefix",

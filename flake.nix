@@ -22,7 +22,7 @@
     flake-utils.lib.eachSystem supportedSystems (system: let
       pkgs = import nixpkgs {
         inherit system;
-        overlays = import ./nix/overlays.nix;
+        overlays = import ./build/nix/overlays.nix;
       };
     in {
       packages = {
@@ -31,7 +31,7 @@
         raylib = pkgs.raylib;
         web-raylib = pkgs.web-raylib;
         web-chipmunk = pkgs.web-chipmunk;
-        web-build = pkgs.callPackage ./nix/web-build {};
+        web-build = pkgs.callPackage ./build/nix/web-build {};
       };
 
       devShell =

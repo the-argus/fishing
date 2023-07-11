@@ -6,8 +6,8 @@ const release_flags = [_][]const u8{"-DNDEBUG"};
 const debug_flags = [_][]const u8{};
 var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
-const include = @import("./common.zig").include;
-const link = @import("./common.zig").link;
+const include = @import("../common.zig").include;
+const link = @import("../common.zig").link;
 
 const c_sources = [_][]const u8{
     "chipmunk/src/chipmunk.c",

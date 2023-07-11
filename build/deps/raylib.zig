@@ -25,8 +25,8 @@ var flags: std.ArrayList([]const u8) = undefined;
 // rgflw.c needs different flags
 var glfw_flags: std.ArrayList([]const u8) = undefined;
 
-const include = @import("./common.zig").include;
-const link = @import("./common.zig").link;
+const include = @import("../common.zig").include;
+const link = @import("../common.zig").link;
 
 const srcdir = "./raylib/src/";
 const c_sources = [_][]const u8{

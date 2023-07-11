@@ -9,7 +9,7 @@ stdenv.mkDerivation {
   pname = "webbuild";
   version = "0.0.1";
 
-  src = ../..;
+  src = ../../..;
 
   nativeBuildInputs = [zig buildPackages.emscripten];
 
