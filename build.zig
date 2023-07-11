@@ -48,61 +48,58 @@ pub fn build(b: *std.Build) !void {
 
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
-            std.log.warn("WARNING: the cdb compile step will not work when using the emscripten target.\n", .{});
+            std.log.info("building for emscripten", .{});
+            std.log.warn("The cdb compile step will not work when using the emscripten target.", .{});
+
             const emscriptenSrc = "build/emscripten/";
+            const webOutdir = try std.fs.path.join(b.allocator, &.{ b.install_prefix, "web" });
+            const webOutFile = try std.fs.path.join(b.allocator, &.{ webOutdir, "game.html" });
 
-            const raylibIncludeFlag = if (raylibIncludeDir != null) try std.fmt.allocPrint(b.allocator, "-I{s}", .{raylibIncludeDir.?}) else "";
-            const chipmunkIncludeFlag = if (chipmunkIncludeDir != null) try std.fmt.allocPrint(b.allocator, "-I{s}", .{chipmunkIncludeDir.?}) else "";
-            const raylibLibFlag = if (raylibLibDir != null) try std.fmt.allocPrint(b.allocator, "-L{s}", .{raylibLibDir.?}) else "";
-            const chipmunkLibFlag = if (chipmunkLibDir != null) try std.fmt.allocPrint(b.allocator, "-L{s}", .{chipmunkLibDir.?}) else "";
-
-            std.log.info("building for emscripten\n", .{});
             if (b.sysroot == null) {
                 std.log.err("\n\nUSAGE: Please build with 'zig build -Doptimize=ReleaseSmall -Dtarget=wasm32-wasi --sysroot \"$EMSDK/upstream/emscripten\"'\n\n", .{});
                 return error.SysRootExpected;
             }
-            const webOutdir = try std.fs.path.join(b.allocator, &.{ b.install_prefix, "web" });
-            const webOutFile = try std.fs.path.join(b.allocator, &.{ webOutdir, "game.html" });
+
             const lib = b.addStaticLibrary(.{
                 .name = app_name,
                 .optimize = mode,
                 .target = target,
             });
 
-            const emscripten_include_flag = try std.fmt.allocPrint(b.allocator, "-I{s}/include", .{b.sysroot.?});
+            const emscripten_include_flag = try includePrefixFlag(b.allocator, b.sysroot.?);
 
-            lib.addCSourceFiles(&c_sources, &[_][]const u8{ raylibIncludeFlag, chipmunkIncludeFlag, emscripten_include_flag });
+            lib.addCSourceFiles(&c_sources, &[_][]const u8{
+                try raylib.includeFlag(b.allocator),
+                try chipmunk.includeFlag(b.allocator),
+                emscripten_include_flag,
+            });
+
             lib.linkLibC();
-
             lib.defineCMacro("__EMSCRIPTEN__", null);
             lib.defineCMacro("PLATFORM_WEB", null);
             lib.addIncludePath(emscriptenSrc);
 
-            const libraryOutputFolder = try std.fs.path.join(b.allocator, &.{ b.install_prefix, "lib" });
-            const libraryOutputFolderFlag = try std.fmt.allocPrint(b.allocator, "-L{s}", .{libraryOutputFolder});
-            // this installs the lib (libraylib-zig-examples.a) to the `libraryOutputFolder` folder
-            b.installArtifact(lib);
+            const lib_output_include_flag = try includePrefixFlag(b.allocator, b.install_prefix);
+            const shell_file = try std.fs.path.join(b.allocator, &.{ emscriptenSrc, "minshell.html" });
 
             const emcc = b.addSystemCommand(&.{
                 "emcc",
                 "-o",
                 webOutFile,
-
                 emscriptenSrc ++ "entry.c",
-
                 "-I.",
-                "-I" ++ emscriptenSrc,
                 "-L.",
-                libraryOutputFolderFlag,
-                chipmunkLibFlag,
-                chipmunkIncludeFlag,
-                raylibIncludeFlag,
-                raylibLibFlag,
+                "-I" ++ emscriptenSrc,
+                lib_output_include_flag,
+                try chipmunk.linkFlag(b.allocator),
+                try chipmunk.includeFlag(b.allocator),
+                try raylib.includeFlag(b.allocator),
+                try raylib.linkFlag(b.allocator),
                 "-lraylib",
                 "-lchipmunk",
                 "-l" ++ app_name,
                 "--shell-file",
-                try std.fs.path.join(b.allocator, &.{ emscriptenSrc, "minshell.html" }),
+                shell_file,
                 "-DPLATFORM_WEB",
                 "-sUSE_GLFW=3",
                 "-sWASM=1",
@@ -120,11 +117,9 @@ pub fn build(b: *std.Build) !void {
                 "--source-map-base",
                 // "-sLLD_REPORT_UNDEFINED",
                 "-sERROR_ON_UNDEFINED_SYMBOLS=0",
-
                 // optimizations
-                "-O1",
-                "-Os",
-
+                "-O3",
+                // "-Os",
                 // "-sUSE_PTHREADS=1",
                 // "--profiling",
                 // "-sTOTAL_STACK=128MB",
@@ -134,45 +129,50 @@ pub fn build(b: *std.Build) !void {
                 "-sEXPORTED_RUNTIME_METHODS=ccall,cwrap",
             });
 
+            b.installArtifact(lib);
+
             emcc.step.dependOn(&lib.step);
 
             b.getInstallStep().dependOn(&emcc.step);
 
             std.fs.cwd().makePath(webOutdir) catch {};
 
-            std.log.info("\n\nOutput files will be in {s}\n---\ncd {s}\npython -m http.server\n---\n\nbuilding...", .{ webOutdir, webOutdir });
-
-            return;
+            std.log.info(
+                \\
+                \\Output files will be in {s}
+                \\
+                \\---
+                \\cd {s}
+                \\python -m http.server
+                \\---
+                \\
+                \\building...
+            ,
+                .{ webOutdir, webOutdir },
+            );
         },
         else => {
-            exe =
-                b.addExecutable(.{
+            exe = b.addExecutable(.{
                 .name = app_name,
                 .optimize = mode,
                 .target = target,
             });
             try targets.append(exe.?);
 
-            switch (mode) {
-                .Debug => {
-                    chosen_flags = &debug_flags;
-                },
-                else => {
-                    chosen_flags = &release_flags;
-                },
-            }
-
+            chosen_flags = if (mode == .Debug) &debug_flags else &release_flags;
             exe.?.addCSourceFiles(&c_sources, chosen_flags.?);
 
             // always link libc
             for (targets.items) |t| {
                 t.linkLibC();
             }
+
             // links and includes which are shared across platforms
             try link(b.allocator, targets, "raylib", &linker_and_include_flags);
             try link(b.allocator, targets, "chipmunk", &linker_and_include_flags);
             try include(b.allocator, targets, "src/", &linker_and_include_flags);
 
+            // platform-specific additions
             switch (target.getOsTag()) {
                 .windows => {},
                 .macos => {},
@@ -182,21 +182,29 @@ pub fn build(b: *std.Build) !void {
                 },
                 else => {},
             }
+
+            const run_cmd = b.addRunArtifact(exe.?);
+            run_cmd.step.dependOn(b.getInstallStep());
+            if (b.args) |args| {
+                run_cmd.addArgs(args);
+            }
+
+            const run_step = b.step("run", "Run the app");
+            run_step.dependOn(&run_cmd.step);
         },
+    }
+
+    // call the library build functions if they're git modules
+    if (raylib.source == .GitModule) {
+        try raylib.contents.buildFunction(b);
+    }
+    if (chipmunk.source == .GitModule) {
+        try chipmunk.contents.buildFunction(b);
     }
 
     for (targets.items) |t| {
         b.installArtifact(t);
     }
-
-    const run_cmd = b.addRunArtifact(exe.?);
-    run_cmd.step.dependOn(b.getInstallStep());
-    if (b.args) |args| {
-        run_cmd.addArgs(args);
-    }
-
-    const run_step = b.step("run", "Run the app");
-    run_step.dependOn(&run_cmd.step);
 
     // compile commands step
     var step = try b.allocator.create(std.Build.Step);
@@ -206,6 +214,7 @@ pub fn build(b: *std.Build) !void {
         .makeFn = makeCdb,
         .owner = b,
     });
+
     const cdb_step = b.step("cdb", "Create compile_commands.json");
     cdb_step.dependOn(step);
 }
