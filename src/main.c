@@ -18,38 +18,41 @@ int emsc_main()
 int main()
 #endif
 {
-  printf("Hello, World\n");
-  init();
+	printf("Hello, World\n");
+	init();
 #ifdef __EMSCRIPTEN__
-  emscripten_set_main_loop(update, 0, 1);
+	emscripten_set_main_loop(update, 0, 1);
 #else
-  while (!WindowShouldClose()) {
-    update();
-  }
+	while (!WindowShouldClose()) {
+		update();
+	}
 #endif
 }
 
-void init() {
-  SetConfigFlags(FLAG_MSAA_4X_HINT);
-  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib/Chipmunk Example Project");
-  SetTargetFPS(60);
+void init()
+{
+	SetConfigFlags(FLAG_MSAA_4X_HINT);
+	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib/Chipmunk Example Project");
+	SetTargetFPS(60);
 }
 
-void update() {
-  BeginDrawing();
-  ClearBackground(BLACK);
-  DrawRectanglePro((Rectangle){.width = 100,
-                               .height = 100,
-                               .x = (int)(GetTime() * 200) % SCREEN_WIDTH,
-                               .y = SCREEN_HEIGHT / 2.0},
-                   (Vector2){0, 0}, sin(GetTime()) * RAD2DEG, RED);
-  EndDrawing();
+void update()
+{
+	BeginDrawing();
+	ClearBackground(BLACK);
+	DrawRectanglePro((Rectangle){.width = 100,
+								 .height = 100,
+								 .x = (int)(GetTime() * 200) % SCREEN_WIDTH,
+								 .y = SCREEN_HEIGHT / 2.0},
+					 (Vector2){0, 0}, sin(GetTime()) * RAD2DEG, RED);
+	EndDrawing();
 }
 
 void deinit() { CloseWindow(); }
 
 #ifdef __EMSCRIPTEN__
-void emsc_set_window_size(int width, int height) {
-  SetWindowSize(width, height);
+void emsc_set_window_size(int width, int height)
+{
+	SetWindowSize(width, height);
 }
 #endif
