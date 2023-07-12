@@ -31,6 +31,8 @@ pub fn build(b: *std.Build) !void {
 
     // create executable
     var exe: ?*std.Build.CompileStep = null;
+    // emscripten library
+    var lib: ?*std.Build.CompileStep = null;
 
     const chipmunkPrefix = b.option(
         []const u8,
@@ -56,34 +58,35 @@ pub fn build(b: *std.Build) !void {
             const webOutFile = try std.fs.path.join(b.allocator, &.{ webOutdir, "game.html" });
 
             if (b.sysroot == null) {
-                std.log.err("\n\nUSAGE: Please build with 'zig build -Doptimize=ReleaseSmall -Dtarget=wasm32-wasi --sysroot \"$EMSDK/upstream/emscripten\"'\n\n", .{});
+                std.log.err("\n\nUSAGE: Pass the '--sysroot \"$EMSDK/upstream/emscripten\"' flag.\n\n", .{});
                 return error.SysRootExpected;
             }
 
-            const lib = b.addStaticLibrary(.{
+            lib = b.addStaticLibrary(.{
                 .name = app_name,
                 .optimize = mode,
                 .target = target,
             });
+            try targets.append(lib.?);
 
             const emscripten_include_flag = try includePrefixFlag(b.allocator, b.sysroot.?);
 
-            lib.addCSourceFiles(&c_sources, &[_][]const u8{
+            lib.?.addCSourceFiles(&c_sources, &[_][]const u8{
                 try raylib.includeFlag(b.allocator),
                 try chipmunk.includeFlag(b.allocator),
                 emscripten_include_flag,
             });
 
-            lib.linkLibC();
-            lib.defineCMacro("__EMSCRIPTEN__", null);
-            lib.defineCMacro("PLATFORM_WEB", null);
-            lib.addIncludePath(emscriptenSrc);
+            lib.?.defineCMacro("__EMSCRIPTEN__", null);
+            lib.?.defineCMacro("PLATFORM_WEB", null);
+            lib.?.addIncludePath(emscriptenSrc);
 
             const lib_output_include_flag = try includePrefixFlag(b.allocator, b.install_prefix);
             const shell_file = try std.fs.path.join(b.allocator, &.{ emscriptenSrc, "minshell.html" });
+            const emcc_path = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, "bin", "emcc" });
 
             const emcc = b.addSystemCommand(&.{
-                "emcc",
+                emcc_path,
                 "-o",
                 webOutFile,
                 emscriptenSrc ++ "entry.c",
@@ -129,9 +132,7 @@ pub fn build(b: *std.Build) !void {
                 "-sEXPORTED_RUNTIME_METHODS=ccall,cwrap",
             });
 
-            b.installArtifact(lib);
-
-            emcc.step.dependOn(&lib.step);
+            emcc.step.dependOn(&lib.?.step);
 
             b.getInstallStep().dependOn(&emcc.step);
 
@@ -196,13 +197,26 @@ pub fn build(b: *std.Build) !void {
 
     // call the library build functions if they're git modules
     if (raylib.source == .GitModule) {
-        try raylib.contents.buildFunction(b);
+        const raylib_step = try raylib.contents.buildFunction(b, target, mode);
+        if (exe) |game| {
+            game.step.dependOn(&raylib_step.step);
+        }
+        if (lib) |emscripten_lib| {
+            emscripten_lib.step.dependOn(&raylib_step.step);
+        }
     }
     if (chipmunk.source == .GitModule) {
-        try chipmunk.contents.buildFunction(b);
+        const chipmunk_step = try chipmunk.contents.buildFunction(b, target, mode);
+        if (exe) |game| {
+            game.step.dependOn(&chipmunk_step.step);
+        }
+        if (lib) |emscripten_lib| {
+            emscripten_lib.step.dependOn(&chipmunk_step.step);
+        }
     }
 
     for (targets.items) |t| {
+        std.log.debug("Installing {p}", .{&t});
         b.installArtifact(t);
     }
 
