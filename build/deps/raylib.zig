@@ -25,10 +25,11 @@ var flags: std.ArrayList([]const u8) = undefined;
 // rgflw.c needs different flags
 var glfw_flags: std.ArrayList([]const u8) = undefined;
 
-const include = @import("../common.zig").include;
-const link = @import("../common.zig").link;
+const common = @import("./../common.zig");
+const include = common.include;
+const link = common.link;
 
-const srcdir = "./raylib/src/";
+const srcdir = "./deps/raylib/src/";
 const c_sources = [_][]const u8{
     srcdir ++ "raudio.c",
     srcdir ++ "rcore.c",
@@ -41,9 +42,7 @@ const c_sources = [_][]const u8{
 
 const BuildError = error{ NoSysroot, UnsupportedOS };
 
-pub fn build(b: *std.Build) !void {
-    const target = b.standardTargetOptions(.{});
-    const optimize = b.standardOptimizeOption(.{});
+pub fn addRaylib(b: *std.Build, target: std.zig.CrossTarget, optimize: std.builtin.OptimizeMode) !*std.Build.CompileStep {
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
 
     flags = std.ArrayList([]const u8).init(b.allocator);
@@ -125,6 +124,16 @@ pub fn build(b: *std.Build) !void {
 
             const ems_include = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, "include" });
             try include(b.allocator, targets, ems_include, &flags);
+
+            const emranlib_file = switch (b.host.target.os.tag) {
+                .windows => "emranlib.bat",
+                else => "emranlib",
+            };
+            // TODO: remove bin if on linux, or make my linux packaging for EMSDK have the same file structure as windows
+            const emranlib_path = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, "bin", emranlib_file });
+            const run_emranlib = b.addSystemCommand(&.{emranlib_path});
+            run_emranlib.addArtifactArg(raylib);
+            b.getInstallStep().dependOn(&run_emranlib.step);
         },
         else => {
             std.log.err("Unsupported OS", .{});
@@ -139,4 +148,10 @@ pub fn build(b: *std.Build) !void {
         t.linkLibC();
         b.installArtifact(t);
     }
+
+    raylib.installHeader(srcdir ++ "raylib.h", "raylib.h");
+    raylib.installHeader(srcdir ++ "raymath.h", "raymath.h");
+    raylib.installHeader(srcdir ++ "rlgl.h", "rlgl.h");
+
+    return raylib;
 }

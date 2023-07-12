@@ -53,14 +53,7 @@
               pkg-config
               libGL
               self.packages.${system}.zig
-
-              # this is just here so that i get intellisense for emscripten stuff
-              (linkFarm "emsdk" [
-                {
-                  path = "${emscripten}/share/emscripten/cache/sysroot/include";
-                  name = "include";
-                }
-              ])
+              emsdk
             ])
             ++ (with pkgs.xorg; [
               libX11
@@ -71,7 +64,7 @@
             ]);
 
             shellHook = ''
-              export EMSDK="${pkgs.emscripten}/share/emscripten/cache/sysroot"
+              export EMSDK="${pkgs.emsdk}"
             '';
         };
 

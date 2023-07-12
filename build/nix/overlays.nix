@@ -16,4 +16,20 @@
     # build chipmunk without demos
     chipmunk = super.callPackage ./chipmunk {originalChipmunk = super.chipmunk;};
   })
+  (_: super: {
+    emsdk = super.linkFarm "emsdk" [
+      {
+        path = "${super.emscripten}/share/emscripten/cache/sysroot/include";
+        name = "include";
+      }
+      {
+        path = "${super.emscripten}/share/emscripten/cache/sysroot/bin";
+        name = "bin";
+      }
+      {
+        path = "${super.emscripten}/bin";
+        name = "bin";
+      }
+    ];
+  })
 ]
