@@ -6,8 +6,9 @@ const release_flags = [_][]const u8{"-DNDEBUG"};
 const debug_flags = [_][]const u8{};
 var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
-const include = @import("../common.zig").include;
-const link = @import("../common.zig").link;
+const common = @import("./../common.zig");
+const include = common.include;
+const link = common.link;
 
 const c_sources = [_][]const u8{
     "chipmunk/src/chipmunk.c",
@@ -44,10 +45,7 @@ const c_sources = [_][]const u8{
     "chipmunk/src/cpSweep1D.c",
 };
 
-pub fn build(b: *std.Build) !void {
-    const target = b.standardTargetOptions(.{});
-    const mode = b.standardOptimizeOption(.{});
-
+pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) !*std.Build.CompileStep {
     // this is used in the makeCdb function
     linker_and_include_flags = std.ArrayList([]const u8).init(b.allocator);
 
@@ -130,4 +128,6 @@ pub fn build(b: *std.Build) !void {
     for (targets.items) |t| {
         b.installArtifact(t);
     }
+
+    return lib;
 }
