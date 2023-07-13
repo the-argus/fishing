@@ -72,21 +72,24 @@ pub const Library = struct {
     }
 };
 
-pub fn optionalPrefixToLibrary(prefix: []const u8) LibraryParserError!Library {
-    if (prefix.len != 0) {
-        const res: Library = .{ .source = LibrarySource.GitModule, .contents = .{ .buildFunction = block: {
-            if (std.mem.eql(u8, prefix, "chipmunk")) {
-                break :block chipmunkBuild;
-            } else if (std.mem.eql(u8, prefix, "raylib")) {
-                break :block raylibBuild;
-            } else {
-                return LibraryParserError.BadName;
-            }
-        } } };
-        return res;
-    } else {
-        return .{ .source = LibrarySource.System, .contents = .{
-            .system = prefix,
-        } };
+pub const Dependency = enum { Chipmunk, Raylib };
+pub fn optionalPrefixToLibrary(prefix: ?[]const u8, dep: Dependency) LibraryParserError!Library {
+    if (prefix) |prefix_string| {
+        return .{
+            .source = LibrarySource.System,
+            .contents = .{
+                .system = prefix_string,
+            },
+        };
     }
+
+    return .{
+        .source = LibrarySource.GitModule,
+        .contents = .{
+            .buildFunction = switch (dep) {
+                .Chipmunk => chipmunkBuild,
+                .Raylib => raylibBuild,
+            },
+        },
+    };
 }

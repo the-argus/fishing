@@ -29,7 +29,7 @@ const common = @import("./../common.zig");
 const include = common.include;
 const link = common.link;
 
-const srcdir = "./deps/raylib/src/";
+const srcdir = "./build/deps/raylib/src/";
 const c_sources = [_][]const u8{
     srcdir ++ "raudio.c",
     srcdir ++ "rcore.c",

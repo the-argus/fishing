@@ -1,6 +1,7 @@
 const std = @import("std");
 const builtin = @import("builtin");
 const app_name = "chipmunk";
+const srcdir = "./build/deps/chipmunk/";
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
 const debug_flags = [_][]const u8{};
@@ -11,38 +12,38 @@ const include = common.include;
 const link = common.link;
 
 const c_sources = [_][]const u8{
-    "chipmunk/src/chipmunk.c",
-    "chipmunk/src/cpArbiter.c",
-    "chipmunk/src/cpArray.c",
-    "chipmunk/src/cpBBTree.c",
-    "chipmunk/src/cpBody.c",
-    "chipmunk/src/cpCollision.c",
-    "chipmunk/src/cpConstraint.c",
-    "chipmunk/src/cpDampedRotarySpring.c",
-    "chipmunk/src/cpDampedSpring.c",
-    "chipmunk/src/cpGearJoint.c",
-    "chipmunk/src/cpGrooveJoint.c",
-    "chipmunk/src/cpHashSet.c",
-    "chipmunk/src/cpHastySpace.c",
-    "chipmunk/src/cpMarch.c",
-    "chipmunk/src/cpPinJoint.c",
-    "chipmunk/src/cpPivotJoint.c",
-    "chipmunk/src/cpPolyline.c",
-    "chipmunk/src/cpPolyShape.c",
-    "chipmunk/src/cpRatchetJoint.c",
-    "chipmunk/src/cpRobust.c",
-    "chipmunk/src/cpRotaryLimitJoint.c",
-    "chipmunk/src/cpShape.c",
-    "chipmunk/src/cpSimpleMotor.c",
-    "chipmunk/src/cpSlideJoint.c",
-    "chipmunk/src/cpSpace.c",
-    "chipmunk/src/cpSpaceComponent.c",
-    "chipmunk/src/cpSpaceDebug.c",
-    "chipmunk/src/cpSpaceHash.c",
-    "chipmunk/src/cpSpaceQuery.c",
-    "chipmunk/src/cpSpaceStep.c",
-    "chipmunk/src/cpSpatialIndex.c",
-    "chipmunk/src/cpSweep1D.c",
+    srcdir ++ "src/chipmunk.c",
+    srcdir ++ "src/cpArbiter.c",
+    srcdir ++ "src/cpArray.c",
+    srcdir ++ "src/cpBBTree.c",
+    srcdir ++ "src/cpBody.c",
+    srcdir ++ "src/cpCollision.c",
+    srcdir ++ "src/cpConstraint.c",
+    srcdir ++ "src/cpDampedRotarySpring.c",
+    srcdir ++ "src/cpDampedSpring.c",
+    srcdir ++ "src/cpGearJoint.c",
+    srcdir ++ "src/cpGrooveJoint.c",
+    srcdir ++ "src/cpHashSet.c",
+    srcdir ++ "src/cpHastySpace.c",
+    srcdir ++ "src/cpMarch.c",
+    srcdir ++ "src/cpPinJoint.c",
+    srcdir ++ "src/cpPivotJoint.c",
+    srcdir ++ "src/cpPolyline.c",
+    srcdir ++ "src/cpPolyShape.c",
+    srcdir ++ "src/cpRatchetJoint.c",
+    srcdir ++ "src/cpRobust.c",
+    srcdir ++ "src/cpRotaryLimitJoint.c",
+    srcdir ++ "src/cpShape.c",
+    srcdir ++ "src/cpSimpleMotor.c",
+    srcdir ++ "src/cpSlideJoint.c",
+    srcdir ++ "src/cpSpace.c",
+    srcdir ++ "src/cpSpaceComponent.c",
+    srcdir ++ "src/cpSpaceDebug.c",
+    srcdir ++ "src/cpSpaceHash.c",
+    srcdir ++ "src/cpSpaceQuery.c",
+    srcdir ++ "src/cpSpaceStep.c",
+    srcdir ++ "src/cpSpatialIndex.c",
+    srcdir ++ "src/cpSweep1D.c",
 };
 
 pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) !*std.Build.CompileStep {
@@ -70,7 +71,7 @@ pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin
     }
 
     // universal includes / links
-    try include(b.allocator, targets, "./chipmunk/include", &linker_and_include_flags);
+    try include(b.allocator, targets, srcdir ++ "include", &linker_and_include_flags);
     try link(b.allocator, targets, "m", &linker_and_include_flags);
 
     switch (target.getOsTag()) {
@@ -120,7 +121,7 @@ pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin
 
     // always install chipmunk headers
     b.installDirectory(.{
-        .source_dir = "./chipmunk/include",
+        .source_dir = srcdir ++ "include",
         .install_dir = .header,
         .install_subdir = "",
     });

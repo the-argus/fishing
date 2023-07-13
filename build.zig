@@ -38,15 +38,15 @@ pub fn build(b: *std.Build) !void {
         []const u8,
         "chipmunk-prefix",
         "Location where chipmunk include and lib directories can be found",
-    ) orelse "";
+    ) orelse null;
     const raylibPrefix = b.option(
         []const u8,
         "raylib-prefix",
         "Location where raylib include and lib directories can be found",
-    ) orelse "";
+    ) orelse null;
 
-    const chipmunk = try optionalPrefixToLibrary(chipmunkPrefix);
-    const raylib = try optionalPrefixToLibrary(raylibPrefix);
+    const chipmunk = try optionalPrefixToLibrary(chipmunkPrefix, .Chipmunk);
+    const raylib = try optionalPrefixToLibrary(raylibPrefix, .Raylib);
 
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
@@ -71,10 +71,16 @@ pub fn build(b: *std.Build) !void {
 
             const emscripten_include_flag = try includePrefixFlag(b.allocator, b.sysroot.?);
 
-            lib.?.addCSourceFiles(&c_sources, &[_][]const u8{
-                try raylib.includeFlag(b.allocator),
-                try chipmunk.includeFlag(b.allocator),
-                emscripten_include_flag,
+            try include(b.allocator, targets, "./zig-out/include", &linker_and_include_flags);
+            try linker_and_include_flags.append(try linkPrefixFlag(b.allocator, "./zig-out"));
+            lib.?.addCSourceFiles(&c_sources, block: {
+                const flags = &[_][]const u8{
+                    try raylib.includeFlag(b.allocator),
+                    try chipmunk.includeFlag(b.allocator),
+                    emscripten_include_flag,
+                };
+                try linker_and_include_flags.appendSlice(flags);
+                break :block linker_and_include_flags.items;
             });
 
             lib.?.defineCMacro("__EMSCRIPTEN__", null);
@@ -161,7 +167,11 @@ pub fn build(b: *std.Build) !void {
             try targets.append(exe.?);
 
             chosen_flags = if (mode == .Debug) &debug_flags else &release_flags;
-            exe.?.addCSourceFiles(&c_sources, chosen_flags.?);
+            try linker_and_include_flags.appendSlice(chosen_flags.?);
+            try include(b.allocator, targets, "./zig-out/include", &linker_and_include_flags);
+            try linker_and_include_flags.append(try linkPrefixFlag(b.allocator, "./zig-out"));
+
+            exe.?.addCSourceFiles(&c_sources, linker_and_include_flags.items);
 
             // always link libc
             for (targets.items) |t| {
