@@ -216,7 +216,6 @@ pub fn build(b: *std.Build) !void {
     }
 
     for (targets.items) |t| {
-        std.log.debug("Installing {p}", .{&t});
         b.installArtifact(t);
     }
 

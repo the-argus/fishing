@@ -48,8 +48,8 @@
               clang-tools
               gdb
               valgrind
-              chipmunk
-              raylib
+              # chipmunk
+              # raylib
               pkg-config
               libGL
               self.packages.${system}.zig
