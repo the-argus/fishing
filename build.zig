@@ -16,6 +16,9 @@ const linkPrefixFlag = common.linkPrefixFlag;
 const includePrefixFlag = common.includePrefixFlag;
 const optionalPrefixToLibrary = common.optionalPrefixToLibrary;
 
+const cdb = @import("./build/compile_commands.zig");
+const makeCdb = cdb.makeCdb;
+
 const c_sources = [_][]const u8{
     "src/main.c",
 };
@@ -230,6 +233,8 @@ pub fn build(b: *std.Build) !void {
     }
 
     // compile commands step
+    cdb.registerCompileSteps(targets);
+
     var step = try b.allocator.create(std.Build.Step);
     step.* = std.Build.Step.init(.{
         .id = .custom,
@@ -240,73 +245,4 @@ pub fn build(b: *std.Build) !void {
 
     const cdb_step = b.step("cdb", "Create compile_commands.json");
     cdb_step.dependOn(step);
-}
-
-const CompileCommandEntry = struct {
-    arguments: []const []const u8,
-    directory: []const u8,
-    file: []const u8,
-    output: []const u8,
-};
-const CompileCommands = [c_sources.len]CompileCommandEntry;
-
-fn makeCdb(step: *std.Build.Step, prog_node: *std.Progress.Node) anyerror!void {
-    _ = prog_node;
-    _ = step;
-
-    // initialize file and struct containing its future contents
-    const cwd: std.fs.Dir = std.fs.cwd();
-    var file = try cwd.createFile("compile_commands.json", .{});
-    defer file.close();
-    var cmp_commands: CompileCommands = undefined;
-
-    var buf: [10000]u8 = undefined;
-    var fba = std.heap.FixedBufferAllocator.init(&buf);
-    var allocator = fba.allocator();
-    const cwd_string = try toString(cwd, allocator);
-
-    // fill each compile command entry, once for each file
-    std.debug.assert(cmp_commands.len == c_sources.len);
-    for (0.., c_sources) |index, filename| {
-        const file_str = try std.fs.path.join(allocator, &[_][]const u8{ cwd_string, filename });
-        const output_str = try std.fmt.allocPrint(allocator, "{s}.o", .{file_str});
-
-        var arguments = std.ArrayList([]const u8).init(allocator);
-        try arguments.append("clang"); // pretend this is clang compiling
-        for (chosen_flags.?) |flag| {
-            try arguments.append(flag);
-        }
-        try arguments.appendSlice(linker_and_include_flags.items);
-
-        cmp_commands[index] = CompileCommandEntry{
-            .arguments = try arguments.toOwnedSlice(),
-            .output = output_str,
-            .file = file_str,
-            .directory = cwd_string,
-        };
-    }
-
-    {
-        const options = std.json.StringifyOptions{
-            .whitespace = .{
-                .indent_level = 0,
-                .separator = true,
-            },
-            .emit_null_optional_fields = false,
-        };
-
-        try std.json.stringify(cmp_commands, options, file.writer());
-    }
-
-    // finally done using linker_and_include_flags
-    linker_and_include_flags.deinit();
-}
-
-fn toString(dir: std.fs.Dir, allocator: std.mem.Allocator) ![]const u8 {
-    var real_dir = try dir.openDir(".", .{});
-    defer real_dir.close();
-    return std.fs.realpathAlloc(allocator, ".") catch |err| {
-        std.debug.print("error encountered in converting directory to string.\n", .{});
-        return err;
-    };
 }
