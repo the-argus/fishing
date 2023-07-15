@@ -116,7 +116,7 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
 
     // always install chipmunk headers
     b.installDirectory(.{
-        .source_dir = srcdir ++ "include",
+        .source_dir = std.Build.FileSource{ .path = srcdir ++ "include" },
         .install_dir = .header,
         .install_subdir = "",
     });
