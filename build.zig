@@ -4,10 +4,6 @@ const app_name = "abmoog";
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
 const debug_flags = [_][]const u8{};
-const include_out_dir_flags = [_][]const u8{
-    "-L./zig-out",
-    "-I./zig-out/include",
-};
 var chosen_flags: ?[]const []const u8 = null;
 
 const common = @import("./build/common.zig");
@@ -39,25 +35,10 @@ pub fn build(b: *std.Build) !void {
     // emscripten library
     var lib: ?*std.Build.CompileStep = null;
 
-    const chipmunkPrefix = b.option(
-        []const u8,
-        "chipmunk-prefix",
-        "Location where chipmunk include and lib directories can be found",
-    ) orelse null;
-    const raylibPrefix = b.option(
-        []const u8,
-        "raylib-prefix",
-        "Location where raylib include and lib directories can be found",
-    ) orelse null;
-
-    const chipmunk = try optionalPrefixToLibrary(chipmunkPrefix, .Chipmunk);
-    const raylib = try optionalPrefixToLibrary(raylibPrefix, .Raylib);
+    const libraries = try common.getLibraries(b);
 
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
-            std.log.info("building for emscripten", .{});
-            std.log.warn("The cdb compile step will not work when using the emscripten target.", .{});
-
             const emscriptenSrc = "build/emscripten/";
             const webOutdir = try std.fs.path.join(b.allocator, &.{ b.install_prefix, "web" });
             const webOutFile = try std.fs.path.join(b.allocator, &.{ webOutdir, "game.html" });
@@ -77,12 +58,12 @@ pub fn build(b: *std.Build) !void {
             const emscripten_include_flag = try includePrefixFlag(b.allocator, b.sysroot.?);
 
             var flags = std.ArrayList([]const u8).init(b.allocator);
-            try flags.appendSlice(&.{
-                try raylib.includeFlag(b.allocator),
-                try chipmunk.includeFlag(b.allocator),
-                emscripten_include_flag,
-            });
-            try flags.appendSlice(&include_out_dir_flags);
+            try flags.append(emscripten_include_flag);
+            for (libraries) |library| {
+                for (library.allFlags()) |flag| {
+                    try flags.append(flag);
+                }
+            }
 
             lib.?.addCSourceFiles(&c_sources, try flags.toOwnedSlice());
             lib.?.defineCMacro("__EMSCRIPTEN__", null);
@@ -93,7 +74,7 @@ pub fn build(b: *std.Build) !void {
             const shell_file = try std.fs.path.join(b.allocator, &.{ emscriptenSrc, "minshell.html" });
             const emcc_path = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, "bin", "emcc" });
 
-            const emcc = b.addSystemCommand(&.{
+            const command = &[_][]const u8{
                 emcc_path,
                 "-o",
                 webOutFile,
@@ -102,12 +83,6 @@ pub fn build(b: *std.Build) !void {
                 "-L.",
                 "-I" ++ emscriptenSrc,
                 lib_output_include_flag,
-                try chipmunk.linkFlag(b.allocator),
-                try chipmunk.includeFlag(b.allocator),
-                try raylib.includeFlag(b.allocator),
-                try raylib.linkFlag(b.allocator),
-                "-lraylib",
-                "-lchipmunk",
                 "-l" ++ app_name,
                 "--shell-file",
                 shell_file,
@@ -138,7 +113,15 @@ pub fn build(b: *std.Build) !void {
                 // "--no-entry",
                 "-sEXPORTED_FUNCTIONS=['_malloc','_free','_main', '_emsc_main','_emsc_set_window_size']",
                 "-sEXPORTED_RUNTIME_METHODS=ccall,cwrap",
-            });
+            };
+
+            var fullcommand = std.ArrayList([]const u8).init(b.allocator);
+            try fullcommand.appendSlice(command);
+            for (libraries) |library| {
+                try fullcommand.appendSlice(&library.allFlags());
+            }
+
+            const emcc = b.addSystemCommand(try fullcommand.toOwnedSlice());
 
             emcc.step.dependOn(&lib.?.step);
 
@@ -172,7 +155,10 @@ pub fn build(b: *std.Build) !void {
 
             var flags = std.ArrayList([]const u8).init(b.allocator);
             try flags.appendSlice(chosen_flags.?);
-            try flags.appendSlice(&include_out_dir_flags);
+            for (libraries) |library| {
+                try flags.appendSlice(&library.allFlags());
+            }
+
             exe.?.addCSourceFiles(&c_sources, try flags.toOwnedSlice());
 
             // always link libc
@@ -181,12 +167,6 @@ pub fn build(b: *std.Build) !void {
             }
 
             // links and includes which are shared across platforms
-            if (raylib.source == .System) {
-                try link(targets, "raylib");
-            }
-            if (chipmunk.source == .System) {
-                try link(targets, "chipmunk");
-            }
             try include(targets, "src/");
 
             // platform-specific additions
@@ -211,29 +191,17 @@ pub fn build(b: *std.Build) !void {
         },
     }
 
-    // call the library build functions if they're git modules
-    if (raylib.source == .GitModule) {
-        const raylib_step = try raylib.contents.buildFunction(b, target, mode);
-        try targets.append(raylib_step);
-        if (exe) |game| {
-            game.step.dependOn(&raylib_step.step);
-            game.linkLibrary(raylib_step);
-        }
-        if (lib) |emscripten_lib| {
-            emscripten_lib.step.dependOn(&raylib_step.step);
-            emscripten_lib.linkLibrary(raylib_step);
-        }
-    }
-    if (chipmunk.source == .GitModule) {
-        const chipmunk_step = try chipmunk.contents.buildFunction(b, target, mode);
-        try targets.append(chipmunk_step);
-        if (exe) |game| {
-            game.step.dependOn(&chipmunk_step.step);
-            game.linkLibrary(chipmunk_step);
-        }
-        if (lib) |emscripten_lib| {
-            emscripten_lib.step.dependOn(&chipmunk_step.step);
-            emscripten_lib.linkLibrary(chipmunk_step);
+    for (libraries) |library| {
+        if (library.buildFn) |fun| {
+            const compilestep = try fun(b, target, mode);
+            for (&[_]?*std.Build.CompileStep{ exe, lib }) |mainstep| {
+                if (mainstep) |cstep| {
+                    cstep.step.dependOn(&compilestep.step);
+                    cstep.linkLibrary(compilestep);
+                }
+            }
+            // get compile_commands.json for the lib
+            try targets.append(compilestep);
         }
     }
 

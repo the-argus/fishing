@@ -65,6 +65,8 @@
 
             shellHook = ''
               export EMSDK="${pkgs.emsdk}"
+              export CHIPMUNK="${pkgs.chipmunk}"
+              export RAYLIB="${pkgs.raylib}"
             '';
         };
 

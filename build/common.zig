@@ -20,6 +20,65 @@ pub fn include(
     }
 }
 
+const BuildFunction = *const fn (b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) anyerror!*std.Build.CompileStep;
+
+const LibraryInfo = struct {
+    name: []const u8,
+    buildFn: BuildFunction,
+    fallbackIncludePath: []const u8,
+};
+
+const libraries = [_]LibraryInfo{
+    LibraryInfo{
+        .name = "chipmunk",
+        .buildFn = @import("./deps/chipmunk.zig").addLib,
+        .fallbackIncludePath = "include",
+    },
+    LibraryInfo{
+        .name = "raylib",
+        .buildFn = @import("./deps/raylib.zig").addLib,
+        .fallbackIncludePath = "src",
+    },
+};
+
+pub const Library = struct {
+    link_flag: []const u8,
+    linker_flag: []const u8,
+    include_flag: []const u8,
+    buildFn: ?BuildFunction,
+
+    pub fn allFlags(self: @This()) [3][]const u8 {
+        return .{ self.link_flag, self.linker_flag, self.include_flag };
+    }
+};
+
+pub fn getLibraries(b: *std.Build) ![]const Library {
+    var outputmem = try b.allocator.alloc(Library, libraries.len);
+    for (libraries, 0..) |lib, index| {
+        outputmem[index] = try getLibraryFromOption(b, lib);
+    }
+    return outputmem;
+}
+
+pub fn getLibraryFromOption(b: *std.Build, info: LibraryInfo) !Library {
+    const prefix = b.option(
+        []const u8,
+        try std.fmt.allocPrint(b.allocator, "{s}-prefix", .{info.name}),
+        try std.fmt.allocPrint(b.allocator, "Location where {s} include and lib directories can be found", .{info.name}),
+    ) orelse null;
+
+    const include_path = if (prefix == null) try std.fs.path.join(b.allocator, &[_][]const u8{
+        try toString(std.fs.cwd(), b.allocator), "build", "deps", info.name, info.fallbackIncludePath,
+    }) else null;
+
+    return Library{
+        .link_flag = try linkFlag(b.allocator, info.name),
+        .linker_flag = if (prefix != null) try linkPrefixFlag(b.allocator, prefix.?) else "",
+        .include_flag = if (prefix != null) try includePrefixFlag(b.allocator, prefix.?) else include_path.?,
+        .buildFn = if (prefix != null) null else info.buildFn,
+    };
+}
+
 pub fn includeFlag(ally: std.mem.Allocator, path: []const u8) ![]const u8 {
     return try std.fmt.allocPrint(ally, "-I{s}", .{path});
 }
@@ -36,54 +95,11 @@ pub fn linkPrefixFlag(ally: std.mem.Allocator, lib: []const u8) ![]const u8 {
     return try std.fmt.allocPrint(ally, "-L{s}/lib", .{lib});
 }
 
-const chipmunkBuild = @import("./deps/chipmunk.zig").addChipmunk;
-const raylibBuild = @import("./deps/raylib.zig").addRaylib;
-
-pub const LibrarySource = enum { System, GitModule };
-pub const LibraryParserError = error{BadName};
-
-pub const Library = struct {
-    source: LibrarySource,
-    contents: union {
-        system: []const u8,
-        buildFunction: *const fn (b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) anyerror!*std.Build.CompileStep,
-    },
-
-    pub fn includeFlag(self: @This(), ally: std.mem.Allocator) ![]const u8 {
-        if (self.source == .System) {
-            return includePrefixFlag(ally, self.contents.system);
-        } else {
-            return "";
-        }
-    }
-
-    pub fn linkFlag(self: @This(), ally: std.mem.Allocator) ![]const u8 {
-        if (self.source == .System) {
-            return linkPrefixFlag(ally, self.contents.system);
-        } else {
-            return std.fmt.allocPrint(ally, "-I{s}{s}", .{ gitDepDir, self.contents.system });
-        }
-    }
-};
-
-pub const Dependency = enum { Chipmunk, Raylib };
-pub fn optionalPrefixToLibrary(prefix: ?[]const u8, dep: Dependency) LibraryParserError!Library {
-    if (prefix) |prefix_string| {
-        return .{
-            .source = LibrarySource.System,
-            .contents = .{
-                .system = prefix_string,
-            },
-        };
-    }
-
-    return .{
-        .source = LibrarySource.GitModule,
-        .contents = .{
-            .buildFunction = switch (dep) {
-                .Chipmunk => chipmunkBuild,
-                .Raylib => raylibBuild,
-            },
-        },
+pub fn toString(dir: std.fs.Dir, allocator: std.mem.Allocator) ![]const u8 {
+    var real_dir = try dir.openDir(".", .{});
+    defer real_dir.close();
+    return std.fs.realpathAlloc(allocator, ".") catch |err| {
+        std.debug.print("error encountered in converting directory to string.\n", .{});
+        return err;
     };
 }

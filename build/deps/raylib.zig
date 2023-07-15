@@ -41,7 +41,7 @@ const c_sources = [_][]const u8{
 
 const BuildError = error{ NoSysroot, UnsupportedOS };
 
-pub fn addRaylib(b: *std.Build, target: std.zig.CrossTarget, optimize: std.builtin.OptimizeMode) !*std.Build.CompileStep {
+pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, optimize: std.builtin.OptimizeMode) !*std.Build.CompileStep {
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
 
     var flags = std.ArrayList([]const u8).init(b.allocator);

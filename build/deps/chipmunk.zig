@@ -45,7 +45,7 @@ const c_sources = [_][]const u8{
     srcdir ++ "src/cpSweep1D.c",
 };
 
-pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) !*std.Build.CompileStep {
+pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) !*std.Build.CompileStep {
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
 
     const lib = b.addStaticLibrary(.{

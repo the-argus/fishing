@@ -1,5 +1,6 @@
 const std = @import("std");
 const common = @import("./common.zig");
+const toString = common.toString;
 
 var compile_steps: ?std.ArrayList(*std.Build.CompileStep) = null;
 
@@ -158,13 +159,4 @@ fn writeCompileCommands(file: *std.fs.File, compile_commands: []CompileCommandEn
     };
 
     try std.json.stringify(compile_commands, options, file.*.writer());
-}
-
-fn toString(dir: std.fs.Dir, allocator: std.mem.Allocator) ![]const u8 {
-    var real_dir = try dir.openDir(".", .{});
-    defer real_dir.close();
-    return std.fs.realpathAlloc(allocator, ".") catch |err| {
-        std.debug.print("error encountered in converting directory to string.\n", .{});
-        return err;
-    };
 }
