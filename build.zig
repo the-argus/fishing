@@ -28,7 +28,6 @@ pub fn build(b: *std.Build) !void {
 
     // keep track of any targets we create
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
-    defer targets.deinit();
 
     // create executable
     var exe: ?*std.Build.CompileStep = null;
