@@ -93,13 +93,11 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
                 .windows => "emranlib.bat",
                 else => "emranlib",
             };
+            // TODO: remove bin if on linux, or make my linux packaging for EMSDK have the same file structure as windows
             const emranlib_path = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, "bin", emranlib_file });
-            const libPath = lib.getOutputSource().getPath(b);
-            const emranlib = b.addSystemCommand(&.{
-                emranlib_path,
-                libPath,
-            });
-            lib.step.dependOn(&emranlib.step);
+            const run_emranlib = b.addSystemCommand(&.{emranlib_path});
+            run_emranlib.addArtifactArg(lib);
+            b.getInstallStep().dependOn(&run_emranlib.step);
         },
         else => {
             switch (mode) {

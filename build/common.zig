@@ -74,7 +74,7 @@ pub fn getLibraryFromOption(b: *std.Build, info: LibraryInfo) !Library {
     return Library{
         .link_flag = try linkFlag(b.allocator, info.name),
         .linker_flag = if (prefix != null) try linkPrefixFlag(b.allocator, prefix.?) else "",
-        .include_flag = if (prefix != null) try includePrefixFlag(b.allocator, prefix.?) else include_path.?,
+        .include_flag = if (prefix != null) try includePrefixFlag(b.allocator, prefix.?) else try includeFlag(b.allocator, include_path.?),
         .buildFn = if (prefix != null) null else info.buildFn,
     };
 }
