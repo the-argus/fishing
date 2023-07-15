@@ -36,6 +36,15 @@ pub fn build(b: *std.Build) !void {
     var lib: ?*std.Build.CompileStep = null;
 
     const libraries = try common.getLibraries(b);
+    var library_compile_steps = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
+    for (libraries) |library| {
+        if (library.buildFn) |fun| {
+            const compilestep = try fun(b, target, mode);
+            try library_compile_steps.append(compilestep);
+            // get compile_commands.json for the lib
+            try targets.append(compilestep);
+        }
+    }
 
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
@@ -83,7 +92,6 @@ pub fn build(b: *std.Build) !void {
                 "-L.",
                 "-I" ++ emscriptenSrc,
                 lib_output_include_flag,
-                "-l" ++ app_name,
                 "--shell-file",
                 shell_file,
                 "-DPLATFORM_WEB",
@@ -123,6 +131,11 @@ pub fn build(b: *std.Build) !void {
 
             const emcc = b.addSystemCommand(try fullcommand.toOwnedSlice());
 
+            // also statically link the git libraries
+            for (library_compile_steps.items) |lib_cstep| {
+                emcc.addArtifactArg(lib_cstep);
+            }
+            emcc.addArtifactArg(lib.?);
             emcc.step.dependOn(&lib.?.step);
 
             b.getInstallStep().dependOn(&emcc.step);
@@ -191,17 +204,13 @@ pub fn build(b: *std.Build) !void {
         },
     }
 
-    for (libraries) |library| {
-        if (library.buildFn) |fun| {
-            const compilestep = try fun(b, target, mode);
-            for (&[_]?*std.Build.CompileStep{ exe, lib }) |mainstep| {
-                if (mainstep) |cstep| {
-                    cstep.step.dependOn(&compilestep.step);
-                    cstep.linkLibrary(compilestep);
-                }
+    // make the targets depend on the lib compile steps
+    for (&[_]?*std.Build.CompileStep{ exe, lib }) |mainstep| {
+        if (mainstep) |cstep| {
+            for (library_compile_steps.items) |lib_cstep| {
+                cstep.step.dependOn(&lib_cstep.step);
+                cstep.linkLibrary(lib_cstep);
             }
-            // get compile_commands.json for the lib
-            try targets.append(compilestep);
         }
     }
 
