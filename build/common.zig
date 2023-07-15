@@ -3,27 +3,21 @@ const std = @import("std");
 pub const gitDepDir = "./build/deps/";
 
 pub fn link(
-    allocator: std.mem.Allocator,
     targets: std.ArrayList(*std.Build.CompileStep),
     lib: []const u8,
-    flags: *std.ArrayList([]const u8),
 ) !void {
     for (targets.items) |target| {
         target.linkSystemLibrary(lib);
     }
-    try flags.append(try linkFlag(allocator, lib));
 }
 
 pub fn include(
-    allocator: std.mem.Allocator,
     targets: std.ArrayList(*std.Build.CompileStep),
     path: []const u8,
-    flags: *std.ArrayList([]const u8),
 ) !void {
     for (targets.items) |target| {
         target.addIncludePath(path);
     }
-    try flags.append(try includeFlag(allocator, path));
 }
 
 pub fn includeFlag(ally: std.mem.Allocator, path: []const u8) ![]const u8 {

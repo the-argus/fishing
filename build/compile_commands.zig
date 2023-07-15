@@ -1,4 +1,5 @@
 const std = @import("std");
+const common = @import("./common.zig");
 
 var compile_steps: ?std.ArrayList(*std.Build.CompileStep) = null;
 
@@ -29,6 +30,29 @@ fn getCSources(allocator: std.mem.Allocator) ![]*CSourceFiles {
 
     while (index < compile_steps.?.items.len) {
         const step = compile_steps.?.items[index];
+
+        var shared_flags = std.ArrayList([]const u8).init(allocator);
+        defer shared_flags.deinit();
+
+        // catch all the system libraries being linked, make flags out of them
+        for (step.link_objects.items) |link_object| {
+            switch (link_object) {
+                .system_lib => |lib| try shared_flags.append(try common.linkFlag(allocator, lib.name)),
+                else => {},
+            }
+        }
+
+        // do the same for include directories
+        for (step.include_dirs.items) |include_dir| {
+            switch (include_dir) {
+                .other_step => |other_step| try compile_steps.?.append(other_step),
+                .raw_path => |path| try shared_flags.append(try common.includeFlag(allocator, path)),
+                .raw_path_system => |path| try shared_flags.append(try common.includeFlag(allocator, path)),
+                // TODO: support this
+                .config_header_step => {},
+            }
+        }
+
         for (step.link_objects.items) |link_object| {
             switch (link_object) {
                 .static_path => {
@@ -51,22 +75,32 @@ fn getCSources(allocator: std.mem.Allocator) ![]*CSourceFiles {
 
                     var source_file = try allocator.create(CSourceFiles);
 
+                    var flags = std.ArrayList([]const u8).init(allocator);
+                    try flags.appendSlice(link_object.c_source_file.args);
+                    try flags.appendSlice(shared_flags.items);
+
                     source_file.* = CSourceFiles{
                         .files = files_mem,
-                        .flags = link_object.c_source_file.args,
+                        .flags = try flags.toOwnedSlice(),
                     };
 
                     try res.append(source_file);
                 },
                 .c_source_files => {
-                    try res.append(link_object.c_source_files);
+                    var source_files = link_object.c_source_files;
+                    var flags = std.ArrayList([]const u8).init(allocator);
+                    try flags.appendSlice(source_files.flags);
+                    try flags.appendSlice(shared_flags.items);
+                    source_files.flags = try flags.toOwnedSlice();
+
+                    try res.append(source_files);
                 },
             }
         }
         index += 1;
     }
 
-    return res.toOwnedSlice();
+    return try res.toOwnedSlice();
 }
 
 pub fn makeCdb(step: *std.Build.Step, prog_node: *std.Progress.Node) anyerror!void {

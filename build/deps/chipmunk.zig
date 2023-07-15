@@ -5,7 +5,6 @@ const srcdir = "./build/deps/chipmunk/";
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
 const debug_flags = [_][]const u8{};
-var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
 const common = @import("./../common.zig");
 const include = common.include;
@@ -47,9 +46,6 @@ const c_sources = [_][]const u8{
 };
 
 pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) !*std.Build.CompileStep {
-    // this is used in the makeCdb function
-    linker_and_include_flags = std.ArrayList([]const u8).init(b.allocator);
-
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
 
     const lib = b.addStaticLibrary(.{
@@ -61,18 +57,19 @@ pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin
 
     // copied from chipmunk cmake. may be redundant with zig default flags
     // also the compiler is obviously never msvc so idk if the if is necessary
+    var flags = std.ArrayList([]const u8).init(b.allocator);
     if (lib.target.getAbi() != .msvc) {
-        try linker_and_include_flags.appendSlice(&.{ "-fblocks", "-std=gnu99" });
+        try flags.appendSlice(&.{ "-fblocks", "-std=gnu99" });
         if (builtin.mode != .Debug) {
-            try linker_and_include_flags.append("-ffast-math");
+            try flags.append("-ffast-math");
         } else {
-            try linker_and_include_flags.append("-Wall");
+            try flags.append("-Wall");
         }
     }
 
     // universal includes / links
-    try include(b.allocator, targets, srcdir ++ "include", &linker_and_include_flags);
-    try link(b.allocator, targets, "m", &linker_and_include_flags);
+    try include(targets, srcdir ++ "include");
+    try link(targets, "m");
 
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
@@ -85,7 +82,7 @@ pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin
 
             // include emscripten headers for compat, for example sys/sysctl
             const emscripten_include_flag = try std.fmt.allocPrint(b.allocator, "-I{s}/include", .{b.sysroot.?});
-            try linker_and_include_flags.appendSlice(&.{emscripten_include_flag});
+            try flags.appendSlice(&.{emscripten_include_flag});
 
             // define some macros in case there web-conditional code in chipmunk
             lib.defineCMacro("__EMSCRIPTEN__", null);
@@ -96,7 +93,7 @@ pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin
                 .windows => "emranlib.bat",
                 else => "emranlib",
             };
-            const emranlib_path = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, emranlib_file });
+            const emranlib_path = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, "bin", emranlib_file });
             const libPath = lib.getOutputSource().getPath(b);
             const emranlib = b.addSystemCommand(&.{
                 emranlib_path,
@@ -107,17 +104,17 @@ pub fn addChipmunk(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin
         else => {
             switch (mode) {
                 .Debug => {
-                    try linker_and_include_flags.appendSlice(&debug_flags);
+                    try flags.appendSlice(&debug_flags);
                 },
                 else => {
-                    try linker_and_include_flags.appendSlice(&release_flags);
+                    try flags.appendSlice(&release_flags);
                 },
             }
             lib.linkLibC();
         },
     }
 
-    lib.addCSourceFiles(&c_sources, linker_and_include_flags.items);
+    lib.addCSourceFiles(&c_sources, flags.items);
 
     // always install chipmunk headers
     b.installDirectory(.{

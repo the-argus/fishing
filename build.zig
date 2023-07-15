@@ -4,8 +4,11 @@ const app_name = "abmoog";
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
 const debug_flags = [_][]const u8{};
+const include_out_dir_flags = [_][]const u8{
+    "-L./zig-out",
+    "-I./zig-out/include",
+};
 var chosen_flags: ?[]const []const u8 = null;
-var linker_and_include_flags: std.ArrayList([]const u8) = undefined;
 
 const common = @import("./build/common.zig");
 const include = common.include;
@@ -27,10 +30,9 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const mode = b.standardOptimizeOption(.{});
 
-    // this is used in the makeCdb function
-    linker_and_include_flags = std.ArrayList([]const u8).init(b.allocator);
-
+    // keep track of any targets we create
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
+    defer targets.deinit();
 
     // create executable
     var exe: ?*std.Build.CompileStep = null;
@@ -62,7 +64,7 @@ pub fn build(b: *std.Build) !void {
 
             if (b.sysroot == null) {
                 std.log.err("\n\nUSAGE: Pass the '--sysroot \"$EMSDK/upstream/emscripten\"' flag.\n\n", .{});
-                return error.SysRootExpected;
+                return;
             }
 
             lib = b.addStaticLibrary(.{
@@ -74,18 +76,15 @@ pub fn build(b: *std.Build) !void {
 
             const emscripten_include_flag = try includePrefixFlag(b.allocator, b.sysroot.?);
 
-            try include(b.allocator, targets, "./zig-out/include", &linker_and_include_flags);
-            try linker_and_include_flags.append(try linkPrefixFlag(b.allocator, "./zig-out"));
-            lib.?.addCSourceFiles(&c_sources, block: {
-                const flags = &[_][]const u8{
-                    try raylib.includeFlag(b.allocator),
-                    try chipmunk.includeFlag(b.allocator),
-                    emscripten_include_flag,
-                };
-                try linker_and_include_flags.appendSlice(flags);
-                break :block linker_and_include_flags.items;
+            var flags = std.ArrayList([]const u8).init(b.allocator);
+            try flags.appendSlice(&.{
+                try raylib.includeFlag(b.allocator),
+                try chipmunk.includeFlag(b.allocator),
+                emscripten_include_flag,
             });
+            try flags.appendSlice(&include_out_dir_flags);
 
+            lib.?.addCSourceFiles(&c_sources, try flags.toOwnedSlice());
             lib.?.defineCMacro("__EMSCRIPTEN__", null);
             lib.?.defineCMacro("PLATFORM_WEB", null);
             lib.?.addIncludePath(emscriptenSrc);
@@ -170,11 +169,11 @@ pub fn build(b: *std.Build) !void {
             try targets.append(exe.?);
 
             chosen_flags = if (mode == .Debug) &debug_flags else &release_flags;
-            try linker_and_include_flags.appendSlice(chosen_flags.?);
-            try include(b.allocator, targets, "./zig-out/include", &linker_and_include_flags);
-            try linker_and_include_flags.append(try linkPrefixFlag(b.allocator, "./zig-out"));
 
-            exe.?.addCSourceFiles(&c_sources, linker_and_include_flags.items);
+            var flags = std.ArrayList([]const u8).init(b.allocator);
+            try flags.appendSlice(chosen_flags.?);
+            try flags.appendSlice(&include_out_dir_flags);
+            exe.?.addCSourceFiles(&c_sources, try flags.toOwnedSlice());
 
             // always link libc
             for (targets.items) |t| {
@@ -182,17 +181,21 @@ pub fn build(b: *std.Build) !void {
             }
 
             // links and includes which are shared across platforms
-            try link(b.allocator, targets, "raylib", &linker_and_include_flags);
-            try link(b.allocator, targets, "chipmunk", &linker_and_include_flags);
-            try include(b.allocator, targets, "src/", &linker_and_include_flags);
+            if (raylib.source == .System) {
+                try link(targets, "raylib");
+            }
+            if (chipmunk.source == .System) {
+                try link(targets, "chipmunk");
+            }
+            try include(targets, "src/");
 
             // platform-specific additions
             switch (target.getOsTag()) {
                 .windows => {},
                 .macos => {},
                 .linux => {
-                    try link(b.allocator, targets, "GL", &linker_and_include_flags);
-                    try link(b.allocator, targets, "X11", &linker_and_include_flags);
+                    try link(targets, "GL");
+                    try link(targets, "X11");
                 },
                 else => {},
             }
@@ -211,20 +214,26 @@ pub fn build(b: *std.Build) !void {
     // call the library build functions if they're git modules
     if (raylib.source == .GitModule) {
         const raylib_step = try raylib.contents.buildFunction(b, target, mode);
+        try targets.append(raylib_step);
         if (exe) |game| {
             game.step.dependOn(&raylib_step.step);
+            game.linkLibrary(raylib_step);
         }
         if (lib) |emscripten_lib| {
             emscripten_lib.step.dependOn(&raylib_step.step);
+            emscripten_lib.linkLibrary(raylib_step);
         }
     }
     if (chipmunk.source == .GitModule) {
         const chipmunk_step = try chipmunk.contents.buildFunction(b, target, mode);
+        try targets.append(chipmunk_step);
         if (exe) |game| {
             game.step.dependOn(&chipmunk_step.step);
+            game.linkLibrary(chipmunk_step);
         }
         if (lib) |emscripten_lib| {
             emscripten_lib.step.dependOn(&chipmunk_step.step);
+            emscripten_lib.linkLibrary(chipmunk_step);
         }
     }
 

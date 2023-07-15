@@ -21,7 +21,6 @@ const raylib_flags = [_][]const u8{
     "-fno-sanitize=undefined", // https://github.com/raysan5/raylib/issues/1891
 };
 
-var flags: std.ArrayList([]const u8) = undefined;
 // rgflw.c needs different flags
 var glfw_flags: std.ArrayList([]const u8) = undefined;
 
@@ -45,7 +44,7 @@ const BuildError = error{ NoSysroot, UnsupportedOS };
 pub fn addRaylib(b: *std.Build, target: std.zig.CrossTarget, optimize: std.builtin.OptimizeMode) !*std.Build.CompileStep {
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
 
-    flags = std.ArrayList([]const u8).init(b.allocator);
+    var flags = std.ArrayList([]const u8).init(b.allocator);
     glfw_flags = std.ArrayList([]const u8).init(b.allocator);
 
     try flags.appendSlice(&raylib_flags);
@@ -58,7 +57,7 @@ pub fn addRaylib(b: *std.Build, target: std.zig.CrossTarget, optimize: std.built
     });
     try targets.append(raylib);
 
-    try include(b.allocator, targets, srcdir ++ "external/glfw/include", &flags);
+    try flags.append(try common.includeFlag(b.allocator, srcdir ++ "external/glfw/include"));
 
     // keep track of whether we should append rglfw.c to the source files
     var needs_glfw = false;
@@ -66,35 +65,35 @@ pub fn addRaylib(b: *std.Build, target: std.zig.CrossTarget, optimize: std.built
     switch (target.getOsTag()) {
         .windows => {
             needs_glfw = true;
-            try link(b.allocator, targets, "winmm", &flags);
-            try link(b.allocator, targets, "gdi32", &flags);
-            try link(b.allocator, targets, "opengl32", &flags);
-            try include(b.allocator, targets, srcdir ++ "external/glfw/deps/mingw", &flags);
+            try link(targets, "winmm");
+            try link(targets, "gdi32");
+            try link(targets, "opengl32");
+            try include(targets, srcdir ++ "external/glfw/deps/mingw");
 
             raylib.defineCMacro("PLATFORM_DESKTOP", null);
         },
         .linux => {
             needs_glfw = true;
-            try link(b.allocator, targets, "GL", &flags);
-            try link(b.allocator, targets, "rt", &flags);
-            try link(b.allocator, targets, "dl", &flags);
-            try link(b.allocator, targets, "m", &flags);
-            try link(b.allocator, targets, "X11", &flags);
+            try link(targets, "GL");
+            try link(targets, "rt");
+            try link(targets, "dl");
+            try link(targets, "m");
+            try link(targets, "X11");
 
             raylib.defineCMacro("PLATFORM_DESKTOP", null);
         },
         .freebsd, .openbsd, .netbsd, .dragonfly => {
             needs_glfw = true;
-            try link(b.allocator, targets, "GL", &flags);
-            try link(b.allocator, targets, "rt", &flags);
-            try link(b.allocator, targets, "dl", &flags);
-            try link(b.allocator, targets, "m", &flags);
-            try link(b.allocator, targets, "X11", &flags);
-            try link(b.allocator, targets, "Xrandr", &flags);
-            try link(b.allocator, targets, "Xinerama", &flags);
-            try link(b.allocator, targets, "Xi", &flags);
-            try link(b.allocator, targets, "Xxf86vm", &flags);
-            try link(b.allocator, targets, "Xcursor", &flags);
+            try link(targets, "GL");
+            try link(targets, "rt");
+            try link(targets, "dl");
+            try link(targets, "m");
+            try link(targets, "X11");
+            try link(targets, "Xrandr");
+            try link(targets, "Xinerama");
+            try link(targets, "Xi");
+            try link(targets, "Xxf86vm");
+            try link(targets, "Xcursor");
 
             raylib.defineCMacro("PLATFORM_DESKTOP", null);
         },
@@ -123,7 +122,7 @@ pub fn addRaylib(b: *std.Build, target: std.zig.CrossTarget, optimize: std.built
             }
 
             const ems_include = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, "include" });
-            try include(b.allocator, targets, ems_include, &flags);
+            try include(targets, ems_include);
 
             const emranlib_file = switch (b.host.target.os.tag) {
                 .windows => "emranlib.bat",
