@@ -10,7 +10,12 @@ const universal_flags = [_][]const u8{
     "-DCCD_IDESINGLE", // single precision floating point
     "-DdIDESINGLE",
     "-DdBUILTIN_THREADING_IMPL_ENABLED",
+    // OU flags
+    "-DdOU_ENABLED",
+    "-DdATOMICS_ENABLED",
+    "-DdTLS_ENABLED",
     "-D_OU_NAMESPACE=odeou",
+    "-D_OU_FEATURE_SET=_OU_FEATURE_SET_TLS",
 };
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
