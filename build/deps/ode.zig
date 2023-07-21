@@ -11,10 +11,10 @@ const universal_flags = [_][]const u8{
     "-D_OU_TARGET_OS=" ++ switch (builtin.os.tag) {
         .linux => 1,
         .windows => 2,
-        .qnx => 3,
+        // .qnx => 3, // not supported by zig
         .macos => 4,
         .aix => 5,
-        .sunos => 6,
+        // .sunos => 6, //also not supported
         .ios => 7,
     },
 };
