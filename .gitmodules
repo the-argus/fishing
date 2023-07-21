@@ -1,9 +1,6 @@
 [submodule "raylib"]
 	path = build/deps/raylib
 	url = git@github.com:raysan5/raylib
-[submodule "deps/chipmunk"]
-	path = build/deps/chipmunk
-	url = git@github.com:slembcke/Chipmunk2D.git
 [submodule "build/deps/ode"]
 	path = build/deps/ode
 	url = https://bitbucket.org/odedevs/ode.git

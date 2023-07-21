@@ -30,11 +30,6 @@ const LibraryInfo = struct {
 
 const libraries = [_]LibraryInfo{
     LibraryInfo{
-        .name = "chipmunk",
-        .buildFn = @import("./deps/chipmunk.zig").addLib,
-        .fallbackIncludePath = "include",
-    },
-    LibraryInfo{
         .name = "raylib",
         .buildFn = @import("./deps/raylib.zig").addLib,
         .fallbackIncludePath = "src",

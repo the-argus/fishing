@@ -1,6 +1,6 @@
 const std = @import("std");
 const builtin = @import("builtin");
-const app_name = "abmoog";
+const app_name = "fishing";
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
 const debug_flags = [_][]const u8{};
@@ -19,7 +19,7 @@ const cdb = @import("./build/compile_commands.zig");
 const makeCdb = cdb.makeCdb;
 
 const c_sources = [_][]const u8{
-    "src/main.c",
+    "src/main.cpp",
 };
 
 pub fn build(b: *std.Build) !void {
@@ -176,6 +176,7 @@ pub fn build(b: *std.Build) !void {
             // always link libc
             for (targets.items) |t| {
                 t.linkLibC();
+                t.linkLibCpp();
             }
 
             // links and includes which are shared across platforms

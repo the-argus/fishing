@@ -1,9 +1,9 @@
-#include <chipmunk/chipmunk.h>
 #ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
 #endif
 #include <raylib.h>
 #include <stdio.h>
+#include <math.h>
 
 void update();
 void init();
@@ -32,7 +32,7 @@ int main()
 void init()
 {
 	SetConfigFlags(FLAG_MSAA_4X_HINT);
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Raylib/Chipmunk Example Project");
+	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "fishing");
 	SetTargetFPS(60);
 }
 
@@ -40,11 +40,14 @@ void update()
 {
 	BeginDrawing();
 	ClearBackground(BLACK);
-	DrawRectanglePro((Rectangle){.width = 100,
-								 .height = 100,
-								 .x = (int)(GetTime() * 200) % SCREEN_WIDTH,
-								 .y = SCREEN_HEIGHT / 2.0},
-					 (Vector2){0, 0}, sin(GetTime()) * RAD2DEG, RED);
+	DrawRectanglePro(
+		Rectangle{
+			.x = static_cast<float>((int)(GetTime() * 200) % SCREEN_WIDTH),
+			.y = SCREEN_HEIGHT / 2.0,
+			.width = 100,
+			.height = 100,
+		},
+		Vector2{0, 0}, sin(GetTime()) * RAD2DEG, RED);
 	EndDrawing();
 }
 
