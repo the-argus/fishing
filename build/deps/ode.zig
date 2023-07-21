@@ -249,6 +249,12 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
         .install_subdir = "",
     });
 
+    b.installDirectory(.{
+        .source_dir = std.Build.FileSource{ .path = here ++ "dummyinclude" },
+        .install_dir = .header,
+        .install_subdir = "",
+    });
+
     for (targets.items) |t| {
         b.installArtifact(t);
     }
