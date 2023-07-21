@@ -2,21 +2,15 @@ const std = @import("std");
 const builtin = @import("builtin");
 const app_name = "ode";
 const version = "0.16.0";
-const srcdir = "./build/deps/ode/";
+const here = "./build/deps/";
+const srcdir = here ++ "ode/";
 
 const universal_flags = [_][]const u8{
     "-DODE_LIB", // always build statically
     "-DCCD_IDESINGLE", // single precision floating point
+    "-DdIDESINGLE",
     "-DdBUILTIN_THREADING_IMPL_ENABLED",
-    "-D_OU_TARGET_OS=" ++ switch (builtin.os.tag) {
-        .linux => 1,
-        .windows => 2,
-        // .qnx => 3, // not supported by zig
-        .macos => 4,
-        .aix => 5,
-        // .sunos => 6, //also not supported
-        .ios => 7,
-    },
+    "-D_OU_NAMESPACE=odeou",
 };
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
@@ -34,10 +28,12 @@ const link = common.link;
 
 const include_dirs = [_][]const u8{
     srcdir ++ "include",
+    srcdir ++ "ou/include",
     srcdir ++ "ode/src",
     srcdir ++ "ode/src/joints",
     srcdir ++ "OPCODE",
     srcdir ++ "OPCODE/Ice",
+    here ++ "dummyinclude",
 };
 
 const c_sources = [_][]const u8{
@@ -177,18 +173,34 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
     // copied from chipmunk cmake. may be redundant with zig default flags
     // also the compiler is obviously never msvc so idk if the if is necessary
     var flags = std.ArrayList([]const u8).init(b.allocator);
-    if (lib.target.getAbi() != .msvc) {
-        try flags.appendSlice(&.{ "-fblocks", "-std=gnu99" });
-        if (builtin.mode != .Debug) {
-            try flags.append("-ffast-math");
-        } else {
-            try flags.append("-Wall");
-        }
+
+    try flags.appendSlice(&universal_flags);
+
+    if (mode != .Debug) {
+        try flags.appendSlice(&debug_flags);
+    } else {
+        try flags.appendSlice(&release_flags);
     }
 
-    // universal includes / links
-    try include(targets, srcdir ++ "include");
-    try link(targets, "m");
+    {
+        const os_number: i32 = switch ((try std.zig.system.NativeTargetInfo.detect(target)).target.os.tag) {
+            .linux => 1,
+            .windows => 2,
+            // .qnx => 3, // not supported by zig
+            .macos => 4,
+            .aix => 5,
+            // .sunos => 6, //also not supported
+            .ios => 7,
+            else => {
+                return error.UnsupportedOs;
+            },
+        };
+        try flags.append(try std.fmt.allocPrint(b.allocator, "-D_OU_TARGET_OS={any}", .{os_number}));
+    }
+
+    for (include_dirs) |include_dir| {
+        try include(targets, include_dir);
+    }
 
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
@@ -218,15 +230,8 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
             b.getInstallStep().dependOn(&run_emranlib.step);
         },
         else => {
-            switch (mode) {
-                .Debug => {
-                    try flags.appendSlice(&debug_flags);
-                },
-                else => {
-                    try flags.appendSlice(&release_flags);
-                },
-            }
             lib.linkLibC();
+            lib.linkLibCpp();
         },
     }
 

@@ -60,7 +60,7 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
     var flags = std.ArrayList([]const u8).init(b.allocator);
     if (lib.target.getAbi() != .msvc) {
         try flags.appendSlice(&.{ "-fblocks", "-std=gnu99" });
-        if (builtin.mode != .Debug) {
+        if (mode != .Debug) {
             try flags.append("-ffast-math");
         } else {
             try flags.append("-Wall");

@@ -39,6 +39,11 @@ const libraries = [_]LibraryInfo{
         .buildFn = @import("./deps/raylib.zig").addLib,
         .fallbackIncludePath = "src",
     },
+    LibraryInfo{
+        .name = "ode",
+        .buildFn = @import("./deps/ode.zig").addLib,
+        .fallbackIncludePath = "include",
+    },
 };
 
 pub const Library = struct {
