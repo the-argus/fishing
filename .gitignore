@@ -4,6 +4,13 @@ zig-out/
 zig-cache/
 result
 .direnv/
+.vs/
+
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
 # Prerequisites
 *.d

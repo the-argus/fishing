@@ -1,0 +1,2660 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="build\deps\ode\contrib\breakablejoints\joint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\breakablejoints\ode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\breakablejoints\step.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\breakablejoints\stepfast.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\breakablejoints\test_breakable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\breakablejoints\test_buggy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dcylinder\dCylinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\AssemblyInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\Body.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\Geom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\Joint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\JointAMotor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\JointBall.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\JointFixed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\JointGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\JointHinge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\JointHinge2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\JointSlider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\Space.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\Stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dotnetmanaged\World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dray\dRay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dray\dRay_Box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dray\dRay_CCylinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dray\dRay_Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dray\dRay_Sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\dray\test\test_ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\geomtransformgroup\GeomTransformGroup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\LoadOGL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\LoadOGLCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwColors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwDirect3D10.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwDirect3D11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwDirect3D9.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwEventSFML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwFonts.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwMgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwOpenGL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwOpenGLCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwPrecomp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwEventGLFW.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwEventGLUT.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwEventSDL.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwEventSDL12.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwEventSDL13.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwEventWin.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\src\camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\interactivecollisions\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\drawstuff\src\mac_glut_carbon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\ode\test\test_stability1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\ode\test\test_stacktest.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\terrainandcone\dCone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\terrainandcone\dTerrainY.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\terrainandcone\dTerrainZ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\contrib\terrainandcone\test_boxstackb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\drawstuff\dstest\dstest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\drawstuff\src\drawstuff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\drawstuff\src\osx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\drawstuff\src\windows.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\drawstuff\src\x11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gimpact.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_boxpruning.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_contact.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_trimesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_trimesh_capsule_collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_trimesh_ray_collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_trimesh_sphere_collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_trimesh_trimesh_collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\gimpact\src\gim_tri_tri_overlap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\alloc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\ccd.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\mpr.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\polytope.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\support.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\vec3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\bench.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\bench2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\boxbox.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\boxcyl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\common.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\cylcyl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\mpr_boxbox.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\mpr_boxcyl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\mpr_cylcyl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\polytope.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\spheresphere.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\support.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\vec3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\libccd\src\testsuites\cu\cu.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_basket.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_boxstack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_buggy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_cards.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_chain2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_convex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_crash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_cyl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_cylvssphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_dball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_dhinge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_feedback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_friction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_gyro2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_gyroscopic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_heightfield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_hinge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_I.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_jointPR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_jointPU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_joints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_kinematic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_motion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_motor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_moving_convex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_moving_trimesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_ode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_piston.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_plane2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_rfriction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_slider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_space.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_space_stress.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_step.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_tracks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_transmission.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_trimesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\demo\demo_chain1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\array.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\capsule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_convex_trimesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_cylinder_box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_cylinder_plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_cylinder_sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_cylinder_trimesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_kernel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_libccd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_quadtreespace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_sapspace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_space.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_box.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_ccylinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_disabled.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_gimpact.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_internal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_opcode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_trimesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_trimesh_trimesh_old.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\collision_util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\convex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\cylinder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\default_threading.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\error.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\export-dif.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\fastdot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\fastldltfactor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\fastldltsolve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\fastlsolve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\fastltsolve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\fastvecscale.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\gimpact_contact_export_helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\heightfield.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\lcp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\mass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\mat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\misc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\objects.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\obstack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\ode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\odeinit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\odemath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\odeou.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\odetls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\quickstep.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\resource_control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\rotation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\simple_cooperative.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\step.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\threading_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\threading_impl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\threading_pool_posix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\threading_pool_win.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\nextafterf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\amotor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\contact.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\dball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\dhinge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\fixed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\hinge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\hinge2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\joint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\lmotor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\null.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\piston.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\plane2d.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\pr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\pu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\slider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\transmission.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ode\src\joints\universal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\Opcode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_AABBCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_AABBTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_BaseModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_Collider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_Common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_HybridModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_LSSCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_MeshInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_OBBCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_OptimizedTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_Picking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_PlanesCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_RayCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_SphereCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_TreeBuilders.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_TreeCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\OPC_VolumeCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceAABB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceHPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceIndexedTriangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceMatrix3x3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceMatrix4x4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceOBB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IcePlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IcePoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceRandom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceRay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceRevisitedRadix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceSegment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceTriangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\opcode\ice\IceUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ou\src\ou\atomic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ou\src\ou\customization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ou\src\ou\malloc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ou\src\ou\threadlocalstorage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\ou\test\outest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\friction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\odemath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\amotor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\dball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\fixed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\hinge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\hinge2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\piston.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\pr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\pu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\slider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\joints\universal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\AssertException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\Checks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\DeferredTestReporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\DeferredTestResult.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\MemoryOutStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\ReportAssert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\Test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\TestDetails.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\TestList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\TestReporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\TestReporterStdout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\TestResults.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\TestRunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\TimeConstraint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\XmlTestReporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\posix\SignalTranslator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\posix\TimeHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestAssertHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestCheckMacros.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestChecks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestDeferredTestReporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestMemoryOutStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestTestList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestTestMacros.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestTestResults.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestTestRunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestTestSuite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestTimeConstraint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestTimeConstraintMacro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestUnitTest++.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\tests\TestXmlTestReporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\ode\tests\unittest++\src\win32\TimeHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\examples_template.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\audio\audio_mixed_processor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\audio\audio_module_playing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\audio\audio_music_stream.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\audio\audio_raw_stream.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\audio\audio_sound_loading.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\audio\audio_stream_effects.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_2d_camera.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_2d_camera_mouse_zoom.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_2d_camera_platformer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_3d_camera_first_person.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_3d_camera_free.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_3d_camera_mode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_3d_picking.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_basic_screen_manager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_basic_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_basic_window_web.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_custom_frame_control.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_custom_logging.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_drop_files.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_input_gamepad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_input_gestures.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_input_keys.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_input_mouse.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_input_mouse_wheel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_input_multitouch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_loading_thread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_random_values.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_scissor_test.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_smooth_pixelperfect.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_split_screen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_storage_values.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_vr_simulator.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_window_flags.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_window_letterbox.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_window_should_close.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\core\core_world_screen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_animation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_billboard.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_box_collisions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_cubicmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_draw_cube_texture.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_first_person_maze.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_geometric_shapes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_heightmap.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_loading.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_loading_gltf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_loading_m3d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_loading_vox.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_mesh_generation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_mesh_picking.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_orthographic_projection.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_rlgl_solar_system.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_skybox.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_waving_cubes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\models\models_yaw_pitch_roll.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\others\easings_testbed.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\others\embedded_files_loading.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\others\raylib_opengl_interop.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\others\rlgl_compute_shader.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\others\rlgl_standalone.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_basic_lighting.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_custom_uniform.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_eratosthenes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_fog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_hot_reloading.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_hybrid_render.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_julia_set.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_mesh_instancing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_model_shader.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_multi_sample2d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_palette_switch.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_postprocessing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_raymarching.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_shapes_textures.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_simple_mask.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_spotlight.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_texture_drawing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_texture_outline.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_texture_waves.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shaders\shaders_write_depth.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_basic_shapes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_bouncing_ball.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_collision_area.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_colors_palette.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_draw_circle_sector.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_draw_rectangle_rounded.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_draw_ring.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_easings_ball_anim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_easings_box_anim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_easings_rectangle_array.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_following_eyes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_lines_bezier.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_logo_raylib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_logo_raylib_anim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_rectangle_scaling.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\shapes\shapes_top_down_lights.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_codepoints_loading.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_draw_3d.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_font_filters.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_font_loading.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_font_sdf.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_font_spritefont.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_format_text.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_input_box.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_raylib_fonts.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_rectangle_bounds.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_unicode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\text\text_writing_anim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_background_scrolling.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_blend_modes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_bunnymark.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_draw_tiled.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_fog_of_war.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_gif_player.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_image_drawing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_image_generation.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_image_loading.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_image_processing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_image_text.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_logo_raylib.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_mouse_painting.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_npatch_drawing.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_particles_blending.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_polygon.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_raw_data.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_sprite_anim.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_sprite_button.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_sprite_explosion.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_srcrec_dstrec.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_textured_curve.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\examples\textures\textures_to_image.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\parser\raylib_parser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\4coder\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\cmake\core_basic_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\codeblocks\core_basic_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\geany\core_basic_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\notepad++\raylib_npp_parser\raylib_npp_parser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\scripts\core_basic_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\vs2019-android\raylib_android\raylib_android.nativeactivity\android_native_app_glue.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\vs2019-android\raylib_android\raylib_android.nativeactivity\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\projects\vscode\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\raudio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\rcore.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\rglfw.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\rmodels.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\rshapes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\rtext.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\rtextures.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\qoaplay.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\stb_vorbis.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\deps\getopt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\cocoa_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\egl_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\glx_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\input.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\linux_joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\null_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\null_joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\null_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\null_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\osmesa_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\platform.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\posix_module.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\posix_poll.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\posix_thread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\posix_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\vulkan.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\wgl_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\win32_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\win32_joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\win32_module.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\win32_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\win32_thread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\win32_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\win32_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\wl_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\wl_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\wl_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\x11_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\x11_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\x11_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\deps\raylib\src\external\glfw\src\xkb_unicode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\emscripten\entry.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="build\deps\dummyinclude\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\dummyinclude\ode\precision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\dummyinclude\ode\version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\build\config-default.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\breakablejoints\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\breakablejoints\joint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\breakablejoints\objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dcylinder\dCylinder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\Body.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\CommonMgd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\Geom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\Joint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\JointAMotor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\JointBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\JointFixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\JointGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\JointHinge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\JointHinge2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\JointSlider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\Space.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\Stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\TEST.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dotnetmanaged\World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dray\dxRay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\dray\include\dRay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\geomtransformgroup\GeomTransformGroup.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\include\AntTweakBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\AntPerfTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\d3d10vs2003.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\LoadOGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\LoadOGLCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\MiniGLFW.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\MiniGLUT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\MiniSDL12.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\MiniSDL13.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\MiniSFML16.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwColors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwDirect3D10.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwDirect3D11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwDirect3D9.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwFonts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwMgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwOpenGL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwOpenGLCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\TwPrecomp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\deps\anttweakbar\src\res\TwXCursors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\interactivecollisions\src\camera.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\CommonPrefix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\DebugPrefix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\DSPrefix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\ExamplesPrefix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\ODETestPrefix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\ReleasePrefix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\include\gl\gl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\include\gl\glu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\mac_cfmcarbon\mac_source\include\ode\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\contrib\terrainandcone\collision_std_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\drawstuff\src\internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\drawstuff\src\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gimpact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_boxpruning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_contact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_geometry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_radixsort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_trimesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_tri_capsule_collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_tri_collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\gimpact\include\gimpact\gim_tri_sphere_collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\drawstuff\drawstuff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\drawstuff\version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\collision_space.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\collision_trimesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\compatibility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\contact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\cooperative.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\export-dif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\mass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\matrix_coop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\memory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\misc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\ode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\odeconfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\odecpp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\odecpp_collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\odeinit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\odemath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\odemath_legacy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\rotation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\threading.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\threading_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\include\ode\timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\alloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\ccd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\compiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\dbg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\polytope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\quat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\simplex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\support.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\ccd\vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\custom\ccdcustom\quat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\custom\ccdcustom\vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\boxbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\boxcyl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\cylcyl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\mpr_boxbox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\mpr_boxcyl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\mpr_cylcyl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\polytope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\spheresphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\support.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\vec3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\libccd\src\testsuites\cu\cu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\demo\basket_geom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\demo\bunny_geom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\demo\convex_bunny_geom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\demo\convex_prism.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\demo\halton235_geom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\demo\icosahedron_geom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\demo\texturepath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\demo\world_geom3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_kernel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_libccd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_space_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_std.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_trimesh_colliders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_trimesh_gimpact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_trimesh_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_trimesh_internal_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_trimesh_opcode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\collision_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\coop_matrix_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\default_threading.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\fastdot_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\fastldltfactor_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\fastldltsolve_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\fastlsolve_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\fastltsolve_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\fastvecscale_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\gimpact_contact_export_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\gimpact_gim_contact_accessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\gimpact_plane_contact_accessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\heightfield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\lcp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\mat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\matrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\obstack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\odemath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\odeou.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\odetls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\quickstep.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\resource_control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\simple_cooperative.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\step.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threaded_solver_ldlt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threadingutils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threading_atomics_provs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threading_base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threading_fake_sync.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threading_impl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threading_impl_posix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threading_impl_templates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\threading_impl_win.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\typedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\amotor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\ball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\contact.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\dball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\dhinge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\fixed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\hinge.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\hinge2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\joint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\joints.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\joint_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\lmotor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\null.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\piston.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\plane2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\pr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\pu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\slider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\transmission.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ode\src\joints\universal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\Opcode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_AABBCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_AABBTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_BaseModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_BoxBoxOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_Collider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_HybridModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_IceHook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_LSSAABBOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_LSSCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_LSSTriOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_MeshInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_OBBCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_OptimizedTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_Picking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_PlanesAABBOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_PlanesCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_PlanesTriOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_RayAABBOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_RayCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_RayTriOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_SphereAABBOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_SphereCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_SphereTriOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_TreeBuilders.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_TreeCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_TriBoxOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_TriTriOverlap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\OPC_VolumeCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\Stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceAABB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceAxes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceBoundingSphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceFPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceHPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceIndexedTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceLSS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceMatrix3x3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceMatrix4x4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceMemoryMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceOBB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IcePairs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IcePlane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IcePoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IcePreprocessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceRandom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceRay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceRevisitedRadix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceSegment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceTriList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\opcode\ice\IceUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\assert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\atomic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\atomicflags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\customization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\enumarrays.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\features.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\flags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\flagsdefines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\inttypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\malloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\namespace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\simpleflags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\templates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\threadlocalstorage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\ou\include\ou\typewrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\AssertException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\CheckMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\Checks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\DeferredTestReporter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\DeferredTestResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\MemoryOutStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\ReportAssert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TestDetails.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TestList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TestMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TestReporter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TestReporterStdout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TestResults.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TestRunner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TestSuite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TimeConstraint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\TimeHelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\UnitTest++.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\XmlTestReporter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\posix\SignalTranslator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\posix\TimeHelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\tests\RecordingReporter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\ode\tests\unittest++\src\win32\TimeHelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\others\reasings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\others\external\include\glad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\others\external\include\glad_gles2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\others\external\include\glfw\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\others\external\include\glfw\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\others\resources\audio_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\others\resources\image_data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\shaders\rlights.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\shapes\raygui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\examples\shapes\reasings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\projects\notepad++\raylib_npp_parser\raylib_to_parse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\projects\vs2019-android\raylib_android\raylib_android.nativeactivity\android_native_app_glue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\raylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\raymath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\rcamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\rgestures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\rlgl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\cgltf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\dirent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\dr_flac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\dr_mp3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\dr_wav.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glad_gles2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\jar_mod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\jar_xm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\m3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\miniaudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\msf_gif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\par_shapes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\qoa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\qoi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\rl_gputex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\sdefl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\sinfl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\stb_image_resize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\stb_image_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\stb_perlin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\stb_rect_pack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\stb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\tinyobj_loader_c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\vox_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\deps\getopt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\deps\glad\gl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\deps\glad\gles2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\deps\glad\vulkan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\deps\mingw\dinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\deps\mingw\xinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\deps\mingw\_mingw_dxhelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\deps\vs2008\stdint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\include\glfw\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\include\glfw\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\cocoa_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\cocoa_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\cocoa_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\linux_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\mappings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\null_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\null_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\posix_poll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\posix_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\posix_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\win32_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\win32_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\win32_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\win32_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\wl_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\x11_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\deps\raylib\src\external\glfw\src\xkb_unicode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="build\deps\ode\contrib\mac_cfmcarbon\CW7_projects.sit.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="build\deps\ode\libccd\src\Makefile.include" />
+    <None Include="build\deps\ode\ode\src\scrapbook.cpp_deprecated" />
+    <None Include="build\deps\ode\ode\src\stack.cpp_deprecated" />
+    <None Include="build\deps\ode\tests\unittest++\docs\UnitTest++.html" />
+    <None Include="build\deps\raylib\src\minshell.html" />
+    <None Include="build\deps\raylib\src\shell.html" />
+    <None Include="build\emscripten\minshell.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="build\deps\ode\drawstuff\src\resources.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="build\deps\raylib\src\raylib.dll.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="build\deps\raylib\src\raylib.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
