@@ -196,6 +196,7 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
             .aix => 5,
             // .sunos => 6, //also not supported
             .ios => 7,
+            .emscripten, .wasi => 1, // pretend to be linux?
             else => {
                 return error.UnsupportedOs;
             },
@@ -209,6 +210,9 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
 
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
+            // pretend to be linux?
+            try flags.append("-D__linux__");
+
             std.log.info("building for emscripten\n", .{});
 
             if (b.sysroot == null) {
@@ -236,9 +240,10 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
         },
         else => {
             lib.linkLibC();
-            lib.linkLibCpp();
         },
     }
+
+    lib.linkLibCpp();
 
     lib.addCSourceFiles(&c_sources, flags.items);
 
