@@ -1,7 +1,7 @@
 const std = @import("std");
 const builtin = @import("builtin");
 const app_name = "ode";
-const version = "0.16.0";
+const version = "0.16.4";
 const here = "./build/deps/";
 const srcdir = here ++ "ode/";
 
