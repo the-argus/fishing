@@ -3,14 +3,13 @@
 #endif
 #include <raylib.h>
 #include <stdio.h>
-#include <math.h>
+#include "render_pipeline.h"
+#include "constants/screen.h"
+#include "level.h"
 
 void update();
 void init();
 void deinit();
-
-#define SCREEN_WIDTH 600
-#define SCREEN_HEIGHT 600
 
 #ifdef __EMSCRIPTEN__
 int emsc_main()
@@ -34,24 +33,22 @@ void init()
 	SetConfigFlags(FLAG_MSAA_4X_HINT);
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "fishing");
 	SetTargetFPS(60);
+
+	render::init();
+	level::init();
 }
 
-void update()
+void draw() { DrawGrid(10, 1.0f); }
+
+void draw_hud() {}
+
+void update() { render::render(draw, draw_hud); }
+
+void deinit()
 {
-	BeginDrawing();
-	ClearBackground(BLACK);
-	DrawRectanglePro(
-		Rectangle{
-			.x = static_cast<float>((int)(GetTime() * 200) % SCREEN_WIDTH),
-			.y = SCREEN_HEIGHT / 2.0,
-			.width = 100,
-			.height = 100,
-		},
-		Vector2{0, 0}, sin(GetTime()) * RAD2DEG, RED);
-	EndDrawing();
+	level::deinit();
+	CloseWindow();
 }
-
-void deinit() { CloseWindow(); }
 
 #ifdef __EMSCRIPTEN__
 void emsc_set_window_size(int width, int height)
