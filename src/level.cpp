@@ -1,7 +1,9 @@
 #include "level.h"
 #include "constants/physics.h"
 #include <ode/ode.h>
+#include "Fisherman.h"
 #include <raylib.h>
+#include <iostream>
 
 static dWorldID world;
 static dSpaceID space;
@@ -11,6 +13,14 @@ static dGeomID ground_box;
 static void nearCallback(void *unused, dGeomID o1, dGeomID o2) { return; }
 
 namespace level {
+
+dBodyID createBody() { return dBodyCreate(world); }
+
+dGeomID createGeomBox(int lx, int ly, int lz)
+{
+	return dCreateBox(space, lx, ly, lz);
+}
+
 void init()
 {
 	dInitODE();
@@ -27,17 +37,25 @@ void init()
 	dMatrix3 R;
 	dRFromAxisAndAngle(R, 0, 1, 1, 0);
 	dGeomSetRotation(ground_box, R);
+
+	// create fisherman
+	Fisherman fisherman = Fisherman::createInstance();
+	fisherman.setPos(0, 0, 0);
 }
 
 // TODO: make sure its not bad to use a variable update amount
 void update()
 {
 	dSpaceCollide(space, 0, nearCallback);
-	dWorldStep(world, GetFrameTime());
+	float deltaTime = GetFrameTime();
+	dWorldStep(world, deltaTime > 0 ? deltaTime : 1);
+
+	Fisherman::getInstance().update();
 }
 
 void deinit()
 {
+	Fisherman::destroyInstance();
 	dSpaceDestroy(space);
 	dWorldDestroy(world);
 	dCloseODE();

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ode/ode.h>
+
 namespace level {
 
 void init();
@@ -7,5 +9,9 @@ void init();
 void update();
 
 void deinit();
+
+dBodyID createBody();
+
+dGeomID createGeomBox(int lx, int ly, int lz);
 
 }; // namespace level
