@@ -16,4 +16,6 @@ dBodyID createBody();
 
 dGeomID createGeomBox(int lx, int ly, int lz);
 
+bool onGround(dBodyID body);
+
 }; // namespace level

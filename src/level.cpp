@@ -2,6 +2,7 @@
 #include "constants/physics.h"
 #include "Fisherman.h"
 #include "PlaneSet.h"
+#include <raymath.h>
 #include <ode/ode.h>
 #include <raylib.h>
 #include <array>
@@ -73,6 +74,27 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 
 namespace level {
 
+bool onGround(dBodyID body)
+{
+	dGeomID geom = dBodyGetFirstGeom(body);
+	dContact contact;
+	initContact(&contact);
+	int num_collisions =
+		dCollide(geom, ground, 3, &contact.geom, sizeof(dContact));
+
+	if (num_collisions > 0) {
+		Vector3 normal{
+			.x = contact.geom.normal[0],
+			.y = contact.geom.normal[1],
+			.z = contact.geom.normal[2],
+		};
+		// ensure the collision was with a face which is pointing up
+		float upness = Vector3DotProduct(normal, (Vector3){0, 1, 0});
+		return upness > ON_GROUND_THRESHHOLD;
+	}
+	return false;
+}
+
 dBodyID createBody() { return dBodyCreate(world); }
 
 dGeomID createGeomBox(int lx, int ly, int lz)
@@ -109,7 +131,6 @@ void update()
 	dWorldStep(world, deltaTime > 0 ? deltaTime : 0.16);
 
 	Fisherman::getInstance().update();
-
 	dJointGroupEmpty(contactGroup);
 }
 

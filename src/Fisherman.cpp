@@ -30,7 +30,8 @@ Fisherman::Fisherman() noexcept
 	  m_geom(level::createGeomBox(PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_LENGTH))
 {
 	dMass mass;
-	dMassSetBox(&mass, 1, PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_LENGTH);
+	dMassSetBox(&mass, PLAYER_DENSITY, PLAYER_WIDTH, PLAYER_HEIGHT,
+				PLAYER_LENGTH);
 	dMassAdjust(&mass, PLAYER_MASS);
 
 	dGeomSetBody(m_geom, m_body);
