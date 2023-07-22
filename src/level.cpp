@@ -33,7 +33,7 @@ void init()
     Fisherman fisherman = Fisherman::getInstance();
 	fisherman.setup(world, space);
 	fisherman.setPos(12, 22, 16);
-	fisherman.getPosV3();
+	Vector3 ballsaq = fisherman.getPosV3();
 }
 
 // TODO: make sure its not bad to use a variable update amount
