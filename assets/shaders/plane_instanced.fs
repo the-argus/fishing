@@ -18,5 +18,10 @@ void main()
     // Texel color fetching from texture sampler
     vec4 texelColor = texture(texture0, fragTexCoord);
 
-    finalColor = texelColor*colDiffuse;
+    vec3 up = vec3(1.0, 0.0, 0.0);
+    float range = 0.7; // shift the range of shadow to not include the 30% darkest shades
+    float shade = (dot(up, fragNormal) * range * 0.5) + 0.5 + ((1 - range) / 2);
+    vec4 shadedColor = vec4(colDiffuse.rgb * shade, colDiffuse.a);
+
+    finalColor = texelColor*shadedColor;
 }

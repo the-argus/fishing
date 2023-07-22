@@ -31,7 +31,7 @@ void deinit() { UnloadRenderTexture(mainTarget); }
 
 void render(DrawFunction draw, DrawHudFunction drawHud)
 {
-	UpdateCam(&camera);
+	UpdateCamera(&camera, CAMERA_FREE);
 	screenScale = MIN((float)GetScreenWidth() / GAME_WIDTH,
 					  (float)GetScreenHeight() / GAME_HEIGHT);
 

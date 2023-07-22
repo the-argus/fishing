@@ -10,6 +10,9 @@ class PlaneSet
 	explicit PlaneSet() noexcept;
 	~PlaneSet() noexcept;
 
+	PlaneSet(const PlaneSet &) = delete;
+	PlaneSet(PlaneSet &&) = delete;
+
 	void draw();
 
 	struct PlaneOptions
@@ -20,7 +23,8 @@ class PlaneSet
 	};
 
 	// the rotation to use for a horizontal plane (floor or ceiling)
-	static constexpr Vector3 flatPlaneRotation{.x = 90, .y = 0, .z = 0};
+	static constexpr Vector3 flatPlaneRotation{
+		.x = 0, .y = 0, .z = DEG2RAD * 45};
 
 	dGeomID createPlane(dSpaceID space, PlaneOptions);
 

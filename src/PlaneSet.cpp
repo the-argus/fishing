@@ -86,11 +86,11 @@ dGeomID PlaneSet::createPlane(dSpaceID space, PlaneOptions opt)
 	// next step is to get transforms for the plane
 	// easy enough since we took raylib types as input and we use raylib
 	// types for drawing.
-	Matrix scaledAndPositioned =
-		MatrixMultiply(MatrixScale(scale.x, scale.y, scale.z),
-					   MatrixTranslate(position.x, position.y, position.z));
+	Matrix scaled = MatrixScale(scale.x, scale.y, scale.z);
+	Matrix translation = MatrixTranslate(position.x, position.y, position.z);
 
-	m_transforms.push_back(MatrixMultiply(rot, scaledAndPositioned));
+	m_transforms.push_back(MatrixMultiply(
+		rot, MatrixMultiply(MatrixMultiply(translation, rot), scaled)));
 
 	return plane;
 }
