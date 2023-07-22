@@ -13,6 +13,14 @@ static dGeomID ground_box;
 static void nearCallback(void *unused, dGeomID o1, dGeomID o2) { return; }
 
 namespace level {
+
+dBodyID createBody() { return dBodyCreate(world); }
+
+dGeomID createGeomBox(int lx, int ly, int lz)
+{
+	return dCreateBox(space, lx, ly, lz);
+}
+
 void init()
 {
 	dInitODE();
@@ -30,9 +38,8 @@ void init()
 	dRFromAxisAndAngle(R, 0, 1, 1, 0);
 	dGeomSetRotation(ground_box, R);
 
-    // create fisherman
-    Fisherman fisherman = Fisherman::getInstance();
-	fisherman.setup(world, space);
+	// create fisherman
+	Fisherman fisherman = Fisherman::createInstance();
 	fisherman.setPos(0, 0, 0);
 }
 
@@ -41,14 +48,14 @@ void update()
 {
 	dSpaceCollide(space, 0, nearCallback);
 	float deltaTime = GetFrameTime();
-	dWorldStep(world, deltaTime > 0 ? deltaTime : 0.016);
+	dWorldStep(world, deltaTime > 0 ? deltaTime : 1);
 
-    Fisherman fisherman = Fisherman::getInstance();
-	fisherman.update();
+	Fisherman::getInstance().update();
 }
 
 void deinit()
 {
+	Fisherman::destroyInstance();
 	dSpaceDestroy(space);
 	dWorldDestroy(world);
 	dCloseODE();

@@ -1,5 +1,13 @@
 #pragma once
 #include <raylib.h>
-#include "Fisherman.h"
+#include <rcamera.h>
+#include "constants/camera.h"
 
-void UpdateCam(Camera3D *camera);
+inline void UpdateCam(Camera3D *camera)
+{
+	Vector2 mousePositionDelta = GetMouseDelta();
+
+	CameraYaw(camera, -mousePositionDelta.x * MOUSE_SENSITIVITY, false);
+	CameraPitch(camera, -mousePositionDelta.y * MOUSE_SENSITIVITY, true, false,
+				false);
+}
