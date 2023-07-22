@@ -6,6 +6,7 @@ result
 .direnv/
 .vs/
 
+*.filters
 *.rsuser
 *.suo
 *.user
