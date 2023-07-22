@@ -9,7 +9,7 @@ class Fisherman
 	static Fisherman &createInstance();
 	/// Gets a reference to the registered singleton
 	static Fisherman &getInstance();
-    /// Removes the geometries and bodies from the physics world
+	/// Removes the geometries and bodies from the physics world
 	static void destroyInstance();
 
   public:

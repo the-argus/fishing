@@ -5,23 +5,38 @@
 #include <ode/ode.h>
 #include <raylib.h>
 #include <array>
-#include <memory>
+#include <optional>
 
 static dWorldID world;
 static dSpaceID space;
-static std::unique_ptr<PlaneSet> planes(nullptr);
+static std::optional<PlaneSet> planes = std::nullopt;
 
 static constexpr std::array walls = {
 	// ground
 	PlaneSet::PlaneOptions{
 		.position = {.x = 0, .y = 0, .z = 0},
-		.scale = {.x = 10, .y = 1, .z = 10},
+		.scale = {.x = 10, .y = 0.1, .z = 10},
 		.eulerRotation = PlaneSet::flatPlaneRotation,
 	},
 	PlaneSet::PlaneOptions{
-		.position = {.x = 10, .y = 1, .z = 0},
-		.scale = {.x = 1, .y = 10, .z = 10},
+		.position = {.x = 10, .y = 5, .z = 0},
+		.scale = {.x = 0.1, .y = 10, .z = 10},
 		.eulerRotation = {},
+	},
+	PlaneSet::PlaneOptions{
+		.position = {.x = 0, .y = 5, .z = 10},
+		.scale = {.x = 10, .y = 10, .z = 0.1},
+		.eulerRotation = {.x = 0, .y = DEG2RAD * 90, .z = 0},
+	},
+	PlaneSet::PlaneOptions{
+		.position = {.x = -10, .y = 5, .z = 0},
+		.scale = {.x = 0.1, .y = 10, .z = 10},
+		.eulerRotation = {},
+	},
+	PlaneSet::PlaneOptions{
+		.position = {.x = 0, .y = 5, .z = -10},
+		.scale = {.x = 10, .y = 10, .z = 0.1},
+		.eulerRotation = {.x = 0, .y = DEG2RAD * 90, .z = 0},
 	},
 };
 
@@ -41,9 +56,9 @@ void init()
 	dInitODE();
 	world = dWorldCreate();
 	space = dHashSpaceCreate(0);
-	dWorldSetGravity(world, 0, 0, -GRAVITY);
+	dWorldSetGravity(world, 0, GRAVITY, 0);
 
-	planes = std::make_unique<PlaneSet>();
+	planes.emplace();
 
 	for (const auto &wall : walls) {
 		planes->createPlane(space, wall);
@@ -51,7 +66,7 @@ void init()
 
 	// create fisherman
 	Fisherman fisherman = Fisherman::createInstance();
-	fisherman.setPos(0, 0, 0);
+	fisherman.setPos(0, 10, 0);
 }
 
 // TODO: make sure its not bad to use a variable update amount
@@ -69,7 +84,7 @@ void draw() { planes->draw(); }
 void deinit()
 {
 	Fisherman::destroyInstance();
-	planes = nullptr;
+	planes = std::nullopt;
 	dSpaceDestroy(space);
 	dWorldDestroy(world);
 	dCloseODE();

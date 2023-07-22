@@ -6,8 +6,8 @@
 static Shader instancedPlaneShader;
 static Model planeModel;
 static size_t referenceCount = 0;
-static const char *materialsFile = "assets/plane.mtl";
-static const char *modelFile = "assets/plane.obj";
+static const char *materialsFile = "assets/cube.mtl";
+static const char *modelFile = "assets/cube.obj";
 static const char *vShader = "assets/shaders/plane_instanced.vs";
 static const char *fShader = "assets/shaders/plane_instanced.fs";
 
@@ -90,7 +90,7 @@ dGeomID PlaneSet::createPlane(dSpaceID space, PlaneOptions opt)
 	Matrix translation = MatrixTranslate(position.x, position.y, position.z);
 
 	m_transforms.push_back(
-		MatrixMultiply(MatrixMultiply(translation, rot), scaled));
+		MatrixMultiply(MatrixMultiply(rot, scaled), translation));
 
 	return plane;
 }
