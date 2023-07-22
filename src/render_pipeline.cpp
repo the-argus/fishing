@@ -25,6 +25,7 @@ void render(DrawFunction draw, DrawHudFunction drawHud)
 	BeginMode3D(camera);
 	ClearBackground(BLACK);
 	draw();
+    EndMode3D();
 
 	BeginDrawing();
 	drawHud();
