@@ -1,5 +1,6 @@
 #include "Fisherman.h"
 #include "constants/player.h"
+#include "render_pipeline.h"
 
 Fisherman &Fisherman::getInstance()
 {
@@ -12,6 +13,8 @@ Fisherman::Fisherman()
 
 }
 
+void Fisherman::update() { render::getCamera().position = getPosV3(); }
+
 void Fisherman::setup(dWorldID &world, dSpaceID &space)
 {
 	body = dBodyCreate(world);
@@ -22,14 +25,11 @@ void Fisherman::setup(dWorldID &world, dSpaceID &space)
 	dBodySetMass(body, &mass);
 }
 
-void Fisherman::setPos(int x, int y, int z) 
-{ 
-    dBodySetPosition(body, x, y, z); 
-}
+void Fisherman::setPos(int x, int y, int z) { dBodySetPosition(body, x, y, z); }
 
 Vector3 Fisherman::getPosV3()
 {
-	auto* pos = dBodyGetPosition(body);
+	auto *pos = dBodyGetPosition(body);
 
 	return Vector3{.x = pos[0], .y = pos[1], .z = pos[2]};
 }

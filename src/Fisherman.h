@@ -10,6 +10,8 @@ class Fisherman
     void setup(dWorldID &world, dSpaceID &space);
 	void setPos(int x, int y, int z);
 	Vector3 getPosV3();
+
+    void update();
   
 private:
 	dBodyID body;
