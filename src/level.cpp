@@ -98,7 +98,7 @@ void init()
 
 	// create fisherman
 	Fisherman fisherman = Fisherman::createInstance();
-	fisherman.setPos(0, 10, 0);
+	fisherman.setPos(0, 30, 0);
 }
 
 // TODO: make sure its not bad to use a variable update amount
