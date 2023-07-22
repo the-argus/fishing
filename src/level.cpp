@@ -1,14 +1,24 @@
 #include "level.h"
 #include "constants/physics.h"
-#include <ode/ode.h>
 #include "Fisherman.h"
+#include "PlaneSet.h"
+#include <ode/ode.h>
 #include <raylib.h>
-#include <iostream>
+#include <array>
+#include <memory>
 
 static dWorldID world;
 static dSpaceID space;
-static dGeomID ground;
-static dGeomID ground_box;
+static std::unique_ptr<PlaneSet> planes(nullptr);
+
+static constexpr std::array walls = {
+	// ground
+	PlaneSet::PlaneOptions{
+		.position = {.x = 0, .y = 0, .z = 0},
+		.scale = {.x = 10, .y = 0, .z = 10},
+		.eulerRotation = PlaneSet::flatPlaneRotation,
+	},
+};
 
 static void nearCallback(void *unused, dGeomID o1, dGeomID o2) { return; }
 
@@ -28,15 +38,11 @@ void init()
 	space = dHashSpaceCreate(0);
 	dWorldSetGravity(world, 0, 0, -GRAVITY);
 
-	// TODO - figure out what the a b c d arguments here are even for
-	ground = dCreatePlane(space, 0, 0, 1, 0);
-	ground_box = dCreateBox(space, 10, 10, 1);
-	dGeomSetPosition(ground_box, -5, -5, 0);
+	planes = std::make_unique<PlaneSet>();
 
-	// rotation of ground box
-	dMatrix3 R;
-	dRFromAxisAndAngle(R, 0, 1, 1, 0);
-	dGeomSetRotation(ground_box, R);
+	for (const auto &wall : walls) {
+		planes->createPlane(space, wall);
+	}
 
 	// create fisherman
 	Fisherman fisherman = Fisherman::createInstance();
@@ -53,9 +59,12 @@ void update()
 	Fisherman::getInstance().update();
 }
 
+void draw() { planes->draw(); }
+
 void deinit()
 {
 	Fisherman::destroyInstance();
+	planes = nullptr;
 	dSpaceDestroy(space);
 	dWorldDestroy(world);
 	dCloseODE();

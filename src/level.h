@@ -8,6 +8,8 @@ void init();
 
 void update();
 
+void draw();
+
 void deinit();
 
 dBodyID createBody();

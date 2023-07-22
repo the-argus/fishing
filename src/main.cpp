@@ -11,7 +11,6 @@ void update();
 void init();
 void deinit();
 
-
 #ifdef __EMSCRIPTEN__
 int emsc_main()
 #else
@@ -40,14 +39,18 @@ void init()
 	level::init();
 }
 
-void draw() { DrawGrid(10, 1.0f); }
+void draw()
+{
+	DrawGrid(10, 1.0f);
+	level::draw();
+}
 
 void draw_hud() {}
 
 void update()
 {
 	level::update();
-    render::render(draw, draw_hud); 
+	render::render(draw, draw_hud);
 }
 
 void deinit()

@@ -20,7 +20,7 @@ x64/
 # Object files
 *.o
 *.ko
-*.obj
+# *.obj # we need .obj models lol
 *.elf
 
 # Linker output
