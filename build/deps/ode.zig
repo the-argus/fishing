@@ -13,10 +13,10 @@ const universal_flags = [_][]const u8{
     // OU flags
     "-DdOU_ENABLED",
     "-DdATOMICS_ENABLED",
-    // "-DdTLS_ENABLED",
-    // "-D_OU_FEATURE_SET=_OU_FEATURE_SET_TLS", // instead of ATOMICS
+    "-DdTLS_ENABLED",
+    "-D_OU_FEATURE_SET=_OU_FEATURE_SET_TLS", // instead of ATOMICS
     "-D_OU_NAMESPACE=odeou",
-    "-D_OU_FEATURE_SET=_OU_FEATURE_SET_ATOMICS",
+    // "-D_OU_FEATURE_SET=_OU_FEATURE_SET_ATOMICS",
 };
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
@@ -164,6 +164,8 @@ const c_sources = [_][]const u8{
     srcdir ++ "ou/src/ou/customization.cpp",
     srcdir ++ "ou/src/ou/malloc.cpp",
     srcdir ++ "ou/src/ou/threadlocalstorage.cpp",
+    srcdir ++ "ode/src/odeou.cpp",
+    srcdir ++ "ode/src/odetls.cpp",
 };
 
 pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) !*std.Build.CompileStep {
