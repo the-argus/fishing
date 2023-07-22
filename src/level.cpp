@@ -64,7 +64,7 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 	for (i = 0; i < 3; i++) {
 		initContact(&contact[i]);
 	}
-	int numc = dCollide(o1, o2, 3, &contact[0].geom, sizeof(dContact));
+	int numc = dCollide(o1, o2, 1, &contact[0].geom, sizeof(dContactGeom));
 	for (i = 0; i < numc; i++) {
 		dJointID c = dJointCreateContact(world, contactGroup, contact + i);
 		dJointAttach(c, b1, b2);
@@ -84,7 +84,7 @@ bool onGround(dBodyID body)
 		dContact contact;
 		initContact(&contact);
 		int num_collisions =
-			dCollide(geom, plane, 1, &contact.geom, sizeof(contact.geom));
+			dCollide(geom, plane, 1, &contact.geom, sizeof(dContactGeom));
 
 		if (num_collisions > 0) {
 			Vector3 normal{
