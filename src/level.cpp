@@ -19,7 +19,7 @@ static constexpr std::array walls = {
 		.eulerRotation = PlaneSet::flatPlaneRotation,
 	},
 	PlaneSet::PlaneOptions{
-		.position = {.x = 10, .y = 0.5, .z = 0},
+		.position = {.x = 10, .y = 1, .z = 0},
 		.scale = {.x = 1, .y = 10, .z = 10},
 		.eulerRotation = {},
 	},

@@ -89,8 +89,8 @@ dGeomID PlaneSet::createPlane(dSpaceID space, PlaneOptions opt)
 	Matrix scaled = MatrixScale(scale.x, scale.y, scale.z);
 	Matrix translation = MatrixTranslate(position.x, position.y, position.z);
 
-	m_transforms.push_back(MatrixMultiply(
-		rot, MatrixMultiply(MatrixMultiply(translation, rot), scaled)));
+	m_transforms.push_back(
+		MatrixMultiply(MatrixMultiply(translation, rot), scaled));
 
 	return plane;
 }

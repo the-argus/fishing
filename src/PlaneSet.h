@@ -24,7 +24,7 @@ class PlaneSet
 
 	// the rotation to use for a horizontal plane (floor or ceiling)
 	static constexpr Vector3 flatPlaneRotation{
-		.x = 0, .y = 0, .z = DEG2RAD * 45};
+		.x = 0, .y = 0, .z = DEG2RAD * 90};
 
 	dGeomID createPlane(dSpaceID space, PlaneOptions);
 
