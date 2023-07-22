@@ -211,6 +211,26 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
         try include(targets, include_dir);
     }
 
+    {
+        const dir = try b.cache_root.join(b.allocator, &[_][]const u8{"ode"});
+        const file = try std.fs.path.join(b.allocator, &[_][]const u8{ dir, "precision.h" });
+        std.fs.cwd().makePath(dir) catch {};
+        const precision_h = try std.fs.cwd().createFile(file, .{});
+
+        const writer = precision_h.writer();
+        try writer.print(
+            \\#ifndef _ODE_PRECISION_H_
+            \\#define _ODE_PRECISION_H_
+            \\//#define dDOUBLE
+            \\#define dSINGLE
+            \\#endif
+        , .{});
+        defer precision_h.close();
+
+        b.installFile(file, "include/ode/precision.h");
+        try include(targets, if (b.cache_root.path) |path| path else return error.RefuseToAddCWDToInclude);
+    }
+
     switch (target.getOsTag()) {
         .wasi, .emscripten => {
             // pretend to be linux?

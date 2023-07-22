@@ -48,12 +48,9 @@
               clang-tools
               gdb
               valgrind
-              # chipmunk
-              # raylib
               pkg-config
               libGL
               self.packages.${system}.zig
-              emsdk
             ])
             ++ (with pkgs.xorg; [
               libX11
