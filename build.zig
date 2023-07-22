@@ -174,6 +174,10 @@ pub fn build(b: *std.Build) !void {
                 try flags.appendSlice(&library.allFlags());
             }
 
+            // this adds intellisense for any headers which are not present in
+            // the source of dependencies, but are built and installed
+            try flags.append(try includePrefixFlag(b.allocator, b.install_prefix));
+
             exe.?.addCSourceFiles(&c_sources, try flags.toOwnedSlice());
 
             // always link libc
