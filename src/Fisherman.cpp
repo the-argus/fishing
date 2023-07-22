@@ -54,8 +54,8 @@ void Fisherman::update()
 {
 	// Set camera's position to body
 	Camera3D &camera = render::getCamera();
-    
-    // transform both the camera and its target by the same amount
+
+	// transform both the camera and its target by the same amount
 	Vector3 fisherPosition = getPosV3();
 	Vector3 delta = Vector3Subtract(fisherPosition, camera.position);
 	camera.position = Vector3Add(delta, camera.position);

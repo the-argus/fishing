@@ -9,6 +9,8 @@
 
 static dWorldID world;
 static dSpaceID space;
+static dGeomID ground;
+static dJointGroupID contactGroup;
 static std::optional<PlaneSet> planes = std::nullopt;
 
 static constexpr std::array walls = {
@@ -40,7 +42,34 @@ static constexpr std::array walls = {
 	},
 };
 
-static void nearCallback(void *unused, dGeomID o1, dGeomID o2) { return; }
+static void initContact(dContact *contact)
+{
+	contact->surface.mode = dContactSoftCFM | dContactApprox1;
+	contact->surface.mu = 0.5;
+	contact->surface.soft_cfm = 0.01;
+}
+
+static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
+{
+	int i;
+
+	// only collide things with the ground
+	if (o1 != ground && o2 != ground)
+		return;
+
+	dBodyID b1 = dGeomGetBody(o1);
+	dBodyID b2 = dGeomGetBody(o2);
+
+	dContact contact[3]; // up to 3 contacts per box
+	for (i = 0; i < 3; i++) {
+		initContact(&contact[i]);
+	}
+	int numc = dCollide(o1, o2, 3, &contact[0].geom, sizeof(dContact));
+	for (i = 0; i < numc; i++) {
+		dJointID c = dJointCreateContact(world, contactGroup, contact + i);
+		dJointAttach(c, b1, b2);
+	}
+}
 
 namespace level {
 
@@ -56,7 +85,10 @@ void init()
 	dInitODE();
 	world = dWorldCreate();
 	space = dHashSpaceCreate(0);
-	dWorldSetGravity(world, 0, GRAVITY, 0);
+	dWorldSetGravity(world, 0, -GRAVITY, 0);
+
+	contactGroup = dJointGroupCreate(0);
+	ground = dCreatePlane(space, 0, 1, 0, 0);
 
 	planes.emplace();
 
@@ -74,9 +106,11 @@ void update()
 {
 	dSpaceCollide(space, 0, nearCallback);
 	float deltaTime = GetFrameTime();
-	dWorldStep(world, deltaTime > 0 ? deltaTime : 1);
+	dWorldStep(world, deltaTime > 0 ? deltaTime : 0.16);
 
 	Fisherman::getInstance().update();
+
+	dJointGroupEmpty(contactGroup);
 }
 
 void draw() { planes->draw(); }
@@ -85,6 +119,7 @@ void deinit()
 {
 	Fisherman::destroyInstance();
 	planes = std::nullopt;
+	dJointGroupDestroy(contactGroup);
 	dSpaceDestroy(space);
 	dWorldDestroy(world);
 	dCloseODE();
