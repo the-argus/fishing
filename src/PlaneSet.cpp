@@ -1,4 +1,4 @@
-#include "planes.h"
+#include "PlaneSet.h"
 #include <optional>
 
 static std::optional<Shader> instancedPlaneShader = std::nullopt;
