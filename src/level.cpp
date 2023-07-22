@@ -30,17 +30,21 @@ void init()
 	dRFromAxisAndAngle(R, 0, 1, 1, 0);
 	dGeomSetRotation(ground_box, R);
 
+    // create fisherman
     Fisherman fisherman = Fisherman::getInstance();
 	fisherman.setup(world, space);
-	fisherman.setPos(12, 22, 16);
-	Vector3 ballsaq = fisherman.getPosV3();
+	fisherman.setPos(0, 0, 0);
 }
 
 // TODO: make sure its not bad to use a variable update amount
 void update()
 {
 	dSpaceCollide(space, 0, nearCallback);
-	dWorldStep(world, GetFrameTime());
+	float deltaTime = GetFrameTime();
+	dWorldStep(world, deltaTime > 0 ? deltaTime : 0.016);
+
+    Fisherman fisherman = Fisherman::getInstance();
+	fisherman.update();
 }
 
 void deinit()

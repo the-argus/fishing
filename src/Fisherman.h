@@ -14,7 +14,7 @@ class Fisherman
     void update();
   
 private:
-	dBodyID body;
+	stdBodyID body;
 	dMass mass;
 	dGeomID geom;
 
