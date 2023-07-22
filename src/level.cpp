@@ -7,9 +7,11 @@
 #include <raylib.h>
 #include <array>
 #include <optional>
+#include <cassert>
 
 static dWorldID world;
 static dSpaceID space;
+static dGeomID debugGroundPlane;
 static dJointGroupID contactGroup;
 static std::optional<PlaneSet> planes = std::nullopt;
 
@@ -53,9 +55,30 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 {
 	int i;
 
+	bool o1IsPlane = planes->isPlane(o1);
+	bool o2IsPlane = planes->isPlane(o2);
+	bool o1IsGround = o1 == debugGroundPlane;
+	bool o2IsGround = o2 == debugGroundPlane;
+
+	bool noPlane = (!o1IsPlane && !o2IsPlane);
+	bool noGround = (!o1IsGround && !o2IsGround);
+
 	// only collide things with the ground
-	if (!planes->isPlane(o1) && !planes->isPlane(o2))
+	if (noGround && noPlane) {
 		return;
+	}
+
+	dGeomID staticGeom;
+	dGeomID dynamicGeom;
+	if (noGround) {
+		staticGeom = o1IsPlane ? o1 : o2;
+		dynamicGeom = !o1IsPlane ? o1 : o2;
+	} else {
+		staticGeom = o1IsGround ? o1 : o2;
+		dynamicGeom = !o1IsGround ? o1 : o2;
+	}
+
+	assert(staticGeom != dynamicGeom);
 
 	dBodyID b1 = dGeomGetBody(o1);
 	dBodyID b2 = dGeomGetBody(o2);
@@ -64,7 +87,8 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 	for (i = 0; i < 3; i++) {
 		initContact(&contact[i]);
 	}
-	int numc = dCollide(o1, o2, 1, &contact[0].geom, sizeof(dContactGeom));
+	int numc = dCollide(dynamicGeom, staticGeom, 3, &contact[0].geom,
+						sizeof(dContact));
 	for (i = 0; i < numc; i++) {
 		dJointID c = dJointCreateContact(world, contactGroup, contact + i);
 		dJointAttach(c, b1, b2);
@@ -125,6 +149,8 @@ void init()
 		planes->createPlane(space, wall);
 	}
 
+	debugGroundPlane = dCreatePlane(space, 0, 1, 0, 0);
+
 	// create fisherman
 	Fisherman fisherman = Fisherman::createInstance();
 	fisherman.setPos(0, 30, 0);
@@ -148,6 +174,7 @@ void deinit()
 	Fisherman::destroyInstance();
 	planes = std::nullopt;
 	dJointGroupDestroy(contactGroup);
+	dGeomDestroy(debugGroundPlane);
 	dSpaceDestroy(space);
 	dWorldDestroy(world);
 	dCloseODE();
