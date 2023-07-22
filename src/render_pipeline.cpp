@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include "constants/screen.h"
 #include "constants/render.h"
+#include "update_cam.h"
 
 static Camera3D camera;
 
@@ -21,7 +22,7 @@ void init()
 
 void render(DrawFunction draw, DrawHudFunction drawHud)
 {
-	UpdateCamera(&camera, CAMERA_FIRST_PERSON);
+	UpdateCam(&camera);
 	BeginMode3D(camera);
 	ClearBackground(BLACK);
 	draw();

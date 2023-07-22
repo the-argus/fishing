@@ -1,0 +1,1 @@
+#define MOUSE_SENSITIVITY   0.003f
