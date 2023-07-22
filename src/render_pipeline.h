@@ -11,6 +11,8 @@ void init();
 
 void render(DrawFunction draw, DrawHudFunction drawHud);
 
+void deinit();
+
 Camera3D &getCamera();
 
 } // namespace render

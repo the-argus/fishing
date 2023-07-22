@@ -30,7 +30,8 @@ int main()
 
 void init()
 {
-	SetConfigFlags(FLAG_MSAA_4X_HINT);
+	// SetConfigFlags(FLAG_MSAA_4X_HINT);
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "fishing");
 	SetTargetFPS(60);
 
@@ -47,6 +48,7 @@ void update() { render::render(draw, draw_hud); }
 void deinit()
 {
 	level::deinit();
+	render::deinit();
 	CloseWindow();
 }
 
