@@ -185,6 +185,9 @@ pub fn build(b: *std.Build) !void {
                 t.linkLibC();
                 t.linkLibCpp();
             }
+            // intellisense needs to be aware that we're using a newer c++ version
+            // (zig does c++20 by default it seems, removing this doesn't cause compiler errors)
+            try flags.append("-std=c++20");
 
             // links and includes which are shared across platforms
             try include(targets, "src/");
