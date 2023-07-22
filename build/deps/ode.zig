@@ -13,9 +13,10 @@ const universal_flags = [_][]const u8{
     // OU flags
     "-DdOU_ENABLED",
     "-DdATOMICS_ENABLED",
-    "-DdTLS_ENABLED",
+    // "-DdTLS_ENABLED",
+    // "-D_OU_FEATURE_SET=_OU_FEATURE_SET_TLS", // instead of ATOMICS
     "-D_OU_NAMESPACE=odeou",
-    "-D_OU_FEATURE_SET=_OU_FEATURE_SET_TLS",
+    "-D_OU_FEATURE_SET=_OU_FEATURE_SET_ATOMICS",
 };
 
 const release_flags = [_][]const u8{"-DNDEBUG"};

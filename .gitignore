@@ -6,6 +6,7 @@ result
 .direnv/
 .vs/
 
+x64/
 *.filters
 *.rsuser
 *.suo
