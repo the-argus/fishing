@@ -10,7 +10,6 @@
 
 static dWorldID world;
 static dSpaceID space;
-static dGeomID ground;
 static dJointGroupID contactGroup;
 static std::optional<PlaneSet> planes = std::nullopt;
 
@@ -55,7 +54,7 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 	int i;
 
 	// only collide things with the ground
-	if (o1 != ground && o2 != ground)
+	if (!planes->isPlane(o1) && !planes->isPlane(o2))
 		return;
 
 	dBodyID b1 = dGeomGetBody(o1);
@@ -65,7 +64,7 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 	for (i = 0; i < 3; i++) {
 		initContact(&contact[i]);
 	}
-	int numc = dCollide(o1, o2, 3, &contact[0].geom, sizeof(dContact));
+	int numc = dCollide(o1, o2, 1, &contact[0].geom, sizeof(dContactGeom));
 	for (i = 0; i < numc; i++) {
 		dJointID c = dJointCreateContact(world, contactGroup, contact + i);
 		dJointAttach(c, b1, b2);
@@ -77,22 +76,31 @@ namespace level {
 bool onGround(dBodyID body)
 {
 	dGeomID geom = dBodyGetFirstGeom(body);
-	dContact contact;
-	initContact(&contact);
-	int num_collisions =
-		dCollide(geom, ground, 3, &contact.geom, sizeof(dContact));
 
-	if (num_collisions > 0) {
-		Vector3 normal{
-			.x = contact.geom.normal[0],
-			.y = contact.geom.normal[1],
-			.z = contact.geom.normal[2],
-		};
-		// ensure the collision was with a face which is pointing up
-		float upness = Vector3DotProduct(normal, (Vector3){0, 1, 0});
-		return upness > ON_GROUND_THRESHHOLD;
+	auto &groundPlanes = planes->getPlanes();
+
+	float bestCollision = -(~0);
+	for (const auto &plane : groundPlanes) {
+		dContact contact;
+		initContact(&contact);
+		int num_collisions =
+			dCollide(geom, plane, 1, &contact.geom, sizeof(dContactGeom));
+
+		if (num_collisions > 0) {
+			Vector3 normal{
+				.x = contact.geom.normal[0],
+				.y = contact.geom.normal[1],
+				.z = contact.geom.normal[2],
+			};
+			// ensure the collision was with a face which is pointing up
+			float upness = Vector3DotProduct(normal, (Vector3){0, 1, 0});
+
+			if (upness > bestCollision) {
+				bestCollision = upness;
+			}
+		}
 	}
-	return false;
+	return bestCollision > ON_GROUND_THRESHHOLD;
 }
 
 dBodyID createBody() { return dBodyCreate(world); }
@@ -110,7 +118,6 @@ void init()
 	dWorldSetGravity(world, 0, -GRAVITY, 0);
 
 	contactGroup = dJointGroupCreate(0);
-	ground = dCreatePlane(space, 0, 1, 0, 0);
 
 	planes.emplace();
 
