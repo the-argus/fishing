@@ -62,7 +62,7 @@ void Fisherman::update()
 	camera.position = Vector3Add(delta, camera.position);
 	camera.target = Vector3Add(delta, camera.target);
 
-	Vector3 force;
+	Vector3 force = {0};
 	Vector2 input;
 
 	// Set input based on keys
@@ -75,27 +75,30 @@ void Fisherman::update()
 	if (IsKeyDown(KEY_D))
 		input.y += 1;
 
-	Vector3 v1 = camera.position;
-	Vector3 v2 = camera.target;
+    if (input.x != 0 && input.y != 0) {
 
-	float dx = v2.x - v1.x;
-	float dy = v2.y - v1.y;
-	float dz = v2.z - v1.z;
+		Vector3 v1 = camera.position;
+		Vector3 v2 = camera.target;
 
-	float angle_x = atan2f(dx, dz);
+		float dx = v2.x - v1.x;
+		float dy = v2.y - v1.y;
+		float dz = v2.z - v1.z;
 
-	force.x = sin(angle_x) * PLAYER_MOVEMENT_SPEED;
-	force.z = cos(angle_x) * PLAYER_MOVEMENT_SPEED;
-	assert(Vector3LengthSqr(force) != 0);
-	Vector3 h_force =
-		Vector3CrossProduct(Vector3Normalize(force), (Vector3){0, 1, 0});
+		float angle_x = atan2f(dx, dz);
 
-	force = Vector3Scale(force, input.x);
-	h_force = Vector3Scale(h_force, input.y);
+		force.x = sin(angle_x) * PLAYER_MOVEMENT_SPEED;
+		force.z = cos(angle_x) * PLAYER_MOVEMENT_SPEED;
+		assert(Vector3LengthSqr(force) != 0);
+		Vector3 h_force =
+			Vector3CrossProduct(Vector3Normalize(force), (Vector3){0, 1, 0});
 
-	force = Vector3Add(force, h_force);
+		force = Vector3Scale(force, input.x);
+		h_force = Vector3Scale(h_force, input.y);
 
-	dBodyAddRelForce(m_body, force.x, force.y, force.z);
+		force = Vector3Add(force, h_force);
+	}
+
+	dBodySetForce(m_body, force.x, force.y, force.z);
 }
 
 void Fisherman::setPos(int x, int y, int z)
