@@ -1,7 +1,9 @@
 #include "level.h"
 #include "constants/physics.h"
 #include <ode/ode.h>
+#include "Fisherman.h"
 #include <raylib.h>
+#include <iostream>
 
 static dWorldID world;
 static dSpaceID space;
@@ -27,6 +29,11 @@ void init()
 	dMatrix3 R;
 	dRFromAxisAndAngle(R, 0, 1, 1, 0);
 	dGeomSetRotation(ground_box, R);
+
+    Fisherman fisherman = Fisherman::getInstance();
+	fisherman.setup(world, space);
+	fisherman.setPos(12, 22, 16);
+	fisherman.getPosV3();
 }
 
 // TODO: make sure its not bad to use a variable update amount

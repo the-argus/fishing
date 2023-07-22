@@ -23,6 +23,7 @@ const c_sources = [_][]const u8{
     "src/level.cpp",
     "src/render_pipeline.cpp",
 	"src/update_cam.cpp",
+	"src/Fisherman.cpp",
 };
 
 pub fn build(b: *std.Build) !void {

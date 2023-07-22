@@ -11,6 +11,7 @@ void update();
 void init();
 void deinit();
 
+
 #ifdef __EMSCRIPTEN__
 int emsc_main()
 #else
