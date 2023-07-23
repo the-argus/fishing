@@ -55,6 +55,9 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 {
 	int i;
 
+	if (o1 == o2)
+		return;
+
 	bool o1IsPlane = planes->isPlane(o1);
 	bool o2IsPlane = planes->isPlane(o2);
 	bool o1IsGround = o1 == debugGroundPlane;
@@ -100,6 +103,8 @@ namespace level {
 bool onGround(dBodyID body)
 {
 	dGeomID geom = dBodyGetFirstGeom(body);
+
+	assert(!planes->isPlane(geom));
 
 	auto &groundPlanes = planes->getPlanes();
 
@@ -167,7 +172,11 @@ void update()
 	dJointGroupEmpty(contactGroup);
 }
 
-void draw() { planes->draw(); }
+void draw()
+{
+	planes->draw();
+	Fisherman::draw();
+}
 
 void deinit()
 {
