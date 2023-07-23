@@ -39,23 +39,7 @@ void init()
 	hudTexture = LoadRenderTexture(GAME_WIDTH, GAME_HEIGHT);
 }
 
-void prepass()
-{
-	BeginTextureMode(hudTexture);
-
-	// draw the 3D model onto the texture
-	BeginMode3D(hudCamera);
-	BeginShaderMode(hudShader);
-	DrawModel(fishModel, Vector3{.x = 0.5, .y = -0.1, .z = 0.2}, 1, WHITE);
-	EndShaderMode();
-	EndMode3D();
-
-	DrawText(
-		TextFormat("X: %f\tY: %f\tZ: %f", rotation.x, rotation.y, rotation.z),
-		10, 10, 12, WHITE);
-
-	EndTextureMode();
-}
+void prepass() {}
 
 void draw()
 {
@@ -71,9 +55,24 @@ void draw()
 
 	fishModel.transform = MatrixRotateXYZ(rotation);
 
-	rlDisableDepthTest();
+	// BeginTextureMode(hudTexture);
+
+	// draw the 3D model onto the texture
+	BeginMode3D(hudCamera);
+	BeginShaderMode(hudShader);
+	DrawModel(fishModel, Vector3{.x = 0.5, .y = -0.1, .z = 0.2}, 1, WHITE);
+	EndShaderMode();
+	EndMode3D();
+
+	DrawText(
+		TextFormat("X: %f\tY: %f\tZ: %f", rotation.x, rotation.y, rotation.z),
+		10, 10, 12, WHITE);
+
+	// EndTextureMode();
+
+	// rlDisableDepthTest();
 	DrawTexture(hudTexture.texture, GAME_WIDTH / 2, GAME_WIDTH / 2, WHITE);
-	rlEnableDepthTest();
+	// rlEnableDepthTest();
 }
 
 void deinit()
