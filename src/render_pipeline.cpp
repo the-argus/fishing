@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include "constants/screen.h"
 #include "constants/render.h"
+#include "hud.h"
 #include "update_cam.h"
 
 static Camera3D camera;
@@ -25,15 +26,23 @@ void init()
 	DisableCursor();
 
 	mainTarget = LoadRenderTexture(GAME_WIDTH, GAME_HEIGHT);
+
+	hud::init();
 }
 
-void deinit() { UnloadRenderTexture(mainTarget); }
+void deinit()
+{
+	UnloadRenderTexture(mainTarget);
+	hud::deinit();
+}
 
-void render(DrawFunction draw, DrawHudFunction drawHud)
+void render(DrawFunction draw)
 {
 	UpdateCam(&camera);
 	screenScale = MIN((float)GetScreenWidth() / GAME_WIDTH,
 					  (float)GetScreenHeight() / GAME_HEIGHT);
+
+	hud::prepass();
 
 	// clang-format off
     BeginTextureMode(mainTarget);
@@ -41,8 +50,8 @@ void render(DrawFunction draw, DrawHudFunction drawHud)
         BeginMode3D(camera);
             draw();
         EndMode3D();
-
-	    drawHud();
+    
+        hud::draw();
     EndTextureMode();
 	// clang-format on
 

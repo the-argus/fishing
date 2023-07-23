@@ -8,7 +8,6 @@
 #include "level.h"
 #include "music.h"
 #include "sfx.h"
-#include "hud.h"
 
 void update();
 void init();
@@ -42,7 +41,6 @@ void init()
 	level::init();
 	music::init();
 	sfx::init();
-	hud::init();
 }
 
 void draw()
@@ -51,18 +49,15 @@ void draw()
 	level::draw();
 }
 
-void draw_hud() { hud::draw(); }
-
 void update()
 {
 	level::update();
 	music::update();
-	render::render(draw, draw_hud);
+	render::render(draw);
 }
 
 void deinit()
 {
-	hud::deinit();
 	sfx::deinit();
 	music::deinit();
 	level::deinit();
