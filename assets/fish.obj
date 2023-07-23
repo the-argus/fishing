@@ -1,6 +1,6 @@
 # Blender v3.1.2 OBJ File: 'Fish.blend'
 # www.blender.org
-mtllib ReelBig.mtl
+mtllib fish.mtl
 o Cube_Cube.001
 v 0.659778 -0.940666 0.935259
 v 0.656594 1.024246 0.879580

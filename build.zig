@@ -26,6 +26,7 @@ const c_sources = [_][]const u8{
     "src/PlaneSet.cpp",
     "src/music.cpp",
     "src/sfx.cpp",
+    "src/hud.cpp",
 };
 
 pub fn build(b: *std.Build) !void {
