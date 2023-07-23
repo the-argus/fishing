@@ -46,8 +46,11 @@ static constexpr std::array walls = {
 static void initContact(dContact *contact)
 {
 	contact->surface.mode = dContactSoftCFM | dContactApprox1;
-	contact->surface.mu = 0.5;
+	// contact->surface.mu = 0.5;
 	contact->surface.soft_cfm = 0.01;
+	contact->surface.mu = dInfinity;
+	contact->surface.mu2 = 0;
+	contact->surface.bounce = 0;
 }
 
 static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
@@ -61,13 +64,12 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 	dBodyID b1 = dGeomGetBody(o1);
 	dBodyID b2 = dGeomGetBody(o2);
 
-	dContact contact[3]; // up to 3 contacts per box
-	for (i = 0; i < 3; i++) {
-		initContact(&contact[i]);
-	}
-	int numc = dCollide(o1, o2, 3, &contact[0].geom, sizeof(dContact));
+	size_t n_contacts = 3;
+	dContact contact[n_contacts]; // up to 3 contacts per box
+	int numc = dCollide(o1, o2, n_contacts, &contact[0].geom, sizeof(dContact));
 	for (i = 0; i < numc; i++) {
-		dJointID c = dJointCreateContact(world, contactGroup, contact + i);
+		initContact(&contact[i]);
+		dJointID c = dJointCreateContact(world, contactGroup, &contact[i]);
 		dJointAttach(c, b1, b2);
 	}
 }
@@ -104,13 +106,21 @@ dGeomID createGeomBox(int lx, int ly, int lz)
 
 void init()
 {
-	dInitODE();
+	if (dInitODE2(0) == 0) {
+		TraceLog(LOG_FATAL, "Failed to initialize ODE physics engine.");
+		std::abort();
+	}
 	world = dWorldCreate();
 	space = dHashSpaceCreate(0);
 	dWorldSetGravity(world, 0, -GRAVITY, 0);
 
 	contactGroup = dJointGroupCreate(0);
-	ground = dCreatePlane(space, 0, 1, 0, 0);
+
+	ground = dCreateBox(space, 10, 0.1, 10);
+	dMatrix3 R;
+	dRFromAxisAndAngle(R, 0, 1, 0, -0.15);
+	dGeomSetPosition(ground, 2, 0, -0.34);
+	dGeomSetRotation(ground, R);
 
 	planes.emplace();
 
@@ -121,12 +131,18 @@ void init()
 	// create fisherman
 	Fisherman fisherman = Fisherman::createInstance();
 	fisherman.setPos(0, 30, 0);
+
+	// NOTE: allocating all data, probably not necessary and can be
+	// decreased given some testing/research
+	if (!dAllocateODEDataForThread(dAllocateMaskAll))
+		TraceLog(LOG_WARNING, "Physics thread allocation failure");
 }
 
 // TODO: make sure its not bad to use a variable update amount
 void update()
 {
-	dSpaceCollide(space, 0, nearCallback);
+	dSpaceCollide(space, 0, &nearCallback);
+	// don't move faster than 60fps (.016ms step time)
 	dWorldStep(world, std::max(GetFrameTime(), 0.016f));
 
 	Fisherman::getInstance().update();

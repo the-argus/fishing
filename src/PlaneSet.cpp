@@ -67,17 +67,9 @@ dGeomID PlaneSet::createPlane(dSpaceID space, PlaneOptions opt)
 
 	Matrix rot = MatrixRotateXYZ(eulerRotation);
 
-	// ODE uses 4x3 matrices for rotation instead of 4x4 like raylib. chop off
-	// the fourth row. also the way this array is initialized means that its
-	// written sideways. turn your head 90 degrees to read it properly
-	// clang-format off
-	dMatrix3 odeRotation = {
-		rot.m0,     rot.m1,     rot.m2,
-        rot.m4,     rot.m5,     rot.m6,
-		rot.m8,     rot.m9,     rot.m10,
-        rot.m12,    rot.m13,    rot.m14,
-	};
-	// clang-format on
+	dMatrix3 odeRotation;
+	dRFromEulerAngles(odeRotation, eulerRotation.x, eulerRotation.y,
+					  eulerRotation.z);
 
 	dGeomSetRotation(plane, odeRotation);
 

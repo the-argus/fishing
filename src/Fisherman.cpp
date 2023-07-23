@@ -30,13 +30,12 @@ Fisherman::Fisherman() noexcept
 	: m_body(level::createBody()),
 	  m_geom(level::createGeomBox(PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_LENGTH))
 {
-	dMass mass;
-	dMassSetBox(&mass, PLAYER_DENSITY, PLAYER_WIDTH, PLAYER_HEIGHT,
+	dMassSetBox(&m_mass, PLAYER_DENSITY, PLAYER_WIDTH, PLAYER_HEIGHT,
 				PLAYER_LENGTH);
-	dMassAdjust(&mass, PLAYER_MASS);
+	dMassAdjust(&m_mass, PLAYER_MASS);
 
 	dGeomSetBody(m_geom, m_body);
-	dBodySetMass(m_body, &mass);
+	dBodySetMass(m_body, &m_mass);
 
 	// no rotation
 	dBodySetAngularDamping(m_body, 1);

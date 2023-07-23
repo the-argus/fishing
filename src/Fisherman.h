@@ -11,10 +11,10 @@ class Fisherman
 	static Fisherman &getInstance();
 	/// Removes the geometries and bodies from the physics world
 	static void destroyInstance();
-    
-    // move and copy are not deleted, they are used internally. since the
-    // constructor is private though it doesn't matter since you can only get
-    // a reference to the singleton
+
+	// move and copy are not deleted, they are used internally. since the
+	// constructor is private though it doesn't matter since you can only get
+	// a reference to the singleton
 
   public:
 	void setPos(int x, int y, int z);
@@ -28,5 +28,6 @@ class Fisherman
   private:
 	dBodyID m_body;
 	dGeomID m_geom;
-	dMass m_mass;
+	dMass m_mass; // TODO: I'm 90% sure this can be removed, ODE doesn't keep
+				  // a pointer to it
 };
