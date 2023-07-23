@@ -2,6 +2,7 @@
 #include "constants/player.h"
 #include "render_pipeline.h"
 #include "level.h"
+#include "sfx.h"
 #include <rcamera.h>
 #include <raymath.h>
 #include <optional>
@@ -62,8 +63,8 @@ void Fisherman::update()
 	camera.position = Vector3Add(delta, camera.position);
 	camera.target = Vector3Add(delta, camera.target);
 
-	Vector3 force;
-	Vector2 input;
+	Vector3 force{0};
+	Vector2 input{0};
 
 	// Set input based on keys
 	if (IsKeyDown(KEY_W))
@@ -74,6 +75,9 @@ void Fisherman::update()
 		input.y -= 1;
 	if (IsKeyDown(KEY_D))
 		input.y += 1;
+
+	if (IsKeyPressed(KEY_M))
+		sfx::play(sfx::Bank::FishHit);
 
 	Vector3 v1 = camera.position;
 	Vector3 v2 = camera.target;

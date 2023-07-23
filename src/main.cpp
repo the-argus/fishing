@@ -6,6 +6,8 @@
 #include "render_pipeline.h"
 #include "constants/screen.h"
 #include "level.h"
+#include "music.h"
+#include "sfx.h"
 
 void update();
 void init();
@@ -37,6 +39,8 @@ void init()
 
 	render::init();
 	level::init();
+	music::init();
+	sfx::init();
 }
 
 void draw()
@@ -50,11 +54,14 @@ void draw_hud() {}
 void update()
 {
 	level::update();
+	music::update();
 	render::render(draw, draw_hud);
 }
 
 void deinit()
 {
+	sfx::deinit();
+	music::deinit();
 	level::deinit();
 	render::deinit();
 	CloseWindow();
