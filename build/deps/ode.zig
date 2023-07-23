@@ -17,6 +17,7 @@ const universal_flags = [_][]const u8{
     "-D_OU_FEATURE_SET=_OU_FEATURE_SET_TLS", // instead of ATOMICS
     "-D_OU_NAMESPACE=odeou",
     // "-D_OU_FEATURE_SET=_OU_FEATURE_SET_ATOMICS",
+    "-DDS_LIB", // also build drawstuff statically
 };
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
@@ -40,6 +41,51 @@ const include_dirs = [_][]const u8{
     srcdir ++ "OPCODE",
     srcdir ++ "OPCODE/Ice",
     here ++ "dummyinclude",
+};
+
+const drawstuff_sources = [_][]const u8{
+    srcdir ++ "drawstuff/src/drawstuff.cpp",
+    srcdir ++ "drawstuff/src/x11.cpp",
+};
+
+const drawstuff_includes = [_][]const u8{
+    srcdir ++ "drawstuff/src",
+};
+
+const demo_sources = [_][]const u8{
+    srcdir ++ "ode/demo/demo_boxstack.cpp",
+    srcdir ++ "ode/demo/demo_buggy.cpp",
+    srcdir ++ "ode/demo/demo_cards.cpp",
+    srcdir ++ "ode/demo/demo_chain1.c",
+    srcdir ++ "ode/demo/demo_chain2.cpp",
+    srcdir ++ "ode/demo/demo_collision.cpp",
+    srcdir ++ "ode/demo/demo_convex.cpp",
+    srcdir ++ "ode/demo/demo_crash.cpp",
+    srcdir ++ "ode/demo/demo_cylvssphere.cpp",
+    srcdir ++ "ode/demo/demo_dball.cpp",
+    srcdir ++ "ode/demo/demo_dhinge.cpp",
+    srcdir ++ "ode/demo/demo_feedback.cpp",
+    srcdir ++ "ode/demo/demo_friction.cpp",
+    srcdir ++ "ode/demo/demo_gyro2.cpp",
+    srcdir ++ "ode/demo/demo_gyroscopic.cpp",
+    srcdir ++ "ode/demo/demo_heightfield.cpp",
+    srcdir ++ "ode/demo/demo_hinge.cpp",
+    srcdir ++ "ode/demo/demo_I.cpp",
+    srcdir ++ "ode/demo/demo_jointPR.cpp",
+    srcdir ++ "ode/demo/demo_jointPU.cpp",
+    srcdir ++ "ode/demo/demo_joints.cpp",
+    // srcdir ++ "ode/demo/demo_kinematic.cpp", // uses mem_fun, should be std::mem_fn
+    srcdir ++ "ode/demo/demo_motion.cpp",
+    srcdir ++ "ode/demo/demo_motor.cpp",
+    srcdir ++ "ode/demo/demo_ode.cpp",
+    srcdir ++ "ode/demo/demo_piston.cpp",
+    srcdir ++ "ode/demo/demo_plane2d.cpp",
+    srcdir ++ "ode/demo/demo_rfriction.cpp",
+    srcdir ++ "ode/demo/demo_slider.cpp",
+    srcdir ++ "ode/demo/demo_space.cpp",
+    srcdir ++ "ode/demo/demo_space_stress.cpp",
+    srcdir ++ "ode/demo/demo_step.cpp",
+    srcdir ++ "ode/demo/demo_transmission.cpp",
 };
 
 const c_sources = [_][]const u8{
@@ -171,6 +217,19 @@ const c_sources = [_][]const u8{
 pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.OptimizeMode) !*std.Build.CompileStep {
     var targets = std.ArrayList(*std.Build.CompileStep).init(b.allocator);
 
+    const drawstuff = b.option(bool, "ODE-demos", "Build the ODE \"drawstuff\" library.") orelse false;
+    const dslib = if (drawstuff) b.addStaticLibrary(.{
+        .name = "drawstuff",
+        .optimize = mode,
+        .target = target,
+    }) else null;
+    if (dslib) |ds| try targets.append(ds);
+
+    if (drawstuff and (try std.zig.system.NativeTargetInfo.detect(target)).target.os.tag != .linux) {
+        std.log.err("This drawstuff build is unfinished, and only supports linux.", .{});
+        return error.UnsupportedOs;
+    }
+
     const lib = b.addStaticLibrary(.{
         .name = app_name,
         .optimize = mode,
@@ -207,8 +266,46 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
         try flags.append(try std.fmt.allocPrint(b.allocator, "-D_OU_TARGET_OS={any}", .{os_number}));
     }
 
+    lib.addCSourceFiles(&c_sources, flags.items);
+
+    if (dslib) |ds| {
+        for (drawstuff_includes) |include_dir| {
+            ds.addIncludePath(include_dir);
+        }
+
+        ds.linkLibrary(lib);
+
+        switch (target.getOsTag()) {
+            .windows => {},
+            .macos => {},
+            .linux => {
+                ds.linkSystemLibrary("GL");
+                ds.linkSystemLibrary("GLU");
+                ds.linkSystemLibrary("X11");
+            },
+            else => {},
+        }
+
+        ds.addCSourceFiles(&drawstuff_sources, flags.items);
+
+        for (demo_sources) |demo_source| {
+            const demo = b.addExecutable(.{
+                .name = std.fs.path.stem(demo_source),
+                .optimize = mode,
+                .target = target,
+            });
+            demo.addCSourceFile(demo_source, flags.items);
+            demo.linkLibrary(ds);
+            try targets.append(demo);
+        }
+    }
+
     for (include_dirs) |include_dir| {
         try include(targets, include_dir);
+    }
+
+    for (targets.items) |t| {
+        t.linkLibCpp();
     }
 
     {
@@ -230,45 +327,6 @@ pub fn addLib(b: *std.Build, target: std.zig.CrossTarget, mode: std.builtin.Opti
         b.installFile(file, "include/ode/precision.h");
         try include(targets, if (b.cache_root.path) |path| path else return error.RefuseToAddCWDToInclude);
     }
-
-    switch (target.getOsTag()) {
-        .wasi, .emscripten => {
-            // pretend to be linux?
-            try flags.append("-D__linux__");
-
-            std.log.info("building for emscripten\n", .{});
-
-            if (b.sysroot == null) {
-                std.log.err("\n\nUSAGE: Please build with a specified sysroot: 'zig build --sysroot \"$EMSDK/upstream/emscripten\"'\n\n", .{});
-                return error.SysRootExpected;
-            }
-
-            // include emscripten headers for compat, for example sys/sysctl
-            const emscripten_include_flag = try std.fmt.allocPrint(b.allocator, "-I{s}/include", .{b.sysroot.?});
-            try flags.appendSlice(&.{emscripten_include_flag});
-
-            // define some macros in case there web-conditional code in ode
-            lib.defineCMacro("__EMSCRIPTEN__", null);
-
-            // run emranlib
-            const emranlib_file = switch (b.host.target.os.tag) {
-                .windows => "emranlib.bat",
-                else => "emranlib",
-            };
-            // TODO: remove bin if on linux, or make my linux packaging for EMSDK have the same file structure as windows
-            const emranlib_path = try std.fs.path.join(b.allocator, &.{ b.sysroot.?, "bin", emranlib_file });
-            const run_emranlib = b.addSystemCommand(&.{emranlib_path});
-            run_emranlib.addArtifactArg(lib);
-            b.getInstallStep().dependOn(&run_emranlib.step);
-        },
-        else => {
-            lib.linkLibC();
-        },
-    }
-
-    lib.linkLibCpp();
-
-    lib.addCSourceFiles(&c_sources, flags.items);
 
     // always install ode headers
     b.installDirectory(.{

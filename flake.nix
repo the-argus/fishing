@@ -50,6 +50,7 @@
               valgrind
               pkg-config
               libGL
+              libGLU
               self.packages.${system}.zig
             ])
             ++ (with pkgs.xorg; [
@@ -60,11 +61,11 @@
               libXi
             ]);
 
-            shellHook = ''
-              export EMSDK="${pkgs.emsdk}"
-              export CHIPMUNK="${pkgs.chipmunk}"
-              export RAYLIB="${pkgs.raylib}"
-            '';
+          shellHook = ''
+            export EMSDK="${pkgs.emsdk}"
+            export CHIPMUNK="${pkgs.chipmunk}"
+            export RAYLIB="${pkgs.raylib}"
+          '';
         };
 
       formatter = pkgs.alejandra;
