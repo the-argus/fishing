@@ -63,8 +63,8 @@ void Fisherman::update()
 	camera.position = Vector3Add(delta, camera.position);
 	camera.target = Vector3Add(delta, camera.target);
 
-	Vector3 force;
-	Vector2 input;
+	Vector3 force{0};
+	Vector2 input{0};
 
 	// Set input based on keys
 	if (IsKeyDown(KEY_W))

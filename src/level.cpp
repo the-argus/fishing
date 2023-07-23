@@ -127,8 +127,7 @@ void init()
 void update()
 {
 	dSpaceCollide(space, 0, nearCallback);
-	float deltaTime = GetFrameTime();
-	dWorldStep(world, deltaTime > 0 ? deltaTime : 0.16);
+	dWorldStep(world, std::max(GetFrameTime(), 0.016f));
 
 	Fisherman::getInstance().update();
 	dJointGroupEmpty(contactGroup);
