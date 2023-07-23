@@ -36,9 +36,6 @@ Fisherman::Fisherman() noexcept
 
 	dGeomSetBody(m_geom, m_body);
 	dBodySetMass(m_body, &m_mass);
-
-	// no rotation
-	dBodySetAngularDamping(m_body, 1);
 }
 
 void Fisherman::destroyInstance()
