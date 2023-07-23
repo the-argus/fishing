@@ -28,6 +28,18 @@ class PlaneSet
 
 	dGeomID createPlane(dSpaceID space, PlaneOptions);
 
+	/// returns true if the geometry is in this PlaneSet.
+	inline bool isPlane(dGeomID target) const
+	{
+		for (const auto geom : m_geoms) {
+			if (geom == target)
+				return true;
+		}
+		return false;
+	}
+
+	inline const std::vector<dGeomID> &getPlanes() { return m_geoms; }
+
   private:
 	// the initial size of the vector. speeds up plane creation at level load
 	// time

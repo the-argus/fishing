@@ -46,7 +46,25 @@ void Fisherman::destroyInstance()
 	fisherman = std::nullopt;
 }
 
-static Vector3 myForce;
+static Vector3 myForce{0};
+
+void Fisherman::draw()
+{
+	if (Vector3LengthSqr(myForce) == 0)
+		return;
+
+	Vector3 playerPos = getInstance().getPosV3();
+	DrawLine3D(Vector3Add({0, -1, 0}, playerPos),
+			   Vector3Add(playerPos, myForce), GREEN);
+
+	const dReal *force = dBodyGetForce(getInstance().m_body);
+	auto actualForce = Vector3{.x = force[0], .y = force[1], .z = force[2]};
+
+	Vector3 translated = Vector3Add({0.1, 0, 0}, playerPos);
+	DrawLine3D(translated, Vector3Add(translated, actualForce), RED);
+
+	myForce = {0};
+}
 
 void Fisherman::update()
 {
@@ -75,6 +93,9 @@ void Fisherman::update()
 	if (IsKeyPressed(KEY_M))
 		sfx::play(sfx::Bank::FishHit);
 
+	if (Vector2LengthSqr(input) == 0)
+		return;
+
 	Vector3 v1 = camera.position;
 	Vector3 v2 = camera.target;
 
@@ -94,6 +115,7 @@ void Fisherman::update()
 	h_force = Vector3Scale(h_force, input.y);
 
 	force = Vector3Add(force, h_force);
+	myForce = force;
 
 	dBodyAddRelForce(m_body, force.x, force.y, force.z);
 }

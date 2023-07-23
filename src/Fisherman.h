@@ -21,6 +21,7 @@ class Fisherman
 	Vector3 getPosV3();
 
 	void update();
+	static void draw();
 
   private:
 	Fisherman() noexcept;

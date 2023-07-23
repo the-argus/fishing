@@ -7,10 +7,11 @@
 #include <raylib.h>
 #include <array>
 #include <optional>
+#include <cassert>
 
 static dWorldID world;
 static dSpaceID space;
-static dGeomID ground;
+static dGeomID debugGroundPlane;
 static dJointGroupID contactGroup;
 static dThreadingImplementationID threading;
 static dThreadingThreadPoolID pool;
@@ -59,9 +60,18 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 {
 	int i;
 
+	bool o1IsPlane = planes->isPlane(o1);
+	bool o2IsPlane = planes->isPlane(o2);
+	bool o1IsGround = o1 == debugGroundPlane;
+	bool o2IsGround = o2 == debugGroundPlane;
+
+	bool noPlane = (!o1IsPlane && !o2IsPlane);
+	bool noGround = (!o1IsGround && !o2IsGround);
+
 	// only collide things with the ground
-	if (o1 != ground && o2 != ground)
+	if (noGround && noPlane) {
 		return;
+	}
 
 	dBodyID b1 = dGeomGetBody(o1);
 	dBodyID b2 = dGeomGetBody(o2);
@@ -81,22 +91,33 @@ namespace level {
 bool onGround(dBodyID body)
 {
 	dGeomID geom = dBodyGetFirstGeom(body);
-	dContact contact;
-	initContact(&contact);
-	int num_collisions =
-		dCollide(geom, ground, 3, &contact.geom, sizeof(dContact));
 
-	if (num_collisions > 0) {
-		Vector3 normal{
-			.x = contact.geom.normal[0],
-			.y = contact.geom.normal[1],
-			.z = contact.geom.normal[2],
-		};
-		// ensure the collision was with a face which is pointing up
-		float upness = Vector3DotProduct(normal, (Vector3){0, 1, 0});
-		return upness > ON_GROUND_THRESHHOLD;
+	assert(!planes->isPlane(geom));
+
+	auto &groundPlanes = planes->getPlanes();
+
+	float bestCollision = -(~0);
+	for (const auto &plane : groundPlanes) {
+		dContact contact;
+		initContact(&contact);
+		int num_collisions =
+			dCollide(geom, plane, 1, &contact.geom, sizeof(dContactGeom));
+
+		if (num_collisions > 0) {
+			Vector3 normal{
+				.x = contact.geom.normal[0],
+				.y = contact.geom.normal[1],
+				.z = contact.geom.normal[2],
+			};
+			// ensure the collision was with a face which is pointing up
+			float upness = Vector3DotProduct(normal, (Vector3){0, 1, 0});
+
+			if (upness > bestCollision) {
+				bestCollision = upness;
+			}
+		}
 	}
-	return false;
+	return bestCollision > ON_GROUND_THRESHHOLD;
 }
 
 dBodyID createBody() { return dBodyCreate(world); }
@@ -120,17 +141,13 @@ void init()
 
 	contactGroup = dJointGroupCreate(0);
 
-	ground = dCreateBox(space, 10, 0.1, 10);
-	dMatrix3 R;
-	dRFromAxisAndAngle(R, 0, 1, 0, -0.15);
-	dGeomSetPosition(ground, 2, 0, -0.34);
-	dGeomSetRotation(ground, R);
-
 	planes.emplace();
 
 	for (const auto &wall : walls) {
 		planes->createPlane(space, wall);
 	}
+
+	debugGroundPlane = dCreatePlane(space, 0, 1, 0, 0);
 
 	// create fisherman
 	Fisherman fisherman = Fisherman::createInstance();
@@ -153,13 +170,18 @@ void update()
 	dJointGroupEmpty(contactGroup);
 }
 
-void draw() { planes->draw(); }
+void draw()
+{
+	planes->draw();
+	Fisherman::draw();
+}
 
 void deinit()
 {
 	Fisherman::destroyInstance();
 	planes = std::nullopt;
 	dJointGroupDestroy(contactGroup);
+	dGeomDestroy(debugGroundPlane);
 	dSpaceDestroy(space);
 	dWorldDestroy(world);
 	dCloseODE();
