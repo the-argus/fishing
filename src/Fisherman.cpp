@@ -77,6 +77,11 @@ void Fisherman::update()
 	camera.position = Vector3Add(delta, camera.position);
 	camera.target = Vector3Add(delta, camera.target);
 
+	applyMovement();
+}
+
+void Fisherman::applyMovement()
+{
 	Vector3 force{0};
 	Vector2 input{0};
 
@@ -96,6 +101,7 @@ void Fisherman::update()
 	if (Vector2LengthSqr(input) == 0)
 		return;
 
+	Camera3D &camera = render::getCamera();
 	Vector3 v1 = camera.position;
 	Vector3 v2 = camera.target;
 
@@ -107,7 +113,9 @@ void Fisherman::update()
 
 	force.x = sin(angle_x) * PLAYER_MOVEMENT_SPEED;
 	force.z = cos(angle_x) * PLAYER_MOVEMENT_SPEED;
+
 	assert(Vector3LengthSqr(force) != 0);
+
 	Vector3 h_force =
 		Vector3CrossProduct(Vector3Normalize(force), (Vector3){0, 1, 0});
 
@@ -116,6 +124,9 @@ void Fisherman::update()
 
 	force = Vector3Add(force, h_force);
 	myForce = force;
+
+	if (IsKeyPressed(KEY_SPACE) && level::onGround(m_body))
+		force = Vector3Add(force, jumpForce);
 
 	dBodyAddRelForce(m_body, force.x, force.y, force.z);
 }

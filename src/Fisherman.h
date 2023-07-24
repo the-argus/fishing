@@ -25,6 +25,9 @@ class Fisherman
 
   private:
 	Fisherman() noexcept;
+	void applyMovement();
+
+	static constexpr Vector3 jumpForce = {0.0, 2000.0, 0.0};
 
   private:
 	dBodyID m_body;
