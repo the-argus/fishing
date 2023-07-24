@@ -137,7 +137,7 @@ void init()
 	space = dHashSpaceCreate(0);
 	dWorldSetGravity(world, 0, -GRAVITY, 0);
 	dWorldSetCFM(world, 1e-5);
-    dWorldSetMaxAngularSpeed(world, 0);
+	dWorldSetMaxAngularSpeed(world, 0);
 
 	contactGroup = dJointGroupCreate(0);
 
