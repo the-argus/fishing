@@ -61,38 +61,38 @@ dGeomID PlaneSet::createPlane(dSpaceID space, PlaneOptions opt)
 	const auto &position = opt.position;
 	const auto &eulerRotation = opt.eulerRotation;
 
-	dGeomID plane = dCreateBox(space, scale.x, scale.y, scale.z);
+	dGeomID plane = dCreateBox(space, scale.x, scale.z, scale.y);
 
-	TraceLog(LOG_INFO, "Scale X: %f, Y: %f, Z: %f", scale.x, scale.y, scale.z);
-	TraceLog(LOG_INFO, "Translate X: %f, Y: %f, Z: %f", position.x, position.y,
-			 position.z);
+	TraceLog(LOG_INFO, "Scale X: %f, Y: %f, Z: %f", scale.x, scale.z, scale.y);
+	TraceLog(LOG_INFO, "Translate X: %f, Y: %f, Z: %f", position.x, position.z,
+			 position.y);
 	TraceLog(LOG_INFO, "Rotation X: %f, Y: %f, Z: %f", eulerRotation.x,
-			 eulerRotation.y, eulerRotation.z);
+			 eulerRotation.z, eulerRotation.y);
 
 	dReal aabb[6];
 	dGeomGetAABB(plane, aabb);
 	TraceLog(LOG_INFO,
 			 "INITIAL AABB: \n1: %f\t2: %f\t3: %f\t4: %f\t5: %f\t6: %f",
-			 aabb[0], aabb[1], aabb[2], aabb[3], aabb[4], aabb[5]);
+			 aabb[0], aabb[1], aabb[4], aabb[5], aabb[2], aabb[3]);
 
 	// cube model is 1x1x1, so just pass in the scale directly
-	dGeomSetPosition(plane, position.x, position.z, position.y);
+	dGeomSetPosition(plane, position.x, position.y, position.z);
 
 	dGeomGetAABB(plane, aabb);
 	TraceLog(LOG_INFO,
 			 "TRANSLATED AABB: \n1: %f\t2: %f\t3: %f\t4: %f\t5: %f\t6: %f",
-			 aabb[0], aabb[1], aabb[2], aabb[3], aabb[4], aabb[5]);
+			 aabb[0], aabb[1], aabb[4], aabb[5], aabb[2], aabb[3]);
 
 	Matrix rot = MatrixRotateXYZ(eulerRotation);
 
 	dMatrix3 odeRotation;
-	dRFromEulerAngles(odeRotation, eulerRotation.x, eulerRotation.y,
+	dRFromEulerAngles(odeRotation, eulerRotation.z, eulerRotation.y,
 					  eulerRotation.z);
 
 	dGeomSetRotation(plane, odeRotation);
 	dGeomGetAABB(plane, aabb);
 	TraceLog(LOG_INFO, "FINAL AABB: \n1: %f\t2: %f\t3: %f\t4: %f\t5: %f\t6: %f",
-			 aabb[0], aabb[1], aabb[2], aabb[3], aabb[4], aabb[5]);
+			 aabb[0], aabb[1], aabb[4], aabb[5], aabb[2], aabb[3]);
 
 	m_geoms.push_back(plane);
 

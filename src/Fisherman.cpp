@@ -1,5 +1,4 @@
 #include "Fisherman.h"
-#include "constants/player.h"
 #include "render_pipeline.h"
 #include "level.h"
 #include "sfx.h"
@@ -28,11 +27,10 @@ Fisherman &Fisherman::createInstance()
 
 Fisherman::Fisherman() noexcept
 	: m_body(level::createBody()),
-	  m_geom(level::createGeomBox(PLAYER_WIDTH, PLAYER_HEIGHT, PLAYER_LENGTH))
+	  m_geom(level::createGeomBox(physicsSize.x, physicsSize.y, physicsSize.z))
 {
-	dMassSetBox(&m_mass, PLAYER_DENSITY, PLAYER_WIDTH, PLAYER_HEIGHT,
-				PLAYER_LENGTH);
-	dMassAdjust(&m_mass, PLAYER_MASS);
+	dMassSetBox(&m_mass, density, physicsSize.x, physicsSize.y, physicsSize.z);
+	dMassAdjust(&m_mass, mass);
 
 	dGeomSetBody(m_geom, m_body);
 	dBodySetMass(m_body, &m_mass);
@@ -98,32 +96,31 @@ void Fisherman::applyMovement()
 	if (IsKeyPressed(KEY_M))
 		sfx::play(sfx::Bank::FishHit);
 
-	if (Vector2LengthSqr(input) == 0)
-		return;
+	if (Vector2LengthSqr(input) != 0) {
+		Camera3D &camera = render::getCamera();
+		Vector3 v1 = camera.position;
+		Vector3 v2 = camera.target;
 
-	Camera3D &camera = render::getCamera();
-	Vector3 v1 = camera.position;
-	Vector3 v2 = camera.target;
+		float dx = v2.x - v1.x;
+		float dy = v2.y - v1.y;
+		float dz = v2.z - v1.z;
 
-	float dx = v2.x - v1.x;
-	float dy = v2.y - v1.y;
-	float dz = v2.z - v1.z;
+		float angle_x = atan2f(dx, dz);
 
-	float angle_x = atan2f(dx, dz);
+		force.x = sin(angle_x) * movementImpulse;
+		force.z = cos(angle_x) * movementImpulse;
 
-	force.x = sin(angle_x) * PLAYER_MOVEMENT_SPEED;
-	force.z = cos(angle_x) * PLAYER_MOVEMENT_SPEED;
+		assert(Vector3LengthSqr(force) != 0);
 
-	assert(Vector3LengthSqr(force) != 0);
+		Vector3 h_force =
+			Vector3CrossProduct(Vector3Normalize(force), (Vector3){0, 1, 0});
 
-	Vector3 h_force =
-		Vector3CrossProduct(Vector3Normalize(force), (Vector3){0, 1, 0});
+		force = Vector3Scale(force, input.x);
+		h_force = Vector3Scale(h_force, input.y);
 
-	force = Vector3Scale(force, input.x);
-	h_force = Vector3Scale(h_force, input.y);
-
-	force = Vector3Add(force, h_force);
-	myForce = force;
+		force = Vector3Add(force, h_force);
+		myForce = force;
+	}
 
 	if (IsKeyPressed(KEY_SPACE) && level::onGround(m_body))
 		force = Vector3Add(force, jumpForce);
@@ -131,14 +128,13 @@ void Fisherman::applyMovement()
 	dBodyAddRelForce(m_body, force.x, force.y, force.z);
 }
 
-void Fisherman::setPos(int x, int y, int z)
+void Fisherman::setPos(Vector3 pos)
 {
-	dBodySetPosition(m_body, x, y, z);
+	dBodySetPosition(m_body, pos.x, pos.y, pos.z);
 }
 
 Vector3 Fisherman::getPosV3()
 {
 	auto *pos = dBodyGetPosition(m_body);
-
 	return Vector3{.x = pos[0], .y = pos[1], .z = pos[2]};
 }

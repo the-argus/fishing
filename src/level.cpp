@@ -9,9 +9,13 @@
 #include <optional>
 #include <cassert>
 
+// #define DEBUG_PLANE
+
 static dWorldID world;
 static dSpaceID space;
+#ifdef DEBUG_PLANE
 static dGeomID debugGroundPlane;
+#endif
 static dJointGroupID contactGroup;
 static dThreadingImplementationID threading;
 static dThreadingThreadPoolID pool;
@@ -51,7 +55,7 @@ static void initContact(dContact *contact)
 	contact->surface.mode = dContactSoftCFM | dContactApprox1;
 	// contact->surface.mu = 0.5;
 	contact->surface.soft_cfm = 0.01;
-	contact->surface.mu = dInfinity;
+	contact->surface.mu = 0.9;
 	contact->surface.mu2 = 0;
 	contact->surface.bounce = 0;
 }
@@ -60,16 +64,8 @@ static void nearCallback(void *unused, dGeomID o1, dGeomID o2)
 {
 	int i;
 
-	bool o1IsPlane = planes->isPlane(o1);
-	bool o2IsPlane = planes->isPlane(o2);
-	bool o1IsGround = o1 == debugGroundPlane;
-	bool o2IsGround = o2 == debugGroundPlane;
-
-	bool noPlane = (!o1IsPlane && !o2IsPlane);
-	bool noGround = (!o1IsGround && !o2IsGround);
-
 	// only collide things with the ground
-	if (noGround && noPlane) {
+	if (!planes->isPlane(o1) && !planes->isPlane(o2)) {
 		return;
 	}
 
@@ -147,11 +143,13 @@ void init()
 		planes->createPlane(space, wall);
 	}
 
+#ifdef DEBUG_PLANE
 	debugGroundPlane = dCreatePlane(space, 0, 1, 0, 0);
+#endif
 
 	// create fisherman
 	Fisherman fisherman = Fisherman::createInstance();
-	fisherman.setPos(0, 30, 0);
+	fisherman.setPos({0, 30, 0});
 
 	// NOTE: allocating all data, probably not necessary and can be
 	// decreased given some testing/research
@@ -181,7 +179,9 @@ void deinit()
 	Fisherman::destroyInstance();
 	planes = std::nullopt;
 	dJointGroupDestroy(contactGroup);
+#ifdef DEBUG_PLANE
 	dGeomDestroy(debugGroundPlane);
+#endif
 	dSpaceDestroy(space);
 	dWorldDestroy(world);
 	dCloseODE();
