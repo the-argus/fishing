@@ -25,7 +25,11 @@ void init()
 	}
 }
 
-void play(Bank index) { PlaySound(soundPairs[index].sound); }
+void play(Bank index)
+{
+	PlaySound(soundPairs[index].sound);
+	TraceLog(LOG_INFO, "playing sound %d", (int)index);
+}
 
 bool isPlaying(Bank index) { return IsSoundPlaying(soundPairs[index].sound); }
 

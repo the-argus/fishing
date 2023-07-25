@@ -76,6 +76,10 @@ void Fisherman::update()
 	camera.target = Vector3Add(delta, camera.target);
 
 	applyMovement();
+
+	// debug sounds
+	if (IsKeyPressed(KEY_M))
+		sfx::play(sfx::Bank::FishHit);
 }
 
 void Fisherman::applyMovement()
@@ -92,9 +96,6 @@ void Fisherman::applyMovement()
 		input.y -= 1;
 	if (IsKeyDown(KEY_D))
 		input.y += 1;
-
-	if (IsKeyPressed(KEY_M))
-		sfx::play(sfx::Bank::FishHit);
 
 	if (Vector2LengthSqr(input) != 0) {
 		Camera3D &camera = render::getCamera();

@@ -7,7 +7,6 @@
 #include "constants/screen.h"
 #include "level.h"
 #include "music.h"
-#include "sfx.h"
 
 void update();
 void init();
@@ -40,7 +39,6 @@ void init()
 	render::init();
 	level::init();
 	music::init();
-	sfx::init();
 }
 
 void draw()
@@ -58,7 +56,6 @@ void update()
 
 void deinit()
 {
-	sfx::deinit();
 	music::deinit();
 	level::deinit();
 	render::deinit();
