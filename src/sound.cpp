@@ -1,4 +1,4 @@
-#include "sfx.h"
+#include "sound.h"
 #include <raylib.h>
 #include <array>
 
@@ -16,28 +16,40 @@ static std::array soundPairs{
 	SoundPair{.filename = "assets/sfx/lineReel_loopable.ogg"},
 };
 
-namespace sfx {
+static Music mainTrack;
+static constexpr auto mainTrackFileName = "assets/music/fish.ogg";
 
+namespace sound {
 void init()
 {
+	InitAudioDevice();
+
+	mainTrack = LoadMusicStream(mainTrackFileName);
 	for (auto &pair : soundPairs) {
 		pair.sound = LoadSound(pair.filename);
 	}
+
+	SetMusicVolume(mainTrack, 1);
+	PlayMusicStream(mainTrack);
 }
 
-void play(Bank index)
-{
-	PlaySound(soundPairs[index].sound);
-	TraceLog(LOG_INFO, "playing sound %d", (int)index);
-}
-
-bool isPlaying(Bank index) { return IsSoundPlaying(soundPairs[index].sound); }
+void update() { UpdateMusicStream(mainTrack); }
 
 void deinit()
 {
 	for (auto &pair : soundPairs) {
 		UnloadSound(pair.sound);
 	}
+	UnloadMusicStream(mainTrack);
+	CloseAudioDevice();
 }
 
-} // namespace sfx
+void play(Effect index)
+{
+	PlaySound(soundPairs[index].sound);
+	TraceLog(LOG_INFO, "playing sound %d", (int)index);
+}
+
+bool isPlaying(Effect index) { return IsSoundPlaying(soundPairs[index].sound); }
+
+} // namespace sound

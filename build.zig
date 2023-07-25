@@ -24,8 +24,7 @@ const c_sources = [_][]const u8{
     "src/render_pipeline.cpp",
     "src/Fisherman.cpp",
     "src/PlaneSet.cpp",
-    "src/music.cpp",
-    "src/sfx.cpp",
+    "src/sound.cpp",
     "src/hud.cpp",
 };
 

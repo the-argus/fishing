@@ -1,7 +1,7 @@
 #include "Fisherman.h"
 #include "render_pipeline.h"
 #include "level.h"
-#include "sfx.h"
+#include "sound.h"
 #include <rcamera.h>
 #include <raymath.h>
 #include <optional>
@@ -79,7 +79,7 @@ void Fisherman::update()
 
 	// debug sounds
 	if (IsKeyPressed(KEY_M))
-		sfx::play(sfx::Bank::FishHit);
+		sound::play(sound::Effect::FishHit);
 }
 
 void Fisherman::applyMovement()
