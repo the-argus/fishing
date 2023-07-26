@@ -20,6 +20,8 @@ static dJointGroupID contactGroup;
 static dThreadingImplementationID threading;
 static dThreadingThreadPoolID pool;
 static std::optional<PlaneSet> planes = std::nullopt;
+static std::vector<dGeomID> balls;
+static std::vector<Color> colors;
 
 static constexpr std::array walls = {
 	// ground
@@ -143,6 +145,24 @@ void init()
 		planes->createPlane(space, wall);
 	}
 
+	balls.reserve(40);
+	colors.reserve(40);
+
+	for (int i = 0; i < 40; i++) {
+		dBodyID body = createBody();
+		dMass mass;
+		constexpr float radius = 1.0f;
+		dMassSetSphere(&mass, 1, radius);
+		dMassAdjust(&mass, 0.1);
+		dBodySetMass(body, &mass);
+		dGeomID geom = dCreateSphere(space, radius);
+		dGeomSetBody(geom, body);
+		dBodySetPosition(body, (std::rand() % 10) - 5, 10,
+						 (std::rand() % 10) - 5);
+		balls.push_back(geom);
+		colors.push_back(ColorFromHSV(rand() % 360, 1, 1));
+	}
+
 #ifdef DEBUG_PLANE
 	debugGroundPlane = dCreatePlane(space, 0, 1, 0, 0);
 #endif
@@ -172,6 +192,13 @@ void draw()
 {
 	planes->draw();
 	Fisherman::draw();
+
+	for (int i = 0; i < balls.size(); i++) {
+		auto body = dGeomGetBody(balls[i]);
+		const float *pos = dBodyGetPosition(body);
+		Vector3 raylibPos{pos[0], pos[1], pos[2]};
+		DrawSphere(raylibPos, 1, colors[i]);
+	}
 }
 
 void deinit()
@@ -179,6 +206,11 @@ void deinit()
 	Fisherman::destroyInstance();
 	planes = std::nullopt;
 	dJointGroupDestroy(contactGroup);
+
+	for (const auto ball : balls) {
+		dGeomDestroy(ball);
+	}
+
 #ifdef DEBUG_PLANE
 	dGeomDestroy(debugGroundPlane);
 #endif

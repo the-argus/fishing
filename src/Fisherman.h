@@ -27,9 +27,9 @@ class Fisherman
 	Fisherman() noexcept;
 	void applyMovement();
 
-	static constexpr Vector3 jumpForce{0.0, 20000.0, 0.0};
+	static constexpr Vector3 jumpForce{0.0, 2000.0, 0.0};
 	static constexpr int density = 1;
-	static constexpr Vector3 physicsSize{1, 2, 1};
+	static constexpr Vector3 physicsSize{3, 5, 3};
 	static constexpr size_t mass = 10;
 	static constexpr int movementImpulse = 500;
 
