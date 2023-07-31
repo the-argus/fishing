@@ -92,7 +92,7 @@ bool onGround(dBodyID body)
 
 	auto &groundPlanes = planes->getPlanes();
 
-	float bestCollision = -(~0);
+	float bestCollision = ~0; // the largest negative number
 	for (const auto &plane : groundPlanes) {
 		dContact contact;
 		initContact(&contact);
