@@ -182,7 +182,12 @@ void update()
 {
 	dSpaceCollide(space, 0, &nearCallback);
 	// don't move faster than 60fps (.016ms step time)
-	dWorldStep(world, std::max(GetFrameTime(), 0.016f));
+    // NOTE: when using this method, an extremely laggy client will shoot
+    // through walls due to the timestep being very large and so the physics
+    // integration will have fewer samples. best approach may be deltatime
+    // clamped to a range.
+	// dWorldStep(world, std::max(GetFrameTime(), 0.016f));
+	dWorldStep(world, 1.0f / 60.0f);
 
 	Fisherman::getInstance().update();
 	dJointGroupEmpty(contactGroup);
