@@ -18,7 +18,7 @@ const universal_flags = [_][]const u8{
     "-D_OU_NAMESPACE=odeou",
     // "-D_OU_FEATURE_SET=_OU_FEATURE_SET_ATOMICS",
     "-DDS_LIB", // also build drawstuff statically
-    "-fno-sanitize=undefined",
+    // "-fno-sanitize=undefined",
 };
 
 const release_flags = [_][]const u8{"-DNDEBUG"};
